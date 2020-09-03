@@ -1,9 +1,9 @@
     <header>
         <app-header (burgerClicked)="show()"></app-header>
     </header>
-    <div id="sidebar">
-        <app-sidebar></app-sidebar>
-    </div>    
     <main>
+        <div id="sidebar">
+            <app-sidebar></app-sidebar>
+        </div>  
         <router-outlet></router-outlet>
     </main>       

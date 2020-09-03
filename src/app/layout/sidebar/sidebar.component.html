@@ -2,9 +2,11 @@
   <mat-drawer class="example-sidenav" mode="side">
     <button mat-icon-button class="example-icon" [routerLink]="['/books', 'page', '1']">
       <mat-icon>library_books</mat-icon>
+      <p>Books</p>
     </button>
-    <button mat-icon-button class="example-icon" [routerLink]="['/authors', 'page', '1']">
+    <button mat-icon-button class="example-icon" [routerLink]="['/authors']">
       <mat-icon>supervisor_account</mat-icon>
+      <p>Authors</p>
     </button>
   </mat-drawer>
 </mat-drawer-container>
