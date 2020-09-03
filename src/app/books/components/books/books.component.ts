@@ -1,16 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 
 import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AuthorService } from '../../../authors/services/authors.service';
-
-import { BooksService } from './../../services/books.service';
-import { GenresService } from './../../services/genres.service';
-import { IBook, IBooks } from './../../interfaces/book';
+import { BooksService } from '../../services/books.service';
+import { IBook, IBooks } from '../../interfaces/book';
 
 @Component({
   templateUrl: './books.component.html',
@@ -18,24 +13,20 @@ import { IBook, IBooks } from './../../interfaces/book';
 })
 export class BooksComponent implements OnInit, OnDestroy {
 
-  public books: IBook[] = [];
+  public books: IBook[];
   public bookPageQuantity: number = 0;
 
   public books$: Observable<IBooks>;
 
   public displayedColumns: string[] = ['#', 'title', 'price', 'genres'];
 
-  @ViewChild(MatPaginator) public paginator: MatPaginator;
-
   private destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private booksService: BooksService,
-    private authorsService: AuthorService,
-    private genresService: GenresService,
-    private router: Router,
     private route: ActivatedRoute,
-    ) { }
+    ) {
+  }
   public ngOnInit(): void {
     this.route.params
       .pipe(takeUntil(this.destroy$))

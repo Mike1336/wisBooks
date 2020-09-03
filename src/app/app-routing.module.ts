@@ -29,6 +29,15 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'book',
+    children: [
+      {
+        path: ':id',
+        loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
+      },
+    ],
+  },
+  {
     path: '**',
     redirectTo: 'books/page/1',
   },
