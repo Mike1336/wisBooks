@@ -72,7 +72,15 @@
         path: '',
         children: [{
           path: '',
-          pathMatch: 'full',
+          loadChildren: function loadChildren() {
+            return Promise.resolve().then(__webpack_require__.bind(null,
+            /*! ./books/books.module */
+            "./src/app/books/books.module.ts")).then(function (m) {
+              return m.BooksModule;
+            });
+          }
+        }, {
+          path: 'book/:id',
           loadChildren: function loadChildren() {
             return Promise.resolve().then(__webpack_require__.bind(null,
             /*! ./books/books.module */
@@ -360,14 +368,22 @@
       /* harmony import */
 
 
-      var _books_books_books_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./books/books/books.component */
-      "./src/app/books/books/books/books.component.ts");
+      var _components_books_books_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./components/books/books.component */
+      "./src/app/books/components/books/books.component.ts");
+      /* harmony import */
+
+
+      var _components_details_details_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./components/details/details.component */
+      "./src/app/books/components/details/details.component.ts");
 
       var routes = [{
         path: '',
-        pathMatch: 'full',
-        component: _books_books_books_component__WEBPACK_IMPORTED_MODULE_2__["BooksComponent"]
+        component: _components_books_books_component__WEBPACK_IMPORTED_MODULE_2__["BooksComponent"]
+      }, {
+        path: 'book/:id',
+        component: _components_details_details_component__WEBPACK_IMPORTED_MODULE_3__["DetailsComponent"]
       }];
 
       var BooksRoutingModule = function BooksRoutingModule() {
@@ -482,9 +498,15 @@
       /* harmony import */
 
 
-      var _books_books_books_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-      /*! ./books/books/books.component */
-      "./src/app/books/books/books/books.component.ts");
+      var _components_books_books_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! ./components/books/books.component */
+      "./src/app/books/components/books/books.component.ts");
+      /* harmony import */
+
+
+      var _components_details_details_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! ./components/details/details.component */
+      "./src/app/books/components/details/details.component.ts");
 
       var BooksModule = function BooksModule() {
         _classCallCheck(this, BooksModule);
@@ -502,7 +524,7 @@
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](BooksModule, {
-          declarations: [_books_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"]],
+          declarations: [_components_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"], _components_details_details_component__WEBPACK_IMPORTED_MODULE_10__["DetailsComponent"]],
           imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_8__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"]]
         });
       })();
@@ -513,8 +535,9 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](BooksModule, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
-            declarations: [_books_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"]],
-            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_8__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"]]
+            declarations: [_components_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"], _components_details_details_component__WEBPACK_IMPORTED_MODULE_10__["DetailsComponent"]],
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_8__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"]],
+            bootstrap: []
           }]
         }], null, null);
       })();
@@ -523,15 +546,15 @@
     },
 
     /***/
-    "./src/app/books/books/books/books.component.ts":
-    /*!******************************************************!*\
-      !*** ./src/app/books/books/books/books.component.ts ***!
-      \******************************************************/
+    "./src/app/books/components/books/books.component.ts":
+    /*!***********************************************************!*\
+      !*** ./src/app/books/components/books/books.component.ts ***!
+      \***********************************************************/
 
     /*! exports provided: BooksComponent */
 
     /***/
-    function srcAppBooksBooksBooksBooksComponentTs(module, __webpack_exports__, __webpack_require__) {
+    function srcAppBooksComponentsBooksBooksComponentTs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
@@ -581,19 +604,19 @@
 
 
       var _services_books_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-      /*! ./../../services/books.service */
+      /*! ../../services/books.service */
       "./src/app/books/services/books.service.ts");
       /* harmony import */
 
 
       var _services_authors_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-      /*! ./../../services/authors.service */
+      /*! ../../services/authors.service */
       "./src/app/books/services/authors.service.ts");
       /* harmony import */
 
 
       var _services_genres_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
-      /*! ./../../services/genres.service */
+      /*! ../../services/genres.service */
       "./src/app/books/services/genres.service.ts");
       /* harmony import */
 
@@ -895,7 +918,7 @@
           }
         },
         directives: [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_10__["MatInput"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatNoDataRow"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_1__["MatPaginator"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatRow"]],
-        styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2tzL2Jvb2tzL2Jvb2tzL2Jvb2tzLmNvbXBvbmVudC5zY3NzIn0= */"]
+        styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2tzL2NvbXBvbmVudHMvYm9va3MvYm9va3MuY29tcG9uZW50LnNjc3MifQ== */"]
       });
       /*@__PURE__*/
 
@@ -929,6 +952,113 @@
             }]
           }]
         });
+      })();
+      /***/
+
+    },
+
+    /***/
+    "./src/app/books/components/details/details.component.ts":
+    /*!***************************************************************!*\
+      !*** ./src/app/books/components/details/details.component.ts ***!
+      \***************************************************************/
+
+    /*! exports provided: DetailsComponent */
+
+    /***/
+    function srcAppBooksComponentsDetailsDetailsComponentTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "DetailsComponent", function () {
+        return DetailsComponent;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var _services_books_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ./../../services/books.service */
+      "./src/app/books/services/books.service.ts");
+      /* harmony import */
+
+
+      var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/router */
+      "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+      var DetailsComponent = /*#__PURE__*/function () {
+        function DetailsComponent(booksService, route) {
+          _classCallCheck(this, DetailsComponent);
+
+          this.booksService = booksService;
+          this.route = route;
+        }
+
+        _createClass(DetailsComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            var _this2 = this;
+
+            this.route.params.subscribe(function (params) {
+              _this2.bookId = params.id;
+              console.log(_this2.bookId);
+            });
+            this.booksService.getBookById(this.bookId).subscribe(function (data) {
+              _this2.book = data;
+              console.log(_this2.book);
+            });
+          }
+        }]);
+
+        return DetailsComponent;
+      }();
+
+      DetailsComponent.ɵfac = function DetailsComponent_Factory(t) {
+        return new (t || DetailsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_books_service__WEBPACK_IMPORTED_MODULE_1__["BooksService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]));
+      };
+
+      DetailsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+        type: DetailsComponent,
+        selectors: [["app-details"]],
+        decls: 2,
+        vars: 0,
+        template: function DetailsComponent_Template(rf, ctx) {
+          if (rf & 1) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "details works!");
+
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          }
+        },
+        styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2tzL2NvbXBvbmVudHMvZGV0YWlscy9kZXRhaWxzLmNvbXBvbmVudC5zY3NzIn0= */"]
+      });
+      /*@__PURE__*/
+
+      (function () {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DetailsComponent, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+          args: [{
+            selector: 'app-details',
+            templateUrl: './details.component.html',
+            styleUrls: ['./details.component.scss']
+          }]
+        }], function () {
+          return [{
+            type: _services_books_service__WEBPACK_IMPORTED_MODULE_1__["BooksService"]
+          }, {
+            type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]
+          }];
+        }, null);
       })();
       /***/
 

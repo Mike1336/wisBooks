@@ -9,12 +9,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
 import { BooksRoutingModule } from './books-routing.module';
-import { BooksComponent } from './books/books/books.component';
+import { BooksComponent } from './components/books/books.component';
+import { DetailsComponent } from './components/details/details.component';
 
 
 @NgModule({
   declarations: [
     BooksComponent,
+    DetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { BooksComponent } from './books/books/books.component';
     MatPaginatorModule,
     MatTableModule,
   ],
+  bootstrap: [],
 })
 export class BooksModule {
 

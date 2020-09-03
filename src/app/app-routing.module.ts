@@ -7,7 +7,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        pathMatch: 'full',
+        loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
+      },
+      {
+        path: 'book/:id',
         loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
       },
     ],

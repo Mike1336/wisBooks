@@ -45,7 +45,10 @@ const routes = [
         children: [
             {
                 path: '',
-                pathMatch: 'full',
+                loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./books/books.module */ "./src/app/books/books.module.ts")).then((m) => m.BooksModule),
+            },
+            {
+                path: 'book/:id',
                 loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ./books/books.module */ "./src/app/books/books.module.ts")).then((m) => m.BooksModule),
             },
         ],
@@ -191,14 +194,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BooksRoutingModule", function() { return BooksRoutingModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
-/* harmony import */ var _books_books_books_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./books/books/books.component */ "./src/app/books/books/books/books.component.ts");
+/* harmony import */ var _components_books_books_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/books/books.component */ "./src/app/books/components/books/books.component.ts");
+/* harmony import */ var _components_details_details_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/details/details.component */ "./src/app/books/components/details/details.component.ts");
+
 
 
 
 
 
 const routes = [
-    { path: '', pathMatch: 'full', component: _books_books_books_component__WEBPACK_IMPORTED_MODULE_2__["BooksComponent"] },
+    { path: '', component: _components_books_books_component__WEBPACK_IMPORTED_MODULE_2__["BooksComponent"] },
+    { path: 'book/:id', component: _components_details_details_component__WEBPACK_IMPORTED_MODULE_3__["DetailsComponent"] },
 ];
 class BooksRoutingModule {
 }
@@ -235,7 +241,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material/paginator */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/paginator.js");
 /* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/table.js");
 /* harmony import */ var _books_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./books-routing.module */ "./src/app/books/books-routing.module.ts");
-/* harmony import */ var _books_books_books_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./books/books/books.component */ "./src/app/books/books/books/books.component.ts");
+/* harmony import */ var _components_books_books_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/books/books.component */ "./src/app/books/components/books/books.component.ts");
+/* harmony import */ var _components_details_details_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/details/details.component */ "./src/app/books/components/details/details.component.ts");
+
 
 
 
@@ -260,7 +268,8 @@ BooksModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInject
             _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"],
             _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"],
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](BooksModule, { declarations: [_books_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](BooksModule, { declarations: [_components_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"],
+        _components_details_details_component__WEBPACK_IMPORTED_MODULE_10__["DetailsComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
         _books_routing_module__WEBPACK_IMPORTED_MODULE_8__["BooksRoutingModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
@@ -272,7 +281,8 @@ BooksModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInject
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
         args: [{
                 declarations: [
-                    _books_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"],
+                    _components_books_books_component__WEBPACK_IMPORTED_MODULE_9__["BooksComponent"],
+                    _components_details_details_component__WEBPACK_IMPORTED_MODULE_10__["DetailsComponent"],
                 ],
                 imports: [
                     _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
@@ -284,16 +294,17 @@ BooksModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInject
                     _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"],
                     _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"],
                 ],
+                bootstrap: [],
             }]
     }], null, null); })();
 
 
 /***/ }),
 
-/***/ "./src/app/books/books/books/books.component.ts":
-/*!******************************************************!*\
-  !*** ./src/app/books/books/books/books.component.ts ***!
-  \******************************************************/
+/***/ "./src/app/books/components/books/books.component.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/books/components/books/books.component.ts ***!
+  \***********************************************************/
 /*! exports provided: BooksComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -306,9 +317,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/table.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
-/* harmony import */ var _services_books_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../services/books.service */ "./src/app/books/services/books.service.ts");
-/* harmony import */ var _services_authors_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../../services/authors.service */ "./src/app/books/services/authors.service.ts");
-/* harmony import */ var _services_genres_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../../services/genres.service */ "./src/app/books/services/genres.service.ts");
+/* harmony import */ var _services_books_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/books.service */ "./src/app/books/services/books.service.ts");
+/* harmony import */ var _services_authors_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/authors.service */ "./src/app/books/services/authors.service.ts");
+/* harmony import */ var _services_genres_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/genres.service */ "./src/app/books/services/genres.service.ts");
 /* harmony import */ var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/form-field */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/form-field.js");
 /* harmony import */ var _angular_material_input__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/input */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/input.js");
 
@@ -480,7 +491,7 @@ BooksComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("matRowDefColumns", ctx.displayedColumns);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("pageSizeOptions", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](4, _c0));
-    } }, directives: [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_10__["MatInput"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatNoDataRow"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_1__["MatPaginator"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatRow"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2tzL2Jvb2tzL2Jvb2tzL2Jvb2tzLmNvbXBvbmVudC5zY3NzIn0= */"] });
+    } }, directives: [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_9__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_10__["MatInput"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatNoDataRow"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_1__["MatPaginator"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatRow"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2tzL2NvbXBvbmVudHMvYm9va3MvYm9va3MuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](BooksComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -495,6 +506,58 @@ BooksComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"],
             args: [_angular_material_sort__WEBPACK_IMPORTED_MODULE_2__["MatSort"], { static: true }]
         }] }); })();
+
+
+/***/ }),
+
+/***/ "./src/app/books/components/details/details.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/books/components/details/details.component.ts ***!
+  \***************************************************************/
+/*! exports provided: DetailsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DetailsComponent", function() { return DetailsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _services_books_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../services/books.service */ "./src/app/books/services/books.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+
+
+
+class DetailsComponent {
+    constructor(booksService, route) {
+        this.booksService = booksService;
+        this.route = route;
+    }
+    ngOnInit() {
+        this.route.params.subscribe((params) => {
+            this.bookId = params.id;
+            console.log(this.bookId);
+        });
+        this.booksService.getBookById(this.bookId)
+            .subscribe((data) => {
+            this.book = data;
+            console.log(this.book);
+        });
+    }
+}
+DetailsComponent.ɵfac = function DetailsComponent_Factory(t) { return new (t || DetailsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_books_service__WEBPACK_IMPORTED_MODULE_1__["BooksService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
+DetailsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: DetailsComponent, selectors: [["app-details"]], decls: 2, vars: 0, template: function DetailsComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "details works!");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Jvb2tzL2NvbXBvbmVudHMvZGV0YWlscy9kZXRhaWxzLmNvbXBvbmVudC5zY3NzIn0= */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DetailsComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+                selector: 'app-details',
+                templateUrl: './details.component.html',
+                styleUrls: ['./details.component.scss']
+            }]
+    }], function () { return [{ type: _services_books_service__WEBPACK_IMPORTED_MODULE_1__["BooksService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }]; }, null); })();
 
 
 /***/ }),
