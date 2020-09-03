@@ -1,7 +1,6 @@
 import { IAuthor } from './author';
 
 export interface IBook {
-
   id: number;
   description: string;
   author_id: number;
@@ -16,6 +15,17 @@ export interface IBook {
   image: string;
   writing_date: string;
   release_date: string;
-  author: IAuthor;
+  author?: IAuthor;
 
 }
+export interface IBooks {
+
+  books: IBook[];
+  meta: {
+    pages: number;
+    records: number;
+    limit: number;
+    page: number;
+  };
+}
+

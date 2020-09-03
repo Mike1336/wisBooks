@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IBook } from './../interfaces/book';
+import { IBook, IBooks } from './../interfaces/book';
 
 
 @Injectable({
@@ -17,8 +17,8 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  public getBooks(): Observable<object> {
-    return this.http.get<IBook[]>(`${this.apiUrl}${this.booksEndpoint}`);
+  public getBooks(): Observable<IBooks> {
+    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`);
   }
   public getBookById(bookId: number): Observable<object> {
     return this.http.get<IBook>(`${this.apiUrl}${this.booksEndpoint}/${bookId}`);

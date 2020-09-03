@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IAuthor } from './../interfaces/author';
+import { IAuthor, IAuthors } from './../interfaces/author';
 
 
 @Injectable({
@@ -16,8 +16,8 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
-  public getAuthors(): Observable<object> {
-    return this.http.get<IAuthor[]>(`${this.apiUrl}${this.authorsEndpoint}`);
+  public getAuthors(): Observable<IAuthors> {
+    return this.http.get<IAuthors>(`${this.apiUrl}${this.authorsEndpoint}`);
   }
   public getAuthorById(authorId: number): Observable<object> {
     return this.http.get<IAuthor>(`${this.apiUrl}${this.authorsEndpoint}/${authorId}`);
