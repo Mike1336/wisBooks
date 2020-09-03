@@ -13,6 +13,8 @@ import { IBook, IBooks } from '../../interfaces/book';
 })
 export class BooksComponent implements OnInit, OnDestroy {
 
+  public title: string = 'My books (1/10 pages)';
+
   public books: IBook[];
   public bookPageQuantity: number = 0;
 

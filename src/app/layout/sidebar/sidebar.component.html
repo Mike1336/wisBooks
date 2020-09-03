@@ -1,11 +1,11 @@
-<div id="drawers" (mouseenter)="drawer.toggle()" (mouseleave)="drawer.toggle()">
-  <mat-sidenav>
+<div id="drawers">
+  <!-- <mat-sidenav>
     <mat-drawer id="hidden-drawer" #drawer mode="over">
       <h2>Library</h2>
       <h2>Authors</h2>
     </mat-drawer>
   </mat-sidenav>
-  
+   -->
   <mat-drawer mode="side" opened >
     <button mat-icon-button class="example-icon" [routerLink]="['/books', 'page', '1']">
       <mat-icon>library_books</mat-icon>

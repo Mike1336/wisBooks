@@ -1,3 +1,8 @@
+@mixin data-table{
+  margin-top:50px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 #content {
     display: grid;
     grid-template-columns: 45px auto;
@@ -12,4 +17,5 @@
       min-height: 92vh;
       background-color: #8053a3;
     }
-  }
+}
+
