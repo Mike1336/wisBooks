@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BooksModule } from './books/books.module';
 import { BookModule } from './book/book.module';
 import { LayoutModule } from './layout/layout.module';
+import { NotFoundModule } from './not-found/not-found.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { LayoutModule } from './layout/layout.module';
     BookModule,
     LayoutModule,
     CommaModule,
+    NotFoundModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
