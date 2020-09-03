@@ -1,14 +1,25 @@
-@import '../../../app.component.scss';
-
-table{
-    width: 85vw;
-    margin: 30px 0;
-    @include data-table;
-    th{
-        font-size: 16px;
-        font-style: bold;
-    }
-    th, td{
-        text-align: center;
+#books{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: 15px;
+    mat-card{
+        cursor: pointer;
+        width: 25%;
+        margin: 15px 0;
+        mat-card-header{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100px;
+        }
+        mat-card-content{
+            text-align: center;
+        }
+        .book-img{
+            height: 50%;
+        }
     }
 }
+

@@ -1,9 +1,9 @@
-@import '../../../app.component.scss';
 
 table{
     width: 85vw;
-    margin: 30px 0;
-    @include data-table;
+    margin-top: 50px;
+    margin-left: 50%;
+    transform: translateX(-50%);
     th{
         font-size: 16px;
         font-style: bold;

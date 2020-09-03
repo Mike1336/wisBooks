@@ -6,9 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 
+import { CommaModule } from '../libs/comma/comma.module';
+
 import { BookRoutingModule } from './book-routing.module';
 import { BookComponent } from './components/book/book.component';
-import { CommaModule } from './../comma/comma.module';
 
 
 @NgModule({

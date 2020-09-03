@@ -1,22 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 
+import { MatDrawer } from '@angular/material/sidenav';
+
+import { SidebarService } from './../services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
-  options: FormGroup;
-  constructor(fb: FormBuilder) {
-    this.options = fb.group({
-      bottom: 0,
-      fixed: false,
-      top: 0,
-    });
+export class SidebarComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatDrawer) public drawer: MatDrawer;
+
+  constructor(private sidebar: SidebarService) {
+
   }
-  ngOnInit(): void {
+  public ngOnInit(): void {
+  }
+  public ngAfterViewInit(): void {
+    this.sidebar.sbOpen$.subscribe((data) => {
+      if (data) {
+        this.drawer.open();
+
+      } else {
+        this.drawer.close();
+      }
+    });
   }
 
 }

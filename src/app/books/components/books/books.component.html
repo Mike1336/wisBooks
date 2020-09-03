@@ -1,28 +1,14 @@
-<title>{{title}}</title>
-
-<table mat-table [dataSource]="books" class="mat-elevation-z8 data-table">
-
-  <ng-container matColumnDef="#">
-    <th mat-header-cell *matHeaderCellDef> # </th>
-    <td mat-cell *matCellDef="let book"> {{book.id}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef> TITLE </th>
-    <td mat-cell *matCellDef="let book"> {{book.title}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef> PRICE </th>
-    <td mat-cell *matCellDef="let book"> {{book.price}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="genres">
-    <th mat-header-cell *matHeaderCellDef> GENRES </th>
-    <td mat-cell *matCellDef="let book"> {{book.genres | comma}} </td>
-  </ng-container>
-  
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let book; columns: displayedColumns;" 
-  [routerLink]="['/book', book.id]"></tr>
-</table>
+<div id="books">
+  <mat-card class="example-card" *ngFor="let book of books" [routerLink]="['/book', book.id]">
+    <mat-card-header>
+      <mat-card-title>{{book?.title}}</mat-card-title>
+      <mat-card-subtitle>Price: {{book?.price}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image class="book-img" src="../../../../assets//book.png" alt="Book image not found">
+    <mat-card-content>
+      <p>
+        {{book?.description}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

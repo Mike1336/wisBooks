@@ -20,8 +20,6 @@ export class BooksComponent implements OnInit, OnDestroy {
 
   public books$: Observable<IBooks>;
 
-  public displayedColumns: string[] = ['#', 'title', 'price', 'genres'];
-
   private destroy$ = new ReplaySubject<any>(1);
 
   constructor(

@@ -1,11 +1,9 @@
-<div id="content">
     <header>
-        <app-header></app-header>
+        <app-header (burgerClicked)="show()"></app-header>
     </header>
     <div id="sidebar">
         <app-sidebar></app-sidebar>
-    </div>
+    </div>    
     <main>
         <router-outlet></router-outlet>
     </main>       
-</div>
