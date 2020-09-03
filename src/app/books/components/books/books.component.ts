@@ -6,24 +6,24 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { AuthorService } from '../../../authors/services/authors.service';
+
 import { BooksService } from './../../services/books.service';
-import { AuthorService } from './../../services/authors.service';
 import { GenresService } from './../../services/genres.service';
 import { IBook, IBooks } from './../../interfaces/book';
 
 @Component({
-  selector: 'app-books',
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
 })
 export class BooksComponent implements OnInit, OnDestroy {
 
   public books: IBook[] = [];
-  public bookQuantity: number = 0;
+  public bookPageQuantity: number = 0;
 
   public books$: Observable<IBooks>;
 
-  public displayedColumns: string[] = ['id', 'title', 'price', 'genres'];
+  public displayedColumns: string[] = ['#', 'title', 'price', 'genres'];
 
   @ViewChild(MatPaginator) public paginator: MatPaginator;
 
@@ -35,8 +35,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     private genresService: GenresService,
     private router: Router,
     private route: ActivatedRoute,
-    ) {
-  }
+    ) { }
   public ngOnInit(): void {
     this.route.params
       .pipe(takeUntil(this.destroy$))
@@ -47,7 +46,7 @@ export class BooksComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.books = data.books;
-        this.bookQuantity = data.meta.pages;
+        this.bookPageQuantity = data.meta.pages;
       });
   }
   public ngOnDestroy(): void {

@@ -3,11 +3,28 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'books/page/:number',
+    path: 'books',
     children: [
       {
-        path: '',
+        path: 'page',
         loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
+      },
+      {
+        path: '**',
+        redirectTo: 'page/1',
+      },
+    ],
+  },
+  {
+    path: 'authors',
+    children: [
+      {
+        path: 'page',
+        loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule),
+      },
+      {
+        path: '**',
+        redirectTo: 'page/1',
       },
     ],
   },
@@ -15,6 +32,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'books/page/1',
   },
+
 ];
 
 @NgModule({

@@ -1,0 +1,21 @@
+<table mat-table [dataSource]="authors" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="#">
+      <th mat-header-cell *matHeaderCellDef> # </th>
+      <td mat-cell *matCellDef="let author"> {{author.id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef> FIRSTNAME </th>
+      <td mat-cell *matCellDef="let author"> {{author.first_name}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef> LASTNAME </th>
+      <td mat-cell *matCellDef="let author"> {{author.last_name}} </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let author; columns: displayedColumns;" 
+    [routerLink]="['author', author.id]"></tr>
+  </table>
