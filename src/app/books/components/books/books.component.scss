@@ -1,6 +1,7 @@
 #books{
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
     margin: 0 15px;
     padding-top: 55px;
     mat-card{

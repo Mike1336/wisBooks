@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';
 
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
 import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 
@@ -21,6 +24,7 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   public loading: boolean;
 
   public displayedColumns: string[] = ['#', 'firstname', 'lastname'];
+  public dataSource = new MatTableDataSource();
 
   private authors$: Observable<IAuthors>;
   private authorQuantity$: Observable<IAuthors>;
@@ -32,18 +36,6 @@ export class AuthorsComponent implements OnInit, OnDestroy {
     ) { }
 
   public ngOnInit(): void {
-    // this.route.params
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((params) => {
-    //     this.authors$ = this.authorsService.getAuthorsInPage(params.number);
-    //   });
-    // this.authors$
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((data) => {
-    //     this.authors = data.authors;
-    //     console.log(this.authors)
-    //     this.authorPageQuantity = data.meta.pages;
-    //   });
     this.loading = true;
     this.authorQuantity$ = this.authorsService.getAuthorsInFirstPage();
     this.authorQuantity$
@@ -56,16 +48,32 @@ export class AuthorsComponent implements OnInit, OnDestroy {
             takeUntil(this.destroy$),
             )
           .subscribe((authors) => {
-            console.log(authors)
             this.authors = authors.authors;
+            this.dataSource.data = authors.authors;
             this.loading = false;
           });
       });
+    // this.route.params
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((params) => {
+    //     this.authors$ = this.authorsService.getAuthorsInPage(params.number);
+    //   });
+    // this.authors$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((data) => {
+    //     this.authors = data.authors;
+    //     console.log(this.authors)
+    //     this.authorPageQuantity = data.meta.pages;
+    //   });
 
   }
   public ngOnDestroy(): void {
     this.destroy$.next(null);
     this.destroy$.complete();
   }
+  public takePaginator(paginator: MatPaginator): void {
+    this.dataSource.paginator = paginator;
+    console.log(paginator);
 
+  }
 }
