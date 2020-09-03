@@ -8,6 +8,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 import { BookRoutingModule } from './book-routing.module';
 import { BookComponent } from './components/book/book.component';
+import { CommaModule } from './../comma/comma.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { BookComponent } from './components/book/book.component';
     HttpClientModule,
     MatTableModule,
     MatGridListModule,
+    CommaModule,
   ],
 })
 export class BookModule { }

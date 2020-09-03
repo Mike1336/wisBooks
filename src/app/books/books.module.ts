@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksComponent } from './components/books/books.component';
+import { CommaModule } from './../comma/comma.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BooksComponent } from './components/books/books.component';
     MatTableModule,
     MatGridListModule,
     MatCardModule,
+    CommaModule,
   ],
   bootstrap: [],
 })

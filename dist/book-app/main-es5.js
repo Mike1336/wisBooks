@@ -307,27 +307,27 @@
       /* harmony import */
 
 
-      var _books_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-      /*! ./books/pipes/comma.pipe */
-      "./src/app/books/pipes/comma.pipe.ts");
-      /* harmony import */
-
-
-      var _books_books_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _books_books_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ./books/books.module */
       "./src/app/books/books.module.ts");
       /* harmony import */
 
 
-      var _book_book_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _book_book_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ./book/book.module */
       "./src/app/book/book.module.ts");
       /* harmony import */
 
 
-      var _layout_layout_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _layout_layout_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ./layout/layout.module */
       "./src/app/layout/layout.module.ts");
+      /* harmony import */
+
+
+      var _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! ./comma/comma.module */
+      "./src/app/comma/comma.module.ts");
 
       var AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
@@ -342,13 +342,13 @@
           return new (t || AppModule)();
         },
         providers: [],
-        imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"], _books_books_module__WEBPACK_IMPORTED_MODULE_6__["BooksModule"], _book_book_module__WEBPACK_IMPORTED_MODULE_7__["BookModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_8__["LayoutModule"]]]
+        imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"], _books_books_module__WEBPACK_IMPORTED_MODULE_5__["BooksModule"], _book_book_module__WEBPACK_IMPORTED_MODULE_6__["BookModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_7__["LayoutModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__["CommaModule"]]]
       });
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](AppModule, {
-          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"], _books_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_5__["CommaPipe"]],
-          imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"], _books_books_module__WEBPACK_IMPORTED_MODULE_6__["BooksModule"], _book_book_module__WEBPACK_IMPORTED_MODULE_7__["BookModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_8__["LayoutModule"]]
+          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
+          imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"], _books_books_module__WEBPACK_IMPORTED_MODULE_5__["BooksModule"], _book_book_module__WEBPACK_IMPORTED_MODULE_6__["BookModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_7__["LayoutModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__["CommaModule"]]
         });
       })();
       /*@__PURE__*/
@@ -358,8 +358,8 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AppModule, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"], _books_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_5__["CommaPipe"]],
-            imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"], _books_books_module__WEBPACK_IMPORTED_MODULE_6__["BooksModule"], _book_book_module__WEBPACK_IMPORTED_MODULE_7__["BookModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_8__["LayoutModule"]],
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
+            imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"], _books_books_module__WEBPACK_IMPORTED_MODULE_5__["BooksModule"], _book_book_module__WEBPACK_IMPORTED_MODULE_6__["BookModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_7__["LayoutModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__["CommaModule"]],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
           }]
@@ -515,6 +515,12 @@
       var _components_book_book_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ./components/book/book.component */
       "./src/app/book/components/book/book.component.ts");
+      /* harmony import */
+
+
+      var _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! ./../comma/comma.module */
+      "./src/app/comma/comma.module.ts");
 
       var BookModule = function BookModule() {
         _classCallCheck(this, BookModule);
@@ -527,13 +533,13 @@
         factory: function BookModule_Factory(t) {
           return new (t || BookModule)();
         },
-        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _book_routing_module__WEBPACK_IMPORTED_MODULE_6__["BookRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_4__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"]]]
+        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _book_routing_module__WEBPACK_IMPORTED_MODULE_6__["BookRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_4__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__["CommaModule"]]]
       });
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](BookModule, {
           declarations: [_components_book_book_component__WEBPACK_IMPORTED_MODULE_7__["BookComponent"]],
-          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _book_routing_module__WEBPACK_IMPORTED_MODULE_6__["BookRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_4__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"]]
+          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _book_routing_module__WEBPACK_IMPORTED_MODULE_6__["BookRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_4__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__["CommaModule"]]
         });
       })();
       /*@__PURE__*/
@@ -544,7 +550,7 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
             declarations: [_components_book_book_component__WEBPACK_IMPORTED_MODULE_7__["BookComponent"]],
-            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _book_routing_module__WEBPACK_IMPORTED_MODULE_6__["BookRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_4__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"]]
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _book_routing_module__WEBPACK_IMPORTED_MODULE_6__["BookRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_4__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridListModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_8__["CommaModule"]]
           }]
         }], null, null);
       })();
@@ -610,7 +616,13 @@
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _comma_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ../../../comma/pipes/comma.pipe */
+      "./src/app/comma/pipes/comma.pipe.ts");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/common */
       "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
@@ -655,7 +667,7 @@
         type: BookComponent,
         selectors: [["ng-component"]],
         decls: 19,
-        vars: 16,
+        vars: 19,
         consts: [["cols", "2", "rowHeight", "25%"], [3, "colspan"]],
         template: function BookComponent_Template(rf, ctx) {
           if (rf & 1) {
@@ -677,7 +689,7 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "\n        ");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](7, "comma");
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -731,11 +743,11 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("          Author: ", ctx.book == null ? null : ctx.book.author.first_name, " ", ctx.book == null ? null : ctx.book.author.last_name, "\n\n          ");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate3"]("          Author: ", ctx.book == null ? null : ctx.book.author.first_name, " ", ctx.book == null ? null : ctx.book.author.last_name, "\n\n          ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](7, 11, ctx.book == null ? null : ctx.book.genres), "\n        ");
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("            Writing date: ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](11, 10, ctx.book == null ? null : ctx.book.writing_date, "dd MMMM yyyy"), " \n\n            Release date: ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](12, 13, ctx.book == null ? null : ctx.book.release_date, "dd MMMM yyyy"), " \n          ");
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("            Writing date: ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](11, 13, ctx.book == null ? null : ctx.book.writing_date, "dd MMMM yyyy"), " \n\n            Release date: ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](12, 16, ctx.book == null ? null : ctx.book.release_date, "dd MMMM yyyy"), " \n          ");
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
@@ -755,7 +767,7 @@
           }
         },
         directives: [_angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridList"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_5__["MatGridTile"]],
-        pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_6__["DatePipe"]],
+        pipes: [_comma_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_6__["CommaPipe"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]],
         styles: ["h1[_ngcontent-%COMP%], h2[_ngcontent-%COMP%], p[_ngcontent-%COMP%], pre[_ngcontent-%COMP%] {\n  color: white;\n}\n\np[_ngcontent-%COMP%] {\n  font-size: 16px;\n  margin: 0 20px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm9vay9jb21wb25lbnRzL2Jvb2svYm9vay5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFlBQUE7QUFDSjs7QUFDQTtFQUNJLGVBQUE7RUFDQSxjQUFBO0FBRUoiLCJmaWxlIjoic3JjL2FwcC9ib29rL2NvbXBvbmVudHMvYm9vay9ib29rLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaDEsIGgyLCBwLCBwcmV7XG4gICAgY29sb3I6IHdoaXRlO1xufVxucHtcbiAgICBmb250LXNpemU6IDE2cHg7XG4gICAgbWFyZ2luOiAwIDIwcHg7XG59Il19 */"]
       });
       /*@__PURE__*/
@@ -952,6 +964,12 @@
       var _components_books_books_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! ./components/books/books.component */
       "./src/app/books/components/books/books.component.ts");
+      /* harmony import */
+
+
+      var _comma_comma_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      /*! ./../comma/comma.module */
+      "./src/app/comma/comma.module.ts");
 
       var BooksModule = function BooksModule() {
         _classCallCheck(this, BooksModule);
@@ -964,13 +982,13 @@
         factory: function BooksModule_Factory(t) {
           return new (t || BooksModule)();
         },
-        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_10__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_8__["MatGridListModule"], _angular_material_card__WEBPACK_IMPORTED_MODULE_9__["MatCardModule"]]]
+        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_10__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_8__["MatGridListModule"], _angular_material_card__WEBPACK_IMPORTED_MODULE_9__["MatCardModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_12__["CommaModule"]]]
       });
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](BooksModule, {
           declarations: [_components_books_books_component__WEBPACK_IMPORTED_MODULE_11__["BooksComponent"]],
-          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_10__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_8__["MatGridListModule"], _angular_material_card__WEBPACK_IMPORTED_MODULE_9__["MatCardModule"]]
+          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_10__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_8__["MatGridListModule"], _angular_material_card__WEBPACK_IMPORTED_MODULE_9__["MatCardModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_12__["CommaModule"]]
         });
       })();
       /*@__PURE__*/
@@ -981,7 +999,7 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
             declarations: [_components_books_books_component__WEBPACK_IMPORTED_MODULE_11__["BooksComponent"]],
-            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_10__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_8__["MatGridListModule"], _angular_material_card__WEBPACK_IMPORTED_MODULE_9__["MatCardModule"]],
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _books_routing_module__WEBPACK_IMPORTED_MODULE_10__["BooksRoutingModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_paginator__WEBPACK_IMPORTED_MODULE_6__["MatPaginatorModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"], _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_8__["MatGridListModule"], _angular_material_card__WEBPACK_IMPORTED_MODULE_9__["MatCardModule"], _comma_comma_module__WEBPACK_IMPORTED_MODULE_12__["CommaModule"]],
             bootstrap: []
           }]
         }], null, null);
@@ -1045,6 +1063,12 @@
       var _angular_material_table__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/material/table */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/table.js");
+      /* harmony import */
+
+
+      var _comma_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ../../../comma/pipes/comma.pipe */
+      "./src/app/comma/pipes/comma.pipe.ts");
 
       function BooksComponent_th_2_Template(rf, ctx) {
         if (rf & 1) {
@@ -1142,7 +1166,21 @@
 
       function BooksComponent_td_12_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "td", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "comma");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+
+        if (rf & 2) {
+          var book_r13 = ctx.$implicit;
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, book_r13.genres), " ");
         }
       }
 
@@ -1245,7 +1283,7 @@
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, BooksComponent_th_11_Template, 2, 0, "th", 2);
 
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, BooksComponent_td_12_Template, 1, 0, "td", 3);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, BooksComponent_td_12_Template, 3, 3, "td", 3);
 
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
 
@@ -1269,6 +1307,7 @@
           }
         },
         directives: [_angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_5__["MatRow"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterLink"]],
+        pipes: [_comma_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_6__["CommaPipe"]],
         styles: ["table[_ngcontent-%COMP%] {\n  width: 85vw;\n  margin: 30px 0;\n}\ntable[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\n  font-size: 16px;\n  font-style: bold;\n}\ntable[_ngcontent-%COMP%]   th[_ngcontent-%COMP%], table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm9va3MvY29tcG9uZW50cy9ib29rcy9ib29rcy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQUE7RUFDQSxjQUFBO0FBQ0o7QUFBSTtFQUNJLGVBQUE7RUFDQSxnQkFBQTtBQUVSO0FBQUk7RUFDSSxrQkFBQTtBQUVSIiwiZmlsZSI6InNyYy9hcHAvYm9va3MvY29tcG9uZW50cy9ib29rcy9ib29rcy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbInRhYmxle1xuICAgIHdpZHRoOiA4NXZ3O1xuICAgIG1hcmdpbjogMzBweCAwO1xuICAgIHRoe1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICAgIGZvbnQtc3R5bGU6IGJvbGQ7XG4gICAgfVxuICAgIHRoLCB0ZHtcbiAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIH1cbn0iXX0= */"]
       });
       /*@__PURE__*/
@@ -1287,80 +1326,6 @@
             type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]
           }];
         }, null);
-      })();
-      /***/
-
-    },
-
-    /***/
-    "./src/app/books/pipes/comma.pipe.ts":
-    /*!*******************************************!*\
-      !*** ./src/app/books/pipes/comma.pipe.ts ***!
-      \*******************************************/
-
-    /*! exports provided: CommaPipe */
-
-    /***/
-    function srcAppBooksPipesCommaPipeTs(module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony export (binding) */
-
-
-      __webpack_require__.d(__webpack_exports__, "CommaPipe", function () {
-        return CommaPipe;
-      });
-      /* harmony import */
-
-
-      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-      /*! @angular/core */
-      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-
-      var CommaPipe = /*#__PURE__*/function () {
-        function CommaPipe() {
-          _classCallCheck(this, CommaPipe);
-        }
-
-        _createClass(CommaPipe, [{
-          key: "transform",
-          value: function transform(arr) {
-            var strWithComma;
-
-            for (var i = 0; i < (arr === null || arr === void 0 ? void 0 : arr.length); i++) {
-              if (i === arr.length - 1) {
-                strWithComma += arr[i].name;
-              } else {
-                strWithComma += arr[i].name + ', ';
-              }
-            }
-
-            return strWithComma;
-          }
-        }]);
-
-        return CommaPipe;
-      }();
-
-      CommaPipe.ɵfac = function CommaPipe_Factory(t) {
-        return new (t || CommaPipe)();
-      };
-
-      CommaPipe.ɵpipe = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefinePipe"]({
-        name: "comma",
-        type: CommaPipe,
-        pure: true
-      });
-      /*@__PURE__*/
-
-      (function () {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](CommaPipe, [{
-          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"],
-          args: [{
-            name: 'comma'
-          }]
-        }], null, null);
       })();
       /***/
 
@@ -1467,6 +1432,156 @@
             type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
           }];
         }, null);
+      })();
+      /***/
+
+    },
+
+    /***/
+    "./src/app/comma/comma.module.ts":
+    /*!***************************************!*\
+      !*** ./src/app/comma/comma.module.ts ***!
+      \***************************************/
+
+    /*! exports provided: CommaModule */
+
+    /***/
+    function srcAppCommaCommaModuleTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "CommaModule", function () {
+        return CommaModule;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/common */
+      "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+      /* harmony import */
+
+
+      var _pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./pipes/comma.pipe */
+      "./src/app/comma/pipes/comma.pipe.ts");
+
+      var CommaModule = function CommaModule() {
+        _classCallCheck(this, CommaModule);
+      };
+
+      CommaModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({
+        type: CommaModule
+      });
+      CommaModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+        factory: function CommaModule_Factory(t) {
+          return new (t || CommaModule)();
+        },
+        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]]]
+      });
+
+      (function () {
+        (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](CommaModule, {
+          declarations: [_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_2__["CommaPipe"]],
+          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
+          exports: [_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_2__["CommaPipe"]]
+        });
+      })();
+      /*@__PURE__*/
+
+
+      (function () {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](CommaModule, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
+          args: [{
+            declarations: [_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_2__["CommaPipe"]],
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]],
+            exports: [_pipes_comma_pipe__WEBPACK_IMPORTED_MODULE_2__["CommaPipe"]]
+          }]
+        }], null, null);
+      })();
+      /***/
+
+    },
+
+    /***/
+    "./src/app/comma/pipes/comma.pipe.ts":
+    /*!*******************************************!*\
+      !*** ./src/app/comma/pipes/comma.pipe.ts ***!
+      \*******************************************/
+
+    /*! exports provided: CommaPipe */
+
+    /***/
+    function srcAppCommaPipesCommaPipeTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "CommaPipe", function () {
+        return CommaPipe;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+      var CommaPipe = /*#__PURE__*/function () {
+        function CommaPipe() {
+          _classCallCheck(this, CommaPipe);
+        }
+
+        _createClass(CommaPipe, [{
+          key: "transform",
+          value: function transform(arr) {
+            var strWithComma = '';
+
+            for (var i = 0; i < (arr === null || arr === void 0 ? void 0 : arr.length); i++) {
+              if (i === arr.length - 1) {
+                strWithComma += arr[i].name;
+              } else {
+                strWithComma += arr[i].name + ', ';
+              }
+            }
+
+            return strWithComma;
+          }
+        }]);
+
+        return CommaPipe;
+      }();
+
+      CommaPipe.ɵfac = function CommaPipe_Factory(t) {
+        return new (t || CommaPipe)();
+      };
+
+      CommaPipe.ɵpipe = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefinePipe"]({
+        name: "comma",
+        type: CommaPipe,
+        pure: true
+      });
+      /*@__PURE__*/
+
+      (function () {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](CommaPipe, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Pipe"],
+          args: [{
+            name: 'comma'
+          }]
+        }], null, null);
       })();
       /***/
 
