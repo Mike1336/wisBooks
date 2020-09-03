@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 
 import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,32 +16,46 @@ import { IAuthor, IAuthors } from './../../interfaces/author';
 export class AuthorsComponent implements OnInit, OnDestroy {
 
   public authors: IAuthor[] = [];
-  public authorPageQuantity: number = 0;
-
-  public authors$: Observable<IAuthors>;
+  // public authorPageQuantity: number = 0;
+  public authorsQuantity: number = 0;
 
   public displayedColumns: string[] = ['#', 'firstname', 'lastname'];
 
+  private authors$: Observable<IAuthors>;
+  private authorQuantity$: Observable<IAuthors>;
   private destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private authorsService: AuthorService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     ) { }
 
   public ngOnInit(): void {
-    this.route.params
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => {
-        this.authors$ = this.authorsService.getAuthorsInPage(params.number);
-      });
-    this.authors$
+    // this.route.params
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((params) => {
+    //     this.authors$ = this.authorsService.getAuthorsInPage(params.number);
+    //   });
+    // this.authors$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((data) => {
+    //     this.authors = data.authors;
+    //     console.log(this.authors)
+    //     this.authorPageQuantity = data.meta.pages;
+    //   });
+    this.authorQuantity$ = this.authorsService.getAuthorsInFirstPage();
+    this.authorQuantity$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.authors = data.authors;
-        console.log(this.authors)
-        this.authorPageQuantity = data.meta.pages;
+        this.authors$ = this.authorsService.getAuthorsInQuantity(data.meta.records);
+        this.authors$
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((authors) => {
+            console.log(authors)
+            this.authors = authors.authors;
+          });
       });
+
   }
   public ngOnDestroy(): void {
     this.destroy$.next(null);

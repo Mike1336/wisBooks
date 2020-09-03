@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 
 import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,25 +19,37 @@ export class BooksComponent implements OnInit, OnDestroy {
   public bookPageQuantity: number = 0;
 
   public books$: Observable<IBooks>;
+  public booksQuantity$: Observable<IBooks>;
 
   private destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private booksService: BooksService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     ) {
   }
   public ngOnInit(): void {
-    this.route.params
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => {
-        this.books$ = this.booksService.getBooksInPage(params.number);
-      });
-    this.books$
+    // this.route.params
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((params) => {
+    //     this.books$ = this.booksService.get(params.number);
+    //   });
+    // this.books$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((data) => {
+    //     this.books = data.books;
+    //     this.bookPageQuantity = data.meta.pages;
+    //   });
+    this.booksQuantity$ = this.booksService.getBooksInFirstPage();
+    this.booksQuantity$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        this.books = data.books;
-        this.bookPageQuantity = data.meta.pages;
+        this.books$ = this.booksService.getBooksInQuantity(data.meta.records);
+        this.books$
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((books) => {
+            this.books = books.books;
+          });
       });
   }
   public ngOnDestroy(): void {

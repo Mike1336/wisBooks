@@ -5,12 +5,12 @@ import { AuthorsComponent } from './components/authors/authors.component';
 
 const routes: Routes = [
   {
-    path: ':number',
+    path: '',
     component: AuthorsComponent,
   },
   {
     path: '**',
-    redirectTo: '1',
+    redirectTo: '',
   },
 
 ];

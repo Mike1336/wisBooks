@@ -6,12 +6,8 @@ const routes: Routes = [
     path: 'books',
     children: [
       {
-        path: 'page',
+        path: '',
         loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
-      },
-      {
-        path: '**',
-        redirectTo: 'page/1',
       },
     ],
   },
@@ -19,12 +15,8 @@ const routes: Routes = [
     path: 'authors',
     children: [
       {
-        path: 'page',
+        path: '',
         loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule),
-      },
-      {
-        path: '**',
-        redirectTo: 'page/1',
       },
     ],
   },
@@ -37,10 +29,10 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: '**',
-    redirectTo: 'books/page/1',
-  },
+  // {
+  //   path: '**',
+  //   loadChildren: () => import('./not-found/not-found.module').then((m) => m.NotFoundModule),
+  // },
 
 ];
 

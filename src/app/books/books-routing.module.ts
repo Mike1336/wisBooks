@@ -5,12 +5,12 @@ import { BooksComponent } from './components/books/books.component';
 
 const routes: Routes = [
   {
-    path: ':number',
+    path: '',
     component: BooksComponent,
   },
   {
     path: '**',
-    redirectTo: '1',
+    redirectTo: '',
   },
 ];
 

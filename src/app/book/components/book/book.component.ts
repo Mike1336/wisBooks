@@ -34,7 +34,9 @@ export class BookComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.book = data;
         console.log(this.book);
-      });
+      },
+      (err) => console.log('HTTP Error', err)
+      );
   }
   public ngOnDestroy(): void {
     this.destroy$.next(null);

@@ -17,8 +17,11 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  public getBooksInPage(page: number): Observable<IBooks> {
-    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}?page=${page}`);
+  public getBooksInFirstPage(): Observable<IBooks> {
+    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}?page=1`);
+  }
+  public getBooksInQuantity(quantity: number): Observable<IBooks> {
+    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}?limit=${quantity}`);
   }
   public getBookById(bookId: number): Observable<IBook> {
     return this.http.get<IBook>(`${this.apiUrl}${this.booksEndpoint}/${bookId}`);
