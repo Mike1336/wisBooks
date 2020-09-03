@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorsComponent } from './components/authors/authors.component';
@@ -23,6 +24,7 @@ import { AuthorsComponent } from './components/authors/authors.component';
     MatFormFieldModule,
     MatPaginatorModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     AuthorsRoutingModule,
   ],
 })
