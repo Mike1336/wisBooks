@@ -1,1 +1,5 @@
-<mat-paginator [length]="maxLength" [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+<mat-paginator 
+    [length]="maxLength" 
+    [pageSizeOptions]="itemsPerPage" 
+    showFirstLastButtons 
+    (page)="changedSize($event)"></mat-paginator>

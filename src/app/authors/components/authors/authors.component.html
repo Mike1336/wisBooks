@@ -23,9 +23,12 @@
           
           <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true" ></tr>
           <tr mat-row *matRowDef="let author; columns: displayedColumns;" 
-          [routerLink]="['author', author.id]"></tr>
+          [routerLink]="['/author', author.id]"></tr>
       </table>
-      <app-paginator [maxLength]="authors.length" (OnCreate)="takePaginator($event)"></app-paginator>
+      <app-paginator 
+      [maxLength]="authors.length" 
+      [itemsPerPage]='[10, 25, 50]' 
+      (create)="takePaginator($event)"></app-paginator>
     </div>
   </ng-template>
 </div>

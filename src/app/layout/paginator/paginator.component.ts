@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -7,20 +7,29 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })
-export class PaginatorComponent implements AfterViewInit {
+export class PaginatorComponent implements OnInit {
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, {static: true})
   public paginator: MatPaginator;
 
   @Input()
   public maxLength: number = 0;
 
+  @Input()
+  public itemsPerPage: number[] = [];
+
   @Output()
-  public OnCreate: EventEmitter<MatPaginator> = new EventEmitter();
+  public create: EventEmitter<MatPaginator> = new EventEmitter();
+
+  @Output()
+  public changeSize: EventEmitter<MatPaginator> = new EventEmitter();
 
   constructor() { }
 
-  public ngAfterViewInit(): void {
-    this.OnCreate.emit(this.paginator);
+  public ngOnInit(): void {
+    this.create.emit(this.paginator);
+  }
+  public changedSize(page): void {
+    this.changeSize.emit(page.pageSize);
   }
 }

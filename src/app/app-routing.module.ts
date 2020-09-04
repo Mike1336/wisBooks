@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'books',
+    pathMatch: 'full',
     children: [
       {
         path: '',
@@ -13,6 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'authors',
+    pathMatch: 'full',
     children: [
       {
         path: '',
@@ -28,6 +30,11 @@ const routes: Routes = [
         loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
       },
     ],
+  },
+  {
+    path: '',
+    redirectTo: '/books',
+    pathMatch: 'full',
   },
   {
     path: '**',

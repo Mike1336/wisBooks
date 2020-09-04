@@ -17,9 +17,6 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  public getBooksInFirstPage(): Observable<IBooks> {
-    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}?page=1`);
-  }
   public getBooksInQuantity(quantity: number): Observable<IBooks> {
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}?limit=${quantity}`);
   }

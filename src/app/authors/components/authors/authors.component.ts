@@ -19,26 +19,23 @@ import { IAuthor, IAuthors } from './../../interfaces/author';
 export class AuthorsComponent implements OnInit, OnDestroy {
 
   public authors: IAuthor[] = [];
-  // public authorPageQuantity: number = 0;
-  public authorsQuantity: number = 0;
   public loading: boolean;
 
   public displayedColumns: string[] = ['#', 'firstname', 'lastname'];
   public dataSource = new MatTableDataSource();
 
   private authors$: Observable<IAuthors>;
-  private authorQuantity$: Observable<IAuthors>;
+  private authorsQuantity$: Observable<IAuthors>;
   private destroy$ = new ReplaySubject<any>(1);
 
   constructor(
     private authorsService: AuthorService,
-    // private route: ActivatedRoute,
     ) { }
 
   public ngOnInit(): void {
     this.loading = true;
-    this.authorQuantity$ = this.authorsService.getAuthorsInFirstPage();
-    this.authorQuantity$
+    this.authorsQuantity$ = this.authorsService.getAuthorsInFirstPage();
+    this.authorsQuantity$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.authors$ = this.authorsService.getAuthorsInQuantity(data.meta.records);
@@ -53,19 +50,6 @@ export class AuthorsComponent implements OnInit, OnDestroy {
             this.loading = false;
           });
       });
-    // this.route.params
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((params) => {
-    //     this.authors$ = this.authorsService.getAuthorsInPage(params.number);
-    //   });
-    // this.authors$
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((data) => {
-    //     this.authors = data.authors;
-    //     console.log(this.authors)
-    //     this.authorPageQuantity = data.meta.pages;
-    //   });
-
   }
   public ngOnDestroy(): void {
     this.destroy$.next(null);
@@ -73,7 +57,5 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   }
   public takePaginator(paginator: MatPaginator): void {
     this.dataSource.paginator = paginator;
-    console.log(paginator);
-
   }
 }
