@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, takeUntil, mergeMap, pluck } from 'rxjs/operators';
@@ -20,19 +21,21 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   public loadingPage: boolean;
   public loadingAuthors: boolean;
 
-  public displayedColumns: string[] = ['#', 'firstname', 'lastname'];
+  public displayedColumns: string[] = ['id', 'first_name', 'last_name'];
   public dataSource = new MatTableDataSource();
   public authorsQuantity: number;
 
   public authors$: Observable<IAuthor[]>;
 
-  private destroy$: ReplaySubject<number> = new ReplaySubject(1);
+  @ViewChild(MatSort)
+  public sort: MatSort;
 
+  private destroy$: ReplaySubject<number> = new ReplaySubject(1);
   constructor(
     private authorsService: AuthorService,
     ) { }
-
   public ngOnInit(): void {
+    this.loadingPage = true;
     this.authorsService.getAuthorsInQuantity(1)
       .pipe(
         map((data) => {
@@ -48,6 +51,10 @@ export class AuthorsComponent implements OnInit, OnDestroy {
         )
       .subscribe((authors) => {
         this.dataSource.data = authors;
+        this.dataSource.sort = this.sort;
+        setTimeout(() => {
+          this.loadingPage = false;
+        }, 1000);
       });
   }
 
@@ -58,6 +65,7 @@ export class AuthorsComponent implements OnInit, OnDestroy {
 
   public takePaginator(paginator: MatPaginator): void {
     this.dataSource.paginator = paginator;
+
   }
 
 }

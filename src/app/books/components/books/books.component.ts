@@ -47,7 +47,7 @@ export class BooksComponent implements OnInit {
 
     setTimeout(() => {
       this.loadingBooks = false;
-    }, 1000);
+    }, 500);
   }
 
 }

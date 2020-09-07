@@ -8,13 +8,17 @@
     }
     table{
         width: 85vw;
-        th{
-            font-size: 16px;
-            font-style: bold;
-            z-index: 0;
-        }
-        th, td{
+        tr{
             text-align: center;
+            th::ng-deep{
+                font-size: 16px;
+                font-style: bold;
+                z-index: 0;
+                .mat-sort-header-container{
+                    justify-content: center;
+                }
+            }
+    
         }
     }
     mat-paginator{
@@ -23,8 +27,14 @@
     }
 }
 #tableContent {
+    position: absolute;
+    opacity: 0;
     height: 592px;
     overflow: auto;
     margin-top: 75px;
+}
+.show{
+    position: none !important;
+    opacity:1 !important;
 }
 

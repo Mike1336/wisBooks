@@ -1,23 +1,22 @@
 <div id="authors" >
 
-  <mat-spinner *ngIf="loadingPage; else authorsBlock"></mat-spinner>
+  <mat-spinner *ngIf="loadingPage"></mat-spinner>
 
-  <ng-template #authorsBlock>
-    <div id="tableContent">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 data-table">
+    <div id="tableContent" [class.show]="!loadingPage">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 data-table">
 
-          <ng-container matColumnDef="#">
-            <th mat-header-cell *matHeaderCellDef> # </th>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
             <td mat-cell *matCellDef="let author"> {{author.id}} </td>
           </ng-container>
         
-          <ng-container matColumnDef="firstname">
-            <th mat-header-cell *matHeaderCellDef> FIRSTNAME </th>
+          <ng-container matColumnDef="first_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> FIRSTNAME </th>
             <td mat-cell *matCellDef="let author"> {{author.first_name}} </td>
           </ng-container>
         
-          <ng-container matColumnDef="lastname">
-            <th mat-header-cell *matHeaderCellDef> LASTNAME </th>
+          <ng-container matColumnDef="last_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> LASTNAME </th>
             <td mat-cell *matCellDef="let author"> {{author.last_name}} </td>
           </ng-container>
           
@@ -32,6 +31,5 @@
       (create)="takePaginator($event)"></app-paginator>
 
     </div>
-  </ng-template>
 </div>
 
