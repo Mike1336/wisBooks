@@ -1180,12 +1180,14 @@
       function BooksComponent_ng_template_2_ng_template_2_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, BooksComponent_ng_template_2_ng_template_2_mat_card_0_Template, 10, 6, "mat-card", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](1, "async");
         }
 
         if (rf & 2) {
           var ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r5.books);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](1, 1, ctx_r5.books$));
         }
       }
 
@@ -1201,7 +1203,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, BooksComponent_ng_template_2_mat_spinner_1_Template, 1, 0, "mat-spinner", 1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, BooksComponent_ng_template_2_ng_template_2_Template, 1, 1, "ng-template", null, 4, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, BooksComponent_ng_template_2_ng_template_2_Template, 2, 3, "ng-template", null, 4, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1212,7 +1214,7 @@
 
             var ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-            return ctx_r8.takePaginator($event);
+            return ctx_r8.changePageSize($event);
           })("changeSize", function BooksComponent_ng_template_2_Template_app_paginator_changeSize_4_listener($event) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r9);
 
@@ -1235,17 +1237,18 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("maxLength", ctx_r2.books == null ? null : ctx_r2.books.length)("itemsPerPage", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](4, _c1));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("maxLength", ctx_r2.booksQuantity)("itemsPerPage", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](4, _c1));
         }
       }
 
       var BooksComponent = /*#__PURE__*/function () {
-        function BooksComponent(booksService, cdn) {
+        function BooksComponent(booksService, cdr) {
           _classCallCheck(this, BooksComponent);
 
           this.booksService = booksService;
-          this.cdn = cdn;
+          this.cdr = cdr;
           this.booksInQuantity = 0;
+          this.booksQuantity = 0;
           this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
         }
 
@@ -1259,24 +1262,16 @@
             this.destroy$.complete();
           }
         }, {
-          key: "takePaginator",
-          value: function takePaginator(paginator) {
-            this.booksInQuantity = paginator.pageSize;
-            this.hideWrongBooks(this.booksInQuantity);
-          }
-        }, {
           key: "changePageSize",
-          value: function changePageSize(newSize) {
-            this.booksInQuantity = newSize;
-            this.hideWrongBooks(this.booksInQuantity);
+          value: function changePageSize(pagData) {
+            this.booksInQuantity = pagData.pageSize;
+            this.getBooksInQuantity(this.booksInQuantity);
           }
         }, {
-          key: "hideWrongBooks",
-          value: function hideWrongBooks(booksQuantity) {
-            this.books$ = this.booksService.getBooksInQuantity(booksQuantity);
-            this.books$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
-              return data.books;
-            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this.destroy$));
+          key: "getBooksInQuantity",
+          value: function getBooksInQuantity(booksQuantity) {
+            this.booksQuantity = booksQuantity;
+            this.books$ = this.booksService.getBooksInQuantity(booksQuantity).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('books'));
           }
         }]);
 
@@ -1313,6 +1308,7 @@
           }
         },
         directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_5__["MatSpinner"], _layout_paginator_paginator_component__WEBPACK_IMPORTED_MODULE_6__["PaginatorComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCard"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["RouterLink"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCardHeader"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCardTitle"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCardSubtitle"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCardImage"], _angular_material_card__WEBPACK_IMPORTED_MODULE_7__["MatCardContent"]],
+        pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["AsyncPipe"]],
         styles: ["p[_ngcontent-%COMP%] {\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n\n#books[_ngcontent-%COMP%] {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: center;\n  margin: 0 15px;\n  padding-top: 55px;\n  height: 92%;\n}\n\n#books[_ngcontent-%COMP%]   mat-card[_ngcontent-%COMP%] {\n  cursor: pointer;\n  width: 20%;\n  height: 365px;\n  margin: 20px 15px 15px 20px;\n}\n\n#books[_ngcontent-%COMP%]   mat-card[_ngcontent-%COMP%]   mat-card-header[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  text-align: center;\n  height: 100px;\n}\n\n#books[_ngcontent-%COMP%]   mat-card[_ngcontent-%COMP%]   mat-card-header[_ngcontent-%COMP%]   mat-card-title[_ngcontent-%COMP%] {\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n\n#books[_ngcontent-%COMP%]   mat-card[_ngcontent-%COMP%]   mat-card-content[_ngcontent-%COMP%] {\n  text-align: center;\n}\n\n#books[_ngcontent-%COMP%]   mat-card[_ngcontent-%COMP%]   .book-img[_ngcontent-%COMP%] {\n  width: 50%;\n  height: 50%;\n  margin-left: 50%;\n  transform: translateX(-50%);\n}\n\n#books[_ngcontent-%COMP%]   mat-spinner[_ngcontent-%COMP%] {\n  align-self: center;\n  width: 100%;\n}\n\n#books[_ngcontent-%COMP%]   app-paginator[_ngcontent-%COMP%] {\n  width: 100%;\n}\n\n#bookContent[_ngcontent-%COMP%] {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: center;\n  width: 100%;\n  height: 92%;\n  overflow: auto;\n  margin-top: 5px;\n}\n\n.hide[_ngcontent-%COMP%] {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm9va3MvY29tcG9uZW50cy9ib29rcy9ib29rcy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLG9CQUFBO0VBQ0EscUJBQUE7RUFDQSw0QkFBQTtFQUNBLGdCQUFBO0FBQ0o7O0FBQ0E7RUFDSSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLGNBQUE7RUFDQSxpQkFBQTtFQUNBLFdBQUE7QUFFSjs7QUFESTtFQUNJLGVBQUE7RUFDQSxVQUFBO0VBQ0EsYUFBQTtFQUNBLDJCQUFBO0FBR1I7O0FBRlE7RUFDSSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtFQUNBLGtCQUFBO0VBQ0EsYUFBQTtBQUlaOztBQUhZO0VBQ0ksb0JBQUE7RUFDQSxxQkFBQTtFQUNBLDRCQUFBO0VBQ0EsZ0JBQUE7QUFLaEI7O0FBRlE7RUFDSSxrQkFBQTtBQUlaOztBQUZRO0VBQ0ksVUFBQTtFQUNBLFdBQUE7RUFDQSxnQkFBQTtFQUNBLDJCQUFBO0FBSVo7O0FBREk7RUFDSSxrQkFBQTtFQUNBLFdBQUE7QUFHUjs7QUFESTtFQUNJLFdBQUE7QUFHUjs7QUFBQTtFQUNJLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0EsV0FBQTtFQUNBLFdBQUE7RUFDQSxjQUFBO0VBQ0EsZUFBQTtBQUdKOztBQURBO0VBQ0ksYUFBQTtBQUlKIiwiZmlsZSI6InNyYy9hcHAvYm9va3MvY29tcG9uZW50cy9ib29rcy9ib29rcy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbInB7XG4gICAgZGlzcGxheTogLXdlYmtpdC1ib3g7XG4gICAgLXdlYmtpdC1saW5lLWNsYW1wOiAzO1xuICAgIC13ZWJraXQtYm94LW9yaWVudDogdmVydGljYWw7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbn1cbiNib29rc3tcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGZsZXgtZmxvdzogcm93IHdyYXA7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgbWFyZ2luOiAwIDE1cHg7XG4gICAgcGFkZGluZy10b3A6IDU1cHg7XG4gICAgaGVpZ2h0OiA5MiU7XG4gICAgbWF0LWNhcmR7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgd2lkdGg6IDIwJTtcbiAgICAgICAgaGVpZ2h0OiAzNjVweDtcbiAgICAgICAgbWFyZ2luOiAyMHB4IDE1cHggMTVweCAyMHB4O1xuICAgICAgICBtYXQtY2FyZC1oZWFkZXJ7XG4gICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgICAgICAgICAgaGVpZ2h0OiAxMDBweDtcbiAgICAgICAgICAgIG1hdC1jYXJkLXRpdGxle1xuICAgICAgICAgICAgICAgIGRpc3BsYXk6IC13ZWJraXQtYm94O1xuICAgICAgICAgICAgICAgIC13ZWJraXQtbGluZS1jbGFtcDogMztcbiAgICAgICAgICAgICAgICAtd2Via2l0LWJveC1vcmllbnQ6IHZlcnRpY2FsO1xuICAgICAgICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgICAgbWF0LWNhcmQtY29udGVudHtcbiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICAgICAgfVxuICAgICAgICAuYm9vay1pbWd7XG4gICAgICAgICAgICB3aWR0aDogNTAlO1xuICAgICAgICAgICAgaGVpZ2h0OiA1MCU7XG4gICAgICAgICAgICBtYXJnaW4tbGVmdDogNTAlO1xuICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC01MCUpO1xuICAgICAgICB9XG4gICAgfVxuICAgIG1hdC1zcGlubmVye1xuICAgICAgICBhbGlnbi1zZWxmOiBjZW50ZXI7XG4gICAgICAgIHdpZHRoOiAxMDAlO1xuICAgIH1cbiAgICBhcHAtcGFnaW5hdG9ye1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICB9XG59XG4jYm9va0NvbnRlbnR7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBmbGV4LWZsb3c6IHJvdyB3cmFwO1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGhlaWdodDogOTIlO1xuICAgIG92ZXJmbG93OiBhdXRvO1xuICAgIG1hcmdpbi10b3A6IDVweDtcbn1cbi5oaWRle1xuICAgIGRpc3BsYXk6IG5vbmU7XG59XG5cbiJdfQ== */"]
       });
       /*@__PURE__*/
@@ -1379,11 +1375,6 @@
         }
 
         _createClass(BooksService, [{
-          key: "getBooks",
-          value: function getBooks() {
-            return this.http.get("".concat(this.apiUrl).concat(this.booksEndpoint));
-          }
-        }, {
           key: "getBooksInQuantity",
           value: function getBooksInQuantity(quantity) {
             return this.http.get("".concat(this.apiUrl).concat(this.booksEndpoint, "?limit=").concat(quantity));
@@ -1775,12 +1766,18 @@
         _createClass(PaginatorComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            this.create.emit(this.paginator);
+            this.pagData = {
+              paginator: this.paginator,
+              pageSize: this.paginator.pageSize
+            };
+            console.log(this.pagData);
+            this.create.emit(this.pagData);
           }
         }, {
           key: "changedSize",
           value: function changedSize(page) {
-            this.changeSize.emit(page.pageSize);
+            console.log(this.pagData);
+            this.changeSize.emit(this.pagData);
           }
         }]);
 

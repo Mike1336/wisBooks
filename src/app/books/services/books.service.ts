@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -17,8 +17,14 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  public getBooksInQuantity(quantity: number): Observable<IBooks> {
-    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}?limit=${quantity}`);
+  public getBooksInQuantity(quantity: number, page?: number): Observable<IBooks> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', `${page}`);
+    }
+    params = params.append('limit', `${quantity}`);
+
+    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }
   public getBookById(bookId: number): Observable<IBook> {
     return this.http.get<IBook>(`${this.apiUrl}${this.booksEndpoint}/${bookId}`);

@@ -16,9 +16,6 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
-  public getAuthorsInFirstPage(): Observable<IAuthors> {
-    return this.http.get<IAuthors>(`${this.apiUrl}${this.authorsEndpoint}?page=1`);
-  }
   public getAuthorsInQuantity(quantity: number): Observable<IAuthors> {
     return this.http.get<IAuthors>(`${this.apiUrl}${this.authorsEndpoint}?limit=${quantity}`);
   }

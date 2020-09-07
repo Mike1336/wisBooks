@@ -282,8 +282,7 @@
 
       var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/router */
-      "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js"); // import { ActivatedRoute } from '@angular/router';
-
+      "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 
       function AuthorsComponent_mat_spinner_1_Template(rf, ctx) {
         if (rf & 1) {
@@ -471,7 +470,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("maxLength", ctx_r2.authors.length)("itemsPerPage", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](6, _c1));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("maxLength", ctx_r2.dataSource.data.length)("itemsPerPage", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](6, _c1));
         }
       }
 
@@ -480,7 +479,6 @@
           _classCallCheck(this, AuthorsComponent);
 
           this.authorsService = authorsService;
-          this.authors = [];
           this.displayedColumns = ['#', 'firstname', 'lastname'];
           this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"]();
           this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
@@ -491,16 +489,11 @@
           value: function ngOnInit() {
             var _this = this;
 
-            this.loading = true;
-            this.authorsQuantity$ = this.authorsService.getAuthorsInFirstPage();
-            this.authorsQuantity$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function (data) {
-              _this.authors$ = _this.authorsService.getAuthorsInQuantity(data.meta.records);
-
-              _this.authors$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["delay"])(1000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(_this.destroy$)).subscribe(function (authors) {
-                _this.authors = authors.authors;
-                _this.dataSource.data = authors.authors;
-                _this.loading = false;
-              });
+            this.authorsQuantity$ = this.authorsService.getAuthorsInQuantity(1);
+            this.authorsQuantity$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) {
+              return data.meta.pages;
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function (data) {
+              _this.authorsQuantity = data;
             });
           }
         }, {
@@ -511,8 +504,16 @@
           }
         }, {
           key: "takePaginator",
-          value: function takePaginator(paginator) {
-            this.dataSource.paginator = paginator;
+          value: function takePaginator(pagData) {
+            var _this2 = this;
+
+            this.dataSource.paginator = pagData.paginator;
+            this.authors$ = this.authorsService.getAuthorsInQuantity(this.authorsQuantity);
+            this.authors$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) {
+              return data.authors;
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function (authors) {
+              _this2.dataSource.data = authors;
+            });
           }
         }]);
 
@@ -612,11 +613,6 @@
         }
 
         _createClass(AuthorService, [{
-          key: "getAuthorsInFirstPage",
-          value: function getAuthorsInFirstPage() {
-            return this.http.get("".concat(this.apiUrl).concat(this.authorsEndpoint, "?page=1"));
-          }
-        }, {
           key: "getAuthorsInQuantity",
           value: function getAuthorsInQuantity(quantity) {
             return this.http.get("".concat(this.apiUrl).concat(this.authorsEndpoint, "?limit=").concat(quantity));

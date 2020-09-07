@@ -1,56 +1,54 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { MatPaginator } from '@angular/material/paginator';
-
-import { ReplaySubject, Observable } from 'rxjs';
-import { takeUntil, map, toArray } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { pluck, map } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
-import { IBook, IBooks } from '../../interfaces/book';
+import { IBook } from '../../interfaces/book';
+
+import { IPaginatorData } from './../../../layout/paginator/paginator.component';
 
 @Component({
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
 })
-export class BooksComponent implements OnInit, OnDestroy {
+export class BooksComponent implements OnInit {
 
-  public books: IBook[];
-  public booksInQuantity: number = 0;
-
-  public books$: Observable<any>;
   public loadingPage: boolean;
   public loadingBooks: boolean;
 
-  private destroy$ = new ReplaySubject<any>(1);
+  public booksInQuantity: number = 0;
+  public booksQuantity$: Observable<number>;
+  public books$: Observable<IBook[]>;
 
   constructor(
     private booksService: BooksService,
-    private cdr: ChangeDetectorRef,
     ) {
   }
   public ngOnInit(): void {
+    this.loadingPage = true;
+    this.booksQuantity$ = this.booksService.getBooksInQuantity(1)
+        .pipe(map((data) => data.meta.records));
+
+    setTimeout(() => {
+      this.loadingPage = false;
+    }, 1000);
   }
-  public ngOnDestroy(): void {
-    this.destroy$.next(null);
-    this.destroy$.complete();
+  public getFirstPageOfBooks(): void {
+    this.getBooksInQuantity(10);
   }
-  public takePaginator(paginator: MatPaginator): void {
-    this.booksInQuantity = paginator.pageSize;
-    this.hideWrongBooks(this.booksInQuantity);
+  public changePageSize(pagData: IPaginatorData): void {
+    this.getBooksInQuantity(pagData.pageSize, pagData.pageIndex);
   }
-  public changePageSize(newSize: number): void {
-    this.booksInQuantity = newSize;
-    this.hideWrongBooks(this.booksInQuantity);
+  public getBooksInQuantity(booksQuantity: number, page?: number): void {
+    this.loadingBooks = true;
+    this.books$ = this.booksService.getBooksInQuantity(booksQuantity, page += 1)
+    .pipe(pluck('books'));
+
+    setTimeout(() => {
+      this.loadingBooks = false;
+    }, 1000);
   }
-  public hideWrongBooks(booksQuantity: number): void {
-    this.books$ = this.booksService.getBooksInQuantity(booksQuantity);
-    this.books$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((books) => {
-        this.books = books.books;
-        this.loadingBooks = false;
-      });
-      this.cdr.detectChanges();
-  }
+
 }
 

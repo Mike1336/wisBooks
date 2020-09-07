@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -9,7 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class PaginatorComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true})
+  @ViewChild(MatPaginator, { static: true })
   public paginator: MatPaginator;
 
   @Input()
@@ -22,7 +22,9 @@ export class PaginatorComponent implements OnInit {
   public create: EventEmitter<MatPaginator> = new EventEmitter();
 
   @Output()
-  public changeSize: EventEmitter<MatPaginator> = new EventEmitter();
+  public changeSize: EventEmitter<IPaginatorData> = new EventEmitter();
+
+  public pagData: IPaginatorData;
 
   constructor() { }
 
@@ -30,6 +32,19 @@ export class PaginatorComponent implements OnInit {
     this.create.emit(this.paginator);
   }
   public changedSize(page): void {
-    this.changeSize.emit(page.pageSize);
+    this.pagData = {
+      paginator: this.paginator,
+      pageSize: page.pageSize,
+      pageIndex: page.pageIndex,
+      length: page.length,
+    };
+
+    this.changeSize.emit(this.pagData);
   }
+}
+export interface IPaginatorData {
+  paginator: MatPaginator;
+  pageSize: number;
+  pageIndex: number;
+  length: number;
 }

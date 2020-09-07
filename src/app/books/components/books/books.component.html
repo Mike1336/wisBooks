@@ -6,7 +6,7 @@
       <mat-spinner *ngIf="loadingBooks; else booksTable"></mat-spinner>
       <ng-template #booksTable>
         <mat-card class="example-card" 
-                  *ngFor="let book of books" 
+                  *ngFor="let book of books$ | async" 
                   [routerLink]="['/book', book.id]">
           <mat-card-header>
           <mat-card-title>{{book?.title}}</mat-card-title>
@@ -22,10 +22,11 @@
       </ng-template>
 
     </div>
-    <app-paginator 
-      [maxLength]='books?.length'
-      [itemsPerPage]='[10, 25, 50, 75, 100, 125, 150]' 
-      (create)="takePaginator($event)" 
-      (changeSize)="changePageSize($event)"></app-paginator>
   </ng-template>
+    <app-paginator 
+      [maxLength]='booksQuantity$ | async'
+      [itemsPerPage]='[10, 25, 50, 75, 100, 125, 150]'
+      (create)="getFirstPageOfBooks()"
+      (changeSize)="changePageSize($event)"
+      [class.hide]="loadingPage"></app-paginator>
 </div>

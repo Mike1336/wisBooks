@@ -367,7 +367,6 @@
       "check-type-operator",
       "check-preblock"
     ],
-    // tslint-microsoft-contrib
     "chai-prefer-contains-to-index-of": true,
     "chai-vague-errors": true,
     "export-name": false,
@@ -421,7 +420,7 @@
     "promise-must-complete": true,
     "use-named-parameter": true,
     "void-zero": true,
-    // tslint-eslint-rules
+  
     "no-constant-condition": true,
     "no-control-regex": true,
     "no-empty-character-class": true,
@@ -518,7 +517,7 @@
     "ter-no-tabs": true,
     "ter-arrow-body-style": false,
     "ter-arrow-spacing": true,
-    // rxjs-tslint-rules
+
     "rxjs-deep-operators": false,
     "rxjs-just": false,
     "rxjs-no-async-subscribe": true,
@@ -561,7 +560,7 @@
     "rxjs-prefer-angular-takeuntil": true,
     "rxjs-prefer-observer": true,
     "rxjs-suffix-subjects": false,
-    // codelizer
+
     "contextual-decorator": true,
     "contextual-lifecycle": true,
     "no-attribute-decorator": false,

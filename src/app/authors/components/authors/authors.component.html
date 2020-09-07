@@ -1,6 +1,6 @@
 <div id="authors" >
 
-  <mat-spinner *ngIf="loading; else authorsBlock"></mat-spinner>
+  <mat-spinner *ngIf="loadingPage; else authorsBlock"></mat-spinner>
 
   <ng-template #authorsBlock>
     <div id="tableContent">
@@ -25,10 +25,12 @@
           <tr mat-row *matRowDef="let author; columns: displayedColumns;" 
           [routerLink]="['/author', author.id]"></tr>
       </table>
+
       <app-paginator 
-      [maxLength]="authors.length" 
+      [maxLength]="authorsQuantity" 
       [itemsPerPage]='[10, 25, 50]' 
       (create)="takePaginator($event)"></app-paginator>
+
     </div>
   </ng-template>
 </div>

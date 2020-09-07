@@ -143,7 +143,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_paginator_paginator_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../layout/paginator/paginator.component */ "./src/app/layout/paginator/paginator.component.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 
-// import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -242,38 +241,35 @@ function AuthorsComponent_ng_template_2_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("matRowDefColumns", ctx_r2.displayedColumns);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("maxLength", ctx_r2.authors.length)("itemsPerPage", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](6, _c1));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("maxLength", ctx_r2.dataSource.data.length)("itemsPerPage", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](6, _c1));
 } }
 class AuthorsComponent {
     constructor(authorsService) {
         this.authorsService = authorsService;
-        this.authors = [];
         this.displayedColumns = ['#', 'firstname', 'lastname'];
         this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"]();
         this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
     }
     ngOnInit() {
-        this.loading = true;
-        this.authorsQuantity$ = this.authorsService.getAuthorsInFirstPage();
+        this.authorsQuantity$ = this.authorsService.getAuthorsInQuantity(1);
         this.authorsQuantity$
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((data) => data.meta.pages), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$))
             .subscribe((data) => {
-            this.authors$ = this.authorsService.getAuthorsInQuantity(data.meta.records);
-            this.authors$
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["delay"])(1000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$))
-                .subscribe((authors) => {
-                this.authors = authors.authors;
-                this.dataSource.data = authors.authors;
-                this.loading = false;
-            });
+            this.authorsQuantity = data;
         });
     }
     ngOnDestroy() {
         this.destroy$.next(null);
         this.destroy$.complete();
     }
-    takePaginator(paginator) {
-        this.dataSource.paginator = paginator;
+    takePaginator(pagData) {
+        this.dataSource.paginator = pagData.paginator;
+        this.authors$ = this.authorsService.getAuthorsInQuantity(this.authorsQuantity);
+        this.authors$
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((data) => data.authors), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$))
+            .subscribe((authors) => {
+            this.dataSource.data = authors;
+        });
     }
 }
 AuthorsComponent.ɵfac = function AuthorsComponent_Factory(t) { return new (t || AuthorsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_authors_service__WEBPACK_IMPORTED_MODULE_4__["AuthorService"])); };
@@ -318,9 +314,6 @@ class AuthorService {
         this.http = http;
         this.apiUrl = 'http://muzhikov.kubesh.ru/api/';
         this.authorsEndpoint = 'authors';
-    }
-    getAuthorsInFirstPage() {
-        return this.http.get(`${this.apiUrl}${this.authorsEndpoint}?page=1`);
     }
     getAuthorsInQuantity(quantity) {
         return this.http.get(`${this.apiUrl}${this.authorsEndpoint}?limit=${quantity}`);
