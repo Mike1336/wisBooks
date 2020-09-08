@@ -43,17 +43,34 @@ p{
         width: 100%;
     }
     app-paginator{
-        width: 100%;
+        width: 80%;
     }
 }
 #bookContent{
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    width: 100%;
+    width: 80%;
     height: 85%;
     margin-top: 50px;
     overflow: auto;
+}
+#genreFilters{
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 20%;
+    mat-card{
+        width: 100%;
+        height: max-content;
+    }
+    mat-radio-group{
+        display: flex;
+        flex-direction: column;
+        mat-radio-button{
+            line-height: 2;
+        }
+    }
 }
 .hide{
     visibility: hidden;

@@ -1,49 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { pluck, map } from 'rxjs/operators';
+import { Observable, forkJoin, ReplaySubject } from 'rxjs';
+import { pluck, map, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/book';
+import { IGenre } from '../../interfaces/genre';
 
-import { IPaginatorData } from './../../../layout/paginator/paginator.component';
+import { GenresService } from './../../services/genres.service';
+import { IPaginatorData,
+         PaginatorComponent,
+ } from './../../../layout/paginator/paginator.component';
 
 @Component({
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent implements OnInit, OnDestroy {
 
   public loadingPage: boolean;
   public loadingBooks: boolean;
 
-  public booksInQuantity: number = 0;
-  public booksQuantity$: Observable<number>;
+  public filterBy: IGenre;
+  public booksQuantity: number = 0;
+
   public books$: Observable<IBook[]>;
+  public genres$: Observable<IGenre[]>;
+
+  // private destroy$: ReplaySubject<any> = new ReplaySubject(1);
+
+  @ViewChild(PaginatorComponent) private pag: PaginatorComponent;
 
   constructor(
     private booksService: BooksService,
+    private genresService: GenresService,
     ) {
   }
   public ngOnInit(): void {
     this.loadingPage = true;
-    this.booksQuantity$ = this.booksService.getBooksInQuantity(1)
-        .pipe(map((data) => data.meta.records));
+    this.genres$ = this.genresService.getGenres()
+        .pipe(pluck('genres'));
 
+    this.books$ = this.booksService.getBooks(10, 0, null)
+        .pipe(
+          map((data) => {
+            this.booksQuantity = data.meta.records;
+
+            return data.books;
+          }));
     setTimeout(() => {
       this.loadingPage = false;
     }, 1000);
   }
-  public getFirstPageOfBooks(): void {
-    this.getBooksInQuantity(10);
+
+  public ngOnDestroy(): void {
+    // this.destroy$.next(null);
+    // this.destroy$.complete();
   }
+
   public changePageSize(pagData: IPaginatorData): void {
-    this.getBooksInQuantity(pagData.pageSize, pagData.pageIndex);
+    if (this.filterBy) {
+      this.getBooksInQuantity(this.filterBy.name, pagData.pageSize, pagData.pageIndex);
+    } else {
+      this.getBooksInQuantity(null, pagData.pageSize, pagData.pageIndex);
+    }
   }
-  public getBooksInQuantity(booksQuantity: number, page?: number): void {
+  public getBooksInQuantity(genre?: string, booksQuantity?: number, page?: number): void {
     this.loadingBooks = true;
-    this.books$ = this.booksService.getBooksInQuantity(booksQuantity, page += 1)
-    .pipe(pluck('books'));
+    if (!page) {
+      this.pag.moveToFirstPage();
+    }
+    this.books$ = this.booksService.getBooks(booksQuantity, page += 1, genre)
+    .pipe(
+      map((data) => {
+        this.booksQuantity = data.meta.records;
+
+        return data.books;
+      }));
 
     setTimeout(() => {
       this.loadingBooks = false;
@@ -51,4 +84,3 @@ export class BooksComponent implements OnInit {
   }
 
 }
-

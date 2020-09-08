@@ -13,16 +13,16 @@ export class PaginatorComponent implements OnInit {
   public paginator: MatPaginator;
 
   @Input()
-  public maxLength: number = 0;
+  public records: number = 0;
 
   @Input()
-  public itemsPerPage: number[] = [];
+  public limits: number[] = [];
 
   @Output()
   public create: EventEmitter<MatPaginator> = new EventEmitter();
 
   @Output()
-  public changeSize: EventEmitter<IPaginatorData> = new EventEmitter();
+  public changed: EventEmitter<IPaginatorData> = new EventEmitter();
 
   public pagData: IPaginatorData;
 
@@ -39,8 +39,12 @@ export class PaginatorComponent implements OnInit {
       length: page.length,
     };
 
-    this.changeSize.emit(this.pagData);
+    this.changed.emit(this.pagData);
   }
+  public moveToFirstPage(): void {
+    this.paginator.firstPage();
+  }
+
 }
 export interface IPaginatorData {
   paginator: MatPaginator;

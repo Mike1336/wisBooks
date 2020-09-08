@@ -26,8 +26,8 @@
       </table>
 
       <app-paginator 
-      [maxLength]="authorsQuantity" 
-      [itemsPerPage]='[10, 25, 50]' 
+      [records]="authorsQuantity" 
+      [limits]='[10, 25, 50]' 
       (create)="takePaginator($event)"></app-paginator>
 
     </div>

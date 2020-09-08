@@ -17,12 +17,17 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  public getBooksInQuantity(quantity: number, page?: number): Observable<IBooks> {
+  public getBooks(quantity?: number, page?: number, genreName?: string): Observable<IBooks> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', `${page}`);
     }
-    params = params.append('limit', `${quantity}`);
+    if (quantity) {
+      params = params.append('limit', `${quantity}`);
+    }
+    if (genreName) {
+      params = params.append('q[genres_name_cont]', `${genreName}`);
+    }
 
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }

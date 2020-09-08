@@ -22,11 +22,24 @@
       </ng-template>
 
     </div>
+    <div id="genreFilters">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <mat-radio-group
+          [(ngModel)]="filterBy"
+            (ngModelChange)="getBooksInQuantity(filterBy?.name)">
+            <mat-radio-button [value]="undefined">All Genres</mat-radio-button>
+            <mat-radio-button class="example-radio-button" *ngFor="let genre of genres$ | async" [value]="genre">
+              {{genre.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </ng-template>
     <app-paginator 
-      [maxLength]='booksQuantity$ | async'
-      [itemsPerPage]='[10, 25, 50, 75, 100, 125, 150]'
-      (create)="getFirstPageOfBooks()"
-      (changeSize)="changePageSize($event)"
+      [records]='booksQuantity'
+      [limits]='[10, 25, 50, 75, 100, 125, 150]'
+      (changed)="changePageSize($event)"
       [class.hide]="loadingPage"></app-paginator>
 </div>
