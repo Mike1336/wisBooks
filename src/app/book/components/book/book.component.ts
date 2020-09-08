@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject, Observable } from 'rxjs';
+import { takeUntil, mergeMap, map } from 'rxjs/operators';
 
 import { IBook } from '../../../books/interfaces/book';
 import { BooksService } from '../../../books/services/books.service';
@@ -13,7 +13,7 @@ import { BooksService } from '../../../books/services/books.service';
 })
 export class BookComponent implements OnInit, OnDestroy {
 
-  public bookId: number;
+  public loadingPage: boolean;
   public book: IBook;
 
   private destroy$ = new ReplaySubject<any>(1);
@@ -21,22 +21,28 @@ export class BookComponent implements OnInit, OnDestroy {
   constructor(
     private booksService: BooksService,
     private route: ActivatedRoute,
+    private router: Router,
     ) { }
 
   public ngOnInit(): void {
+    this.loadingPage = true;
     this.route.params
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => {
-        this.bookId = params.id;
-      });
-    this.booksService.getBookById(this.bookId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.book = data;
-        console.log(this.book);
-      },
-      (err) => console.log('HTTP Error', err)
-      );
+      .pipe(
+        map((params) => {
+          return params.id;
+        }),
+        mergeMap((id: number): Observable<IBook> => {
+          return this.booksService.getBookById(id);
+        }),
+        takeUntil(this.destroy$))
+      .subscribe(
+        (data) => {
+          this.book = data;
+          this.loadingPage = false;
+        },
+        (err) => { 
+          this.router.navigate(['/404'], { skipLocationChange: true });
+        });
   }
   public ngOnDestroy(): void {
     this.destroy$.next(null);

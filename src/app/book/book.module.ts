@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { CommaModule } from '../libs/comma/comma.module';
 
@@ -23,6 +24,7 @@ import { BookComponent } from './components/book/book.component';
     HttpClientModule,
     MatTableModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
     CommaModule,
   ],
 })

@@ -38,6 +38,10 @@ const routes: Routes = [
   },
   {
     path: '**',
+    redirectTo: '/404',
+  },
+  {
+    path: '404',
     loadChildren: () => import('./not-found/not-found.module').then((m) => m.NotFoundModule),
   },
 
