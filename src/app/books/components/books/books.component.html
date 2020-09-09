@@ -27,19 +27,19 @@
         <mat-card-content>
           <mat-radio-group
           [(ngModel)]="filterBy"
-            (ngModelChange)="getBooksInQuantity(filterBy?.name)">
+            (ngModelChange)="getBooks(filterBy)">
             <mat-radio-button [value]="undefined">All Genres</mat-radio-button>
-            <mat-radio-button class="example-radio-button" *ngFor="let genre of genres$ | async" [value]="genre">
+            <mat-radio-button class="example-radio-button" *ngFor="let genre of genres$ | async" [value]="genre.name">
               {{genre.name}}
             </mat-radio-button>
           </mat-radio-group>
         </mat-card-content>
       </mat-card>
     </div>
-  </ng-template>
     <app-paginator 
       [records]='booksQuantity'
       [limits]='[10, 25, 50, 75, 100, 125, 150]'
-      (changed)="changePageSize($event)"
-      [class.hide]="loadingPage"></app-paginator>
+      (changed)="changePageSize($event)">
+    </app-paginator>
+  </ng-template>
 </div>

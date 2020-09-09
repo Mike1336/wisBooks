@@ -21,7 +21,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   public loadingPage: boolean;
   public loadingBooks: boolean;
 
-  public filterBy: IGenre;
+  public filterBy: string;
   public booksQuantity: number = 0;
 
   public books$: Observable<IBook[]>;
@@ -41,13 +41,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.genres$ = this.genresService.getGenres()
         .pipe(pluck('genres'));
 
-    this.books$ = this.booksService.getBooks(10, 0, null)
-        .pipe(
-          map((data) => {
-            this.booksQuantity = data.meta.records;
-
-            return data.books;
-          }));
+    this.getBooks();
     setTimeout(() => {
       this.loadingPage = false;
     }, 1000);
@@ -59,21 +53,24 @@ export class BooksComponent implements OnInit, OnDestroy {
   }
 
   public changePageSize(pagData: IPaginatorData): void {
-    if (this.filterBy) {
-      this.getBooksInQuantity(this.filterBy.name, pagData.pageSize, pagData.pageIndex);
-    } else {
-      this.getBooksInQuantity(null, pagData.pageSize, pagData.pageIndex);
-    }
+    this.getBooks(this.filterBy, pagData.pageSize, pagData.pageIndex);
   }
-  public getBooksInQuantity(genre?: string, booksQuantity?: number, page?: number): void {
+  public getBooks(
+    genre: string = null,
+    booksQuantity: number = 10,
+    page: number = 0,
+    ): void {// если номер страницы выше чем 1, значит было вызвано отображение другой страницы одного жанра
     this.loadingBooks = true;
-    if (!page) {
-      this.pag.moveToFirstPage();
-    }
+
     this.books$ = this.booksService.getBooks(booksQuantity, page += 1, genre)
     .pipe(
       map((data) => {
         this.booksQuantity = data.meta.records;
+        // если номер страницы выше чем 1, значит было вызвано отображение
+        // другой страницы одного жанра
+        if (page === 1) {
+          this.pag.moveToFirstPage();
+        }
 
         return data.books;
       }));
