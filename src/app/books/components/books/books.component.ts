@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { Observable, forkJoin, ReplaySubject } from 'rxjs';
-import { pluck, map, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { pluck, map } from 'rxjs/operators';
 
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/book';
@@ -16,7 +16,7 @@ import { IPaginatorData,
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
 })
-export class BooksComponent implements OnInit, OnDestroy {
+export class BooksComponent implements OnInit {
 
   public loadingPage: boolean;
   public loadingBooks: boolean;
@@ -27,7 +27,6 @@ export class BooksComponent implements OnInit, OnDestroy {
   public books$: Observable<IBook[]>;
   public genres$: Observable<IGenre[]>;
 
-  // private destroy$: ReplaySubject<any> = new ReplaySubject(1);
 
   @ViewChild(PaginatorComponent) private pag: PaginatorComponent;
 
@@ -47,11 +46,6 @@ export class BooksComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  public ngOnDestroy(): void {
-    // this.destroy$.next(null);
-    // this.destroy$.complete();
-  }
-
   public changePageSize(pagData: IPaginatorData): void {
     this.getBooks(this.filterBy, pagData.pageSize, pagData.pageIndex);
   }
@@ -59,7 +53,7 @@ export class BooksComponent implements OnInit, OnDestroy {
     genre: string = null,
     booksQuantity: number = 10,
     page: number = 0,
-    ): void {// если номер страницы выше чем 1, значит было вызвано отображение другой страницы одного жанра
+    ): void {
     this.loadingBooks = true;
 
     this.books$ = this.booksService.getBooks(booksQuantity, page += 1, genre)

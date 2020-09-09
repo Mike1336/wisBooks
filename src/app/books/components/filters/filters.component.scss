@@ -1,0 +1,11 @@
+mat-card{
+    width: max-content;
+    height: max-content;
+}
+mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    mat-radio-button{
+        line-height: 2;
+    }
+}

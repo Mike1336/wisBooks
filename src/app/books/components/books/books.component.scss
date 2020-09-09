@@ -1,84 +1,26 @@
-p{
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
 #books{
     display: flex;
     flex-flow: column wrap;
-    justify-content: center;
-    margin: 0 15px;
-    height: 100%;
-    mat-card{
-        cursor: pointer;
-        width: 25%;
-        height: 365px;
-        margin: 20px 15px 15px 20px;
-        mat-card-header{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            height: 100px;
-            mat-card-title{
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-        }
-        mat-card-content{
-            text-align: center;
-        }
-        .book-img{
-            width: 50%;
-            height: 50%;
-            margin-left: 50%;
-            transform: translateX(-50%);
-        }
-    }
+    padding-top: 60px;
+
     mat-spinner{
         align-self: center;
         width: 100%;
+    }
+    app-books-content{
+        display: flex;
+        flex-flow: row wrap;
     }
     app-paginator{
         width: 80%;
     }
 }
-#bookContent{
+#content{
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    width: 80%;
-    height: 85%;
-    margin-top: 50px;
+}
+#viewBooks{
+    height: 650px;
     overflow: auto;
 }
-#genreFilters{
-    position: absolute;
-    top: 55px;
-    right: 0;
-    mat-card{
-        width: max-content;
-        height: max-content;
-    }
-    mat-radio-group{
-        display: flex;
-        flex-direction: column;
-        mat-radio-button{
-            line-height: 2;
-        }
-    }
-}
-.hide{
-    visibility: hidden;
-}
-@media (max-width: 1053px){
-    #books{
-        mat-card{
-            width: 40%;
-        }
-    }
-}
+
 
