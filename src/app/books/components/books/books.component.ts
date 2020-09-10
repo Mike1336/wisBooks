@@ -6,11 +6,13 @@ import { pluck, map } from 'rxjs/operators';
 import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/book';
 import { IGenre } from '../../interfaces/genre';
+import { IFilters } from '../../interfaces/filters';
 
 import { GenresService } from './../../services/genres.service';
 import { IPaginatorData,
          PaginatorComponent,
  } from './../../../layout/paginator/paginator.component';
+
 
 @Component({
   templateUrl: './books.component.html',
@@ -21,14 +23,15 @@ export class BooksComponent implements OnInit {
   public loadingPage: boolean;
   public loadingBooks: boolean;
 
-  public filterBy: string;
+  public filters: IFilters;
   public booksQuantity: number = 0;
 
   public books$: Observable<IBook[]>;
   public genres$: Observable<IGenre[]>;
 
 
-  @ViewChild(PaginatorComponent) private pag: PaginatorComponent;
+  @ViewChild(PaginatorComponent)
+  private pag: PaginatorComponent;
 
   constructor(
     private booksService: BooksService,
@@ -47,16 +50,16 @@ export class BooksComponent implements OnInit {
   }
 
   public changePageSize(pagData: IPaginatorData): void {
-    this.getBooks(this.filterBy, pagData.pageSize, pagData.pageIndex);
+    this.getBooks(this.filters, pagData.pageSize, pagData.pageIndex);
   }
   public getBooks(
-    genre: string = null,
+    filters?: IFilters,
     booksQuantity: number = 10,
     page: number = 0,
     ): void {
     this.loadingBooks = true;
-
-    this.books$ = this.booksService.getBooks(booksQuantity, page += 1, genre)
+    page += 1;
+    this.books$ = this.booksService.getBooks(booksQuantity, page, filters)
     .pipe(
       map((data) => {
         this.booksQuantity = data.meta.records;
@@ -72,6 +75,12 @@ export class BooksComponent implements OnInit {
     setTimeout(() => {
       this.loadingBooks = false;
     }, 500);
+  }
+
+  public lol(filters): void {
+      this.filters = filters;
+      this.getBooks(filters);
+    console.log(filters);
   }
 
 }

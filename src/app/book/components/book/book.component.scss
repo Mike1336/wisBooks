@@ -1,15 +1,18 @@
-#bookDetails{
-    height: 99vh;
-    h1, h2, p, pre{
-        color: white;
-    }
-    p{
-        font-size: 16px;
-        margin: 0 20px;
-    }
+#bookDetails {
+  height: 99vh;
+  h1,
+  h2,
+  p,
+  pre {
+    color: white;
+  }
+  p {
+    font-size: 16px;
+    margin: 0 20px;
+  }
 }
-mat-spinner{
-    position: absolute;
-    top: 47%;
-    left: 47%;
+mat-spinner {
+  position: absolute;
+  top: 47%;
+  left: 47%;
 }

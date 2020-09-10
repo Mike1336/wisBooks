@@ -273,12 +273,14 @@
            * collection of MatSortables.
            */
           value: function register(sortable) {
-            if (!sortable.id) {
-              throw getSortHeaderMissingIdError();
-            }
+            if (typeof ngDevMode === 'undefined' || ngDevMode) {
+              if (!sortable.id) {
+                throw getSortHeaderMissingIdError();
+              }
 
-            if (this.sortables.has(sortable.id)) {
-              throw getSortDuplicateSortableIdError(sortable.id);
+              if (this.sortables.has(sortable.id)) {
+                throw getSortDuplicateSortableIdError(sortable.id);
+              }
             }
 
             this.sortables.set(sortable.id, sortable);
@@ -352,7 +354,7 @@
             return this._direction;
           },
           set: function set(direction) {
-            if (Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["isDevMode"])() && direction && direction !== 'asc' && direction !== 'desc') {
+            if (direction && direction !== 'asc' && direction !== 'desc' && (typeof ngDevMode === 'undefined' || ngDevMode)) {
               throw getSortInvalidDirectionError(direction);
             }
 
@@ -664,7 +666,9 @@
 
         var _super2 = _createSuper(MatSortHeader);
 
-        function MatSortHeader(_intl, changeDetectorRef, _sort, _columnDef, _focusMonitor, _elementRef) {
+        function MatSortHeader(_intl, changeDetectorRef, // `MatSort` is not optionally injected, but just asserted manually w/ better error.
+        // tslint:disable-next-line: lightweight-tokens
+        _sort, _columnDef, _focusMonitor, _elementRef) {
           var _this2;
 
           _classCallCheck(this, MatSortHeader);
@@ -697,7 +701,7 @@
 
           _this2.arrowPosition = 'after';
 
-          if (!_sort) {
+          if (!_sort && (typeof ngDevMode === 'undefined' || ngDevMode)) {
             throw getSortHeaderNotContainedWithinSortError();
           }
 

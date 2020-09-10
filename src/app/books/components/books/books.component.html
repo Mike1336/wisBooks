@@ -1,17 +1,15 @@
 <div id="books">
-
   <mat-spinner *ngIf="loadingPage; else booksBlock"></mat-spinner>
 
-
   <ng-template #booksBlock>
-
-  <app-search-field></app-search-field>
+    <app-search-field></app-search-field>
 
     <div id="content">
       <div id="viewBooks">
         <app-books-content
-            *ngIf="(books$ | async) as books; else loading"
-            [books]="books">
+          *ngIf="books$ | async as books; else loading"
+          [books]="books"
+        >
         </app-books-content>
 
         <ng-template #loading>
@@ -19,21 +17,17 @@
         </ng-template>
 
         <app-paginator
-            [records]='booksQuantity'
-            [limits]='[10, 25, 50, 75, 100, 125, 150]'
-            (changed)="changePageSize($event)">
+          [records]="booksQuantity"
+          [limits]="[10, 25, 50, 75, 100, 125, 150]"
+          (changed)="changePageSize($event)"
+        >
         </app-paginator>
       </div>
-        <app-filters
-        *ngIf="(genres$ | async) as genres"
+      <app-filters
+        *ngIf="genres$ | async as genres"
         [genres]="genres"
+        (applyForm)="lol($event)"
       ></app-filters>
-
-
     </div>
-
-
-
   </ng-template>
-
 </div>

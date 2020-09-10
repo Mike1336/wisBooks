@@ -1,26 +1,32 @@
-#books{
+#books {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+
+  mat-spinner {
+    align-self: center;
+  }
+  app-books-content {
     display: flex;
-    flex-flow: column wrap;
-    padding-top: 60px;
-
-    mat-spinner{
-        align-self: center;
-        width: 100%;
-    }
-    app-books-content{
-        display: flex;
-        flex-flow: row wrap;
-    }
-    app-paginator{
-        width: 80%;
-    }
+    flex-flow: row wrap;
+  }
+  app-paginator {
+    width: 80%;
+  }
 }
-#content{
-    display: flex;
+#content {
+  display: flex;
+  height: 93%;
 }
-#viewBooks{
-    height: 650px;
-    overflow: auto;
+#viewBooks {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  mat-spinner {
+    position: absolute;
+    left: 45%;
+    top: 30%;
+  }
 }
-
-

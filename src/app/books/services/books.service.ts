@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IBook, IBooks } from './../interfaces/book';
+import { IFilters } from './../interfaces/filters';
 
 
 @Injectable({
@@ -17,7 +18,7 @@ export class BooksService {
 
   constructor(private http: HttpClient) { }
 
-  public getBooks(quantity?: number, page?: number, genreName?: string): Observable<IBooks> {
+  public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', `${page}`);
@@ -25,8 +26,22 @@ export class BooksService {
     if (quantity) {
       params = params.append('limit', `${quantity}`);
     }
-    if (genreName) {
-      params = params.append('q[genres_name_cont]', `${genreName}`);
+    if (filters) {
+      if (filters.genres.length > 0) {
+        params = params.append('q[genres_name_cont]', `${filters.genres[0]}`);
+      }
+      if (filters.minPrice) {
+        params = params.append('q[price_gteq]', `${filters.minPrice}`);
+      }
+      if (filters.maxPrice) {
+        params = params.append('q[price_lteq]', `${filters.maxPrice}`);
+      }
+      if (filters.releaseFrom) {
+        params = params.append('q[release_date_gteq]', `${filters.releaseFrom}`);
+      }
+      if (filters.releaseTo) {
+        params = params.append('q[release_date_lteq]', `${filters.releaseTo}`);
+      }
     }
 
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });

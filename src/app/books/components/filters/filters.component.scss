@@ -1,11 +1,16 @@
-mat-card{
+form {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 10px;
+  mat-card {
     width: max-content;
     height: max-content;
-}
-mat-radio-group{
+  }
+  mat-radio-group {
     display: flex;
     flex-direction: column;
-    mat-radio-button{
-        line-height: 2;
+    mat-radio-button {
+      line-height: 2;
     }
+  }
 }

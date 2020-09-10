@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { IGenre } from '../../interfaces/genre';
+
 
 @Component({
   selector: 'app-filters',
@@ -9,11 +11,31 @@ import { IGenre } from '../../interfaces/genre';
 })
 export class FiltersComponent implements OnInit {
 
-  @Input() public genres: IGenre[];
+  public filtersForm: FormGroup;
+
+  @Input()
+  public genres: IGenre[];
+  @Output()
+  public applyForm: EventEmitter<object> = new EventEmitter();
 
   constructor() { }
 
   public ngOnInit(): void {
+    this.filtersForm = new FormGroup({
+      genres: new FormControl([]),
+      minPrice: new FormControl(''),
+      maxPrice: new FormControl(''),
+      releaseFrom: new FormControl(''),
+      releaseTo: new FormControl(''),
+    });
+  }
+
+  public applyFilters(): void {
+    this.applyForm.emit(this.filtersForm.value);
+  }
+
+  public lol(date) {
+    console.log(date);
   }
 
 }

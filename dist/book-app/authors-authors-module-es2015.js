@@ -116,7 +116,8 @@ class MatSort extends _MatSortMixinBase {
     /** The sort direction of the currently active MatSortable. */
     get direction() { return this._direction; }
     set direction(direction) {
-        if (Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["isDevMode"])() && direction && direction !== 'asc' && direction !== 'desc') {
+        if (direction && direction !== 'asc' && direction !== 'desc' &&
+            (typeof ngDevMode === 'undefined' || ngDevMode)) {
             throw getSortInvalidDirectionError(direction);
         }
         this._direction = direction;
@@ -132,11 +133,13 @@ class MatSort extends _MatSortMixinBase {
      * collection of MatSortables.
      */
     register(sortable) {
-        if (!sortable.id) {
-            throw getSortHeaderMissingIdError();
-        }
-        if (this.sortables.has(sortable.id)) {
-            throw getSortDuplicateSortableIdError(sortable.id);
+        if (typeof ngDevMode === 'undefined' || ngDevMode) {
+            if (!sortable.id) {
+                throw getSortHeaderMissingIdError();
+            }
+            if (this.sortables.has(sortable.id)) {
+                throw getSortDuplicateSortableIdError(sortable.id);
+            }
         }
         this.sortables.set(sortable.id, sortable);
     }
@@ -379,7 +382,10 @@ const _MatSortHeaderMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_
  * column definition.
  */
 class MatSortHeader extends _MatSortHeaderMixinBase {
-    constructor(_intl, changeDetectorRef, _sort, _columnDef, _focusMonitor, _elementRef) {
+    constructor(_intl, changeDetectorRef, 
+    // `MatSort` is not optionally injected, but just asserted manually w/ better error.
+    // tslint:disable-next-line: lightweight-tokens
+    _sort, _columnDef, _focusMonitor, _elementRef) {
         // Note that we use a string token for the `_columnDef`, because the value is provided both by
         // `material/table` and `cdk/table` and we can't have the CDK depending on Material,
         // and we want to avoid having the sort header depending on the CDK table because
@@ -403,7 +409,7 @@ class MatSortHeader extends _MatSortHeaderMixinBase {
         this._disableViewStateAnimation = false;
         /** Sets the position of the arrow that displays when sorted. */
         this.arrowPosition = 'after';
-        if (!_sort) {
+        if (!_sort && (typeof ngDevMode === 'undefined' || ngDevMode)) {
             throw getSortHeaderNotContainedWithinSortError();
         }
         this._rerenderSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["merge"])(_sort.sortChange, _sort._stateChanges, _intl.changes)

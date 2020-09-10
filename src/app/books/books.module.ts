@@ -11,7 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { CommaModule } from '../libs/comma/comma.module';
 
@@ -46,6 +47,8 @@ import { BooksContentComponent } from './components/books-content/books-content.
     MatSelectModule,
     MatInputModule,
     MatSliderModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     LayoutModule,
     CommaModule,
   ],
