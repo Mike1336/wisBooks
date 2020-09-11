@@ -17,17 +17,16 @@
 }
 #content {
   display: flex;
-  height: 93%;
+  height: 92%;
 }
 #viewBooks {
-  position: relative;
   height: 100%;
   width: 100%;
   overflow: auto;
-  mat-spinner {
-    position: absolute;
-    left: 45%;
-    top: 30%;
+  .spinner{
+    height: 92%;
+    display: flex;
+    justify-content: center;
   }
 }
 #nfBooks{

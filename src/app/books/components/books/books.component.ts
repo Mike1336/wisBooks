@@ -7,12 +7,12 @@ import { BooksService } from '../../services/books.service';
 import { IBook } from '../../interfaces/book';
 import { IGenre } from '../../interfaces/genre';
 import { IFilters } from '../../interfaces/filters';
+import { FiltersComponent } from '../filters/filters.component';
 
 import { GenresService } from './../../services/genres.service';
 import { IPaginatorData,
          PaginatorComponent,
  } from './../../../layout/paginator/paginator.component';
-import { FiltersComponent } from '../filters/filters.component';
 
 
 @Component({
@@ -44,14 +44,10 @@ export class BooksComponent implements OnInit {
     ) {
   }
   public ngOnInit(): void {
-    this.loadingPage = true;
     this.genres$ = this.genresService.getGenres()
         .pipe(pluck('genres'));
 
     this.getBooks();
-    setTimeout(() => {
-      this.loadingPage = false;
-    }, 1000);
   }
 
   public changePageSize(pagData: IPaginatorData): void {
@@ -73,27 +69,23 @@ export class BooksComponent implements OnInit {
         if (page === 1) {
           this.pag.moveToFirstPage();
         }
-        data.books.length === 0 ?
-        this.emptyResult = true :
-        this.emptyResult = false ;
-
+        data.books.length > 0 ?
+        this.emptyResult = false :
+        this.emptyResult = true ;
+        console.log(data.books.length)
         return data.books;
       }));
-
-    setTimeout(() => {
-      this.loadingBooks = false;
-    }, 500);
+    this.loadingBooks = false;
   }
 
   public lol(filters): void {
-      this.filters = filters;
-      this.getBooks(filters);
+    this.filters = filters;
+    this.getBooks(filters);
     console.log(filters);
   }
   public resetFilters(): void {
-    this.form.filtersForm.reset();
-    this.filters = undefined
     this.getBooks();
+    this.form.filtersForm.reset();
   }
 
 }

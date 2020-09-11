@@ -29,7 +29,9 @@ export class BooksService {
     if (filters) {
       if (filters.genres) {
         if (filters.genres.length > 0) {
-          params = params.append('q[genres_name_cont]', `${filters.genres[0]}`);
+          filters.genres.forEach((genre) => {
+            params = params.append('q[genres_name_in][]', `${genre}`);
+          });
         }
       }
       if (filters.minPrice) {
@@ -45,6 +47,7 @@ export class BooksService {
         params = params.append('q[release_date_lteq]', `${filters.releaseTo}`);
       }
     }
+    console.log(filters)
 
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }

@@ -2,9 +2,8 @@
   <mat-form-field appearance="fill">
     <mat-label>Genre filters</mat-label>
     <mat-select multiple formControlName="genres">
-      <mat-option *ngFor="let genre of genres" [value]="genre.name">{{
-        genre.name
-      }}</mat-option>
+      <mat-option *ngFor="let genre of genres" [value]="genre.name">
+        {{ genre.name }}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -24,7 +23,8 @@
       matInput
       [matDatepicker]="pickerFrom"
       formControlName="releaseFrom"
-      (dateInput)="lol($event)" (dateChange)="lol($event)"
+      (dateInput)="lol($event)"
+      (dateChange)="lol($event)"
     />
     <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
     <mat-datepicker #pickerFrom startView="multi-year"></mat-datepicker>
@@ -41,7 +41,7 @@
     type="submit"
     mat-button
     color="accent"
-    *ngIf="filtersForm.touched && filtersForm.valid ; else disabled"
+    *ngIf="filtersForm.touched && filtersForm.valid; else disabled"
   >
     Accept filters
   </button>

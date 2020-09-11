@@ -1,11 +1,8 @@
 <div id="books">
-  <mat-spinner *ngIf="loadingPage; else booksBlock"></mat-spinner>
-
-  <ng-template #booksBlock>
     <app-search-field></app-search-field>
 
     <div id="content">
-      <div class="viewBooks" *ngIf="!emptyResult; else emptyBooks">
+      <div id="viewBooks">
         <app-books-content
           *ngIf="books$ | async as books; else loading"
           [books]="books"
@@ -37,5 +34,4 @@
         (applyForm)="lol($event)"
       ></app-filters>
     </div>
-  </ng-template>
 </div>

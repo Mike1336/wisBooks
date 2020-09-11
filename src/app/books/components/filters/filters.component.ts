@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { IGenre } from '../../interfaces/genre';
-import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -42,6 +42,15 @@ export class FiltersComponent implements OnInit {
   }
 
   public lol(date) {
+  }
+
+  private passEqual() {
+    return (group: FormGroup) => {
+      return (!group.dirty || !group.touched) ||
+              group.get('minPrice').value < group.get('maxPrice').value ?
+                 null :
+                 { custom: 'пароли не совпадают' };
+    }
   }
 
 }
