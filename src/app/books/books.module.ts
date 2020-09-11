@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -52,6 +52,7 @@ import { BooksContentComponent } from './components/books-content/books-content.
     LayoutModule,
     CommaModule,
   ],
+  providers: [DatePipe],
   bootstrap: [],
 })
 export class BooksModule {

@@ -12,6 +12,7 @@ import { GenresService } from './../../services/genres.service';
 import { IPaginatorData,
          PaginatorComponent,
  } from './../../../layout/paginator/paginator.component';
+import { FiltersComponent } from '../filters/filters.component';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class BooksComponent implements OnInit {
 
   public loadingPage: boolean;
   public loadingBooks: boolean;
+  public emptyResult: boolean;
 
   public filters: IFilters;
   public booksQuantity: number = 0;
@@ -32,6 +34,9 @@ export class BooksComponent implements OnInit {
 
   @ViewChild(PaginatorComponent)
   private pag: PaginatorComponent;
+
+  @ViewChild(FiltersComponent)
+  private form: FiltersComponent;
 
   constructor(
     private booksService: BooksService,
@@ -68,6 +73,9 @@ export class BooksComponent implements OnInit {
         if (page === 1) {
           this.pag.moveToFirstPage();
         }
+        data.books.length === 0 ?
+        this.emptyResult = true :
+        this.emptyResult = false ;
 
         return data.books;
       }));
@@ -81,6 +89,11 @@ export class BooksComponent implements OnInit {
       this.filters = filters;
       this.getBooks(filters);
     console.log(filters);
+  }
+  public resetFilters(): void {
+    this.form.filtersForm.reset();
+    this.filters = undefined
+    this.getBooks();
   }
 
 }

@@ -27,8 +27,10 @@ export class BooksService {
       params = params.append('limit', `${quantity}`);
     }
     if (filters) {
-      if (filters.genres.length > 0) {
-        params = params.append('q[genres_name_cont]', `${filters.genres[0]}`);
+      if (filters.genres) {
+        if (filters.genres.length > 0) {
+          params = params.append('q[genres_name_cont]', `${filters.genres[0]}`);
+        }
       }
       if (filters.minPrice) {
         params = params.append('q[price_gteq]', `${filters.minPrice}`);

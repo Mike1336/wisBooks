@@ -5,7 +5,7 @@
     <app-search-field></app-search-field>
 
     <div id="content">
-      <div id="viewBooks">
+      <div class="viewBooks" *ngIf="!emptyResult; else emptyBooks">
         <app-books-content
           *ngIf="books$ | async as books; else loading"
           [books]="books"
@@ -13,7 +13,9 @@
         </app-books-content>
 
         <ng-template #loading>
-          <mat-spinner></mat-spinner>
+          <div class="spinner">
+            <mat-spinner></mat-spinner>
+          </div>
         </ng-template>
 
         <app-paginator
@@ -23,6 +25,12 @@
         >
         </app-paginator>
       </div>
+      <ng-template #emptyBooks>
+        <div id="nfBooks">
+          <h2>Books not found</h2>
+          <button mat-stroked-button color="warn" (click)="resetFilters()">Reset filters</button>
+        </div>
+      </ng-template>
       <app-filters
         *ngIf="genres$ | async as genres"
         [genres]="genres"

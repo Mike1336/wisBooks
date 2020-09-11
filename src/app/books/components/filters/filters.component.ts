@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { IGenre } from '../../interfaces/genre';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class FiltersComponent implements OnInit {
   @Output()
   public applyForm: EventEmitter<object> = new EventEmitter();
 
-  constructor() { }
+  constructor(private datePipe: DatePipe) { }
 
   public ngOnInit(): void {
     this.filtersForm = new FormGroup({
@@ -31,11 +32,16 @@ export class FiltersComponent implements OnInit {
   }
 
   public applyFilters(): void {
+    this.filtersForm.value.releaseFrom = this.datePipe.transform(
+      this.filtersForm.value.releaseFrom, 'yyyy-MM-dd',
+      );
+    this.filtersForm.value.releaseTo = this.datePipe.transform(
+      this.filtersForm.value.releaseTo, 'yyyy-MM-dd',
+      );
     this.applyForm.emit(this.filtersForm.value);
   }
 
   public lol(date) {
-    console.log(date);
   }
 
 }
