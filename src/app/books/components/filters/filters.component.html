@@ -7,45 +7,71 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Price from</mat-label>
-    <input type="number" matInput formControlName="minPrice" />
-  </mat-form-field>
+  <div formGroupName="prices">
+    <mat-form-field class="example-full-width">
+      <mat-label>Price from</mat-label>
+      <input type="number" matInput formControlName="minPrice" />
+      <div *ngIf="filtersForm.get('prices').get('minPrice').invalid && 
+                  filtersForm.get('prices').get('minPrice').touched">
+        <small *ngIf="filtersForm.get('prices').get('minPrice').errors.min">Цена не может быть отрицательной</small>
+        <small *ngIf="filtersForm.get('prices').get('minPrice').errors.minMaxPriceError">Минимальная цена не может быть больше максимальной</small>
+      </div>
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Price to</mat-label>
-    <input type="number" matInput formControlName="maxPrice" />
-  </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Price to</mat-label>
+      <input type="number" matInput formControlName="maxPrice" />
+      <div *ngIf="filtersForm.get('prices').get('maxPrice').invalid && filtersForm.get('prices').get('maxPrice').touched">
+        <small *ngIf="filtersForm.get('prices').get('maxPrice').errors.min">Цена не может быть отрицательной</small>
+      </div>
+    </mat-form-field>
+  </div>
 
-  <mat-form-field color="accent" appearance="fill">
-    <mat-label>Release date from</mat-label>
-    <input
-      matInput
-      [matDatepicker]="pickerFrom"
-      formControlName="releaseFrom"
-      (dateInput)="lol($event)"
-      (dateChange)="lol($event)"
-    />
-    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-    <mat-datepicker #pickerFrom startView="multi-year"></mat-datepicker>
-  </mat-form-field>
+  <div formGroupName="releases">
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Release date from</mat-label>
+      <input
+        matInput
+        [matDatepicker]="pickerFrom"
+        formControlName="releaseFrom"
+      />
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom startView="multi-year"></mat-datepicker>
+      <small *ngIf="filtersForm.get('releases').errors">Начальная дата не может быть больше конечной</small>
+    </mat-form-field>
 
-  <mat-form-field color="accent" appearance="fill">
-    <mat-label>Release date to</mat-label>
-    <input matInput [matDatepicker]="pickerTo" formControlName="releaseTo" />
-    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-    <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field color="accent" appearance="fill">
+      <mat-label>Release date to</mat-label>
+      <input matInput [matDatepicker]="pickerTo" formControlName="releaseTo" />
+      <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
+    </mat-form-field>
+  </div>
 
-  <button
-    type="submit"
-    mat-button
-    color="accent"
-    *ngIf="filtersForm.touched && filtersForm.valid; else disabled"
+  <div
+  id="buttons"
+  *ngIf="filtersForm.touched && filtersForm.valid; else disabled"
   >
-    Accept filters
-  </button>
+    <button
+      type="submit"
+      mat-button
+      color="accent"
+    >
+      Accept filters
+    </button>
+
+    <button
+      type="submit"
+      mat-button
+      color="warn"
+      (click)="resetFilters()"
+      *ngIf="showResetButton"
+    >
+      Reset filters
+    </button>
+  </div>
   <ng-template #disabled>
     <button mat-button disabled>Accept filters</button>
+    
   </ng-template>
 </form>

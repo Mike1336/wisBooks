@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import { IGenre } from '../../interfaces/genre';
@@ -13,21 +13,36 @@ import { IGenre } from '../../interfaces/genre';
 export class FiltersComponent implements OnInit {
 
   public filtersForm: FormGroup;
+  public showResetButton: boolean;
 
   @Input()
   public genres: IGenre[];
   @Output()
   public applyForm: EventEmitter<object> = new EventEmitter();
+  @Output()
+  public resetForm: EventEmitter<object> = new EventEmitter();
 
   constructor(private datePipe: DatePipe) { }
 
   public ngOnInit(): void {
     this.filtersForm = new FormGroup({
       genres: new FormControl([]),
-      minPrice: new FormControl(''),
-      maxPrice: new FormControl(''),
-      releaseFrom: new FormControl(''),
-      releaseTo: new FormControl(''),
+      prices: new FormGroup({
+        minPrice: new FormControl('', [
+          Validators.min(0),
+        ]),
+        maxPrice: new FormControl('', [
+          Validators.min(0),
+        ]),
+      },
+      this.validPrice
+      ),
+      releases: new FormGroup({
+        releaseFrom: new FormControl(''),
+        releaseTo: new FormControl(''),  
+      },
+      this.validRelease
+      )
     });
   }
 
@@ -39,18 +54,41 @@ export class FiltersComponent implements OnInit {
       this.filtersForm.value.releaseTo, 'yyyy-MM-dd',
       );
     this.applyForm.emit(this.filtersForm.value);
+    this.showResetButton = true;
   }
 
-  public lol(date) {
+  public resetFilters(): void {
+    this.resetForm.emit();
+    this.showResetButton = false;
   }
 
-  private passEqual() {
-    return (group: FormGroup) => {
-      return (!group.dirty || !group.touched) ||
-              group.get('minPrice').value < group.get('maxPrice').value ?
-                 null :
-                 { custom: 'пароли не совпадают' };
+  private validPrice(priceGroup: FormGroup): {[key: string]: boolean} {
+    if (priceGroup.get('minPrice').value > 0 &&
+        priceGroup.get('maxPrice').value > 0) {
+        if (priceGroup.get('minPrice').value > priceGroup.get('maxPrice').value) {
+          priceGroup.get('minPrice').setErrors({
+            minMaxPriceError: true,
+          })
+          return { minMaxPriceError: true, }
+        } else {
+          priceGroup.get('minPrice').reset();
+          return null;
+        }
     }
   }
-
+  private validRelease(releaseFroup: FormGroup): {[key: string]: boolean} {
+    if (releaseFroup.get('releaseFrom').value &&
+        releaseFroup.get('releaseTo').value) {
+        if (releaseFroup.get('releaseFrom').value > releaseFroup.get('releaseTo').value) {
+          releaseFroup.get('releaseFrom').setErrors({
+            fromToReleaseError: true,
+          })
+          return { fromToReleaseError: true, }
+        } else {
+          releaseFroup.get('releaseFrom').reset();
+          return null;
+        }
+    }
+  }
+  
 }

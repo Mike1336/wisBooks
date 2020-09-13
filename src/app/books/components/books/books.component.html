@@ -19,19 +19,21 @@
           [records]="booksQuantity"
           [limits]="[10, 25, 50, 75, 100, 125, 150]"
           (changed)="changePageSize($event)"
+          [class.hide]="emptyResult"
         >
         </app-paginator>
-      </div>
-      <ng-template #emptyBooks>
-        <div id="nfBooks">
+        <div id="nfBooks" *ngIf="emptyResult">
           <h2>Books not found</h2>
           <button mat-stroked-button color="warn" (click)="resetFilters()">Reset filters</button>
         </div>
-      </ng-template>
-      <app-filters
-        *ngIf="genres$ | async as genres"
-        [genres]="genres"
-        (applyForm)="lol($event)"
-      ></app-filters>
+      </div>
+
+        <app-filters
+          *ngIf="genres$ | async as genres"
+          [genres]="genres"
+          (applyForm)="getFilteredBooks($event)"
+          (resetForm)="resetFilters()"
+        ></app-filters>
+
     </div>
 </div>

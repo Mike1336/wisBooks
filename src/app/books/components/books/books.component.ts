@@ -78,14 +78,15 @@ export class BooksComponent implements OnInit {
     this.loadingBooks = false;
   }
 
-  public lol(filters): void {
+  public getFilteredBooks(filters): void {
     this.filters = filters;
     this.getBooks(filters);
     console.log(filters);
   }
   public resetFilters(): void {
-    this.getBooks();
+    this.form.showResetButton = false;
     this.form.filtersForm.reset();
+    this.getBooks();
   }
 
 }

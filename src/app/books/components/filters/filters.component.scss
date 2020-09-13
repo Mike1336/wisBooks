@@ -2,6 +2,10 @@ form {
   display: flex;
   flex-flow: column wrap;
   margin: 10px;
+  mat-form-field{
+    width: 100%;
+    color: #ffffff;
+  }
   mat-card {
     width: max-content;
     height: max-content;
@@ -12,5 +16,9 @@ form {
     mat-radio-button {
       line-height: 2;
     }
+  }
+  #buttons{
+    display: flex;
+    flex-direction: column;
   }
 }

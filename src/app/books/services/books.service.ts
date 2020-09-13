@@ -34,20 +34,23 @@ export class BooksService {
           });
         }
       }
-      if (filters.minPrice) {
-        params = params.append('q[price_gteq]', `${filters.minPrice}`);
+      if (filters.prices) {
+        if (filters.prices.minPrice) {
+          params = params.append('q[price_gteq]', `${filters.prices.minPrice}`);
+        }
+        if (filters.prices.maxPrice) {
+          params = params.append('q[price_lteq]', `${filters.prices.maxPrice}`);
+        }
       }
-      if (filters.maxPrice) {
-        params = params.append('q[price_lteq]', `${filters.maxPrice}`);
-      }
-      if (filters.releaseFrom) {
-        params = params.append('q[release_date_gteq]', `${filters.releaseFrom}`);
-      }
-      if (filters.releaseTo) {
-        params = params.append('q[release_date_lteq]', `${filters.releaseTo}`);
+      if (filters.releases) {
+        if (filters.releases.releaseFrom) {
+          params = params.append('q[release_date_gteq]', `${filters.releases.releaseFrom}`);
+        }
+        if (filters.releases.releaseTo) {
+          params = params.append('q[release_date_lteq]', `${filters.releases.releaseTo}`);
+        }  
       }
     }
-    console.log(filters)
 
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }
