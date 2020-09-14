@@ -23,14 +23,12 @@ export class MyValidator {
   public static releaseValidation(releaseFroup: FormGroup): {[key: string]: boolean} {
     const releaseFrom = releaseFroup.get('releaseFrom');
     const releaseTo = releaseFroup.get('releaseTo');
-    if ((releaseFrom.value && releaseTo.value) &&
+    if ((releaseFrom.value > 0 && releaseTo.value > 0) &&
             releaseFrom.value > releaseTo.value
         ) {
       releaseFrom.setErrors({
         fromToReleaseError: true,
       });
-
-      return { fromToReleaseError: true, };
     } else {
       releaseFrom.setErrors(
           null,

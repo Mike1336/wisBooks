@@ -31,12 +31,6 @@ export class FiltersComponent implements OnInit {
   }
 
   public applyFilters(): void {
-    this.filtersForm.value.releaseFrom = this.datePipe.transform(
-      this.filtersForm.value.releaseFrom, 'yyyy-MM-dd',
-      );
-    this.filtersForm.value.releaseTo = this.datePipe.transform(
-      this.filtersForm.value.releaseTo, 'yyyy-MM-dd',
-      );
     this.applyForm.emit(this.filtersForm.value);
     this.showResetButton = true;
   }

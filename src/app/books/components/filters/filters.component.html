@@ -44,14 +44,12 @@
         matInput
         [matDatepicker]="pickerFrom"
         formControlName="releaseFrom"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="pickerFrom"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #pickerFrom startView="multi-year"></mat-datepicker>
+        disabled
+        />
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom startView="multi-year" disabled="false"></mat-datepicker>
       <mat-error
-        *ngIf="filtersForm.get('releases').hasError('fromToReleaseError')"
+        *ngIf="filtersForm.get('releases').get('releaseFrom').hasError('fromToReleaseError')"
       >
         Начальная дата не может быть больше конечной
       </mat-error>
@@ -59,9 +57,14 @@
 
     <mat-form-field color="accent" appearance="fill">
       <mat-label>Release date to</mat-label>
-      <input matInput [matDatepicker]="pickerTo" formControlName="releaseTo" />
+      <input 
+        matInput 
+        [matDatepicker]="pickerTo" 
+        formControlName="releaseTo"
+        disabled 
+      />
       <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-      <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
+      <mat-datepicker #pickerTo startView="multi-year" disabled="false"></mat-datepicker>
     </mat-form-field>
   </div>
 
