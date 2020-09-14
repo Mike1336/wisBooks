@@ -3,7 +3,8 @@
     <mat-label>Genre filters</mat-label>
     <mat-select multiple formControlName="genres">
       <mat-option *ngFor="let genre of genres" [value]="genre.name">
-        {{ genre.name }}</mat-option>
+        {{ genre.name }}</mat-option
+      >
     </mat-select>
   </mat-form-field>
 
@@ -11,19 +12,28 @@
     <mat-form-field class="example-full-width">
       <mat-label>Price from</mat-label>
       <input type="number" matInput formControlName="minPrice" />
-      <div *ngIf="filtersForm.get('prices').get('minPrice').invalid && 
-                  filtersForm.get('prices').get('minPrice').touched">
-        <small *ngIf="filtersForm.get('prices').get('minPrice').errors.min">Цена не может быть отрицательной</small>
-        <small *ngIf="filtersForm.get('prices').get('minPrice').errors.minMaxPriceError">Минимальная цена не может быть больше максимальной</small>
-      </div>
+      <mat-error
+        *ngIf="filtersForm.get('prices').get('minPrice').hasError('min')"
+      >
+        Цена не может быть отрицательной
+      </mat-error>
+      <mat-error
+        *ngIf="
+        filtersForm.get('prices').get('minPrice').hasError('minPriceError')
+        "
+      >
+        Минимальная цена не может быть больше максимальной
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Price to</mat-label>
       <input type="number" matInput formControlName="maxPrice" />
-      <div *ngIf="filtersForm.get('prices').get('maxPrice').invalid && filtersForm.get('prices').get('maxPrice').touched">
-        <small *ngIf="filtersForm.get('prices').get('maxPrice').errors.min">Цена не может быть отрицательной</small>
-      </div>
+      <mat-error
+        *ngIf="filtersForm.get('prices').get('maxPrice').hasError('min')"
+      >
+        Цена не может быть отрицательной
+      </mat-error>
     </mat-form-field>
   </div>
 
@@ -35,9 +45,16 @@
         [matDatepicker]="pickerFrom"
         formControlName="releaseFrom"
       />
-      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerFrom"
+      ></mat-datepicker-toggle>
       <mat-datepicker #pickerFrom startView="multi-year"></mat-datepicker>
-      <small *ngIf="filtersForm.get('releases').errors">Начальная дата не может быть больше конечной</small>
+      <mat-error
+        *ngIf="filtersForm.get('releases').hasError('fromToReleaseError')"
+      >
+        Начальная дата не может быть больше конечной
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field color="accent" appearance="fill">
@@ -49,16 +66,10 @@
   </div>
 
   <div
-  id="buttons"
-  *ngIf="filtersForm.touched && filtersForm.valid; else disabled"
+    id="buttons"
+    *ngIf="filtersForm.touched && filtersForm.valid; else disabled"
   >
-    <button
-      type="submit"
-      mat-button
-      color="accent"
-    >
-      Accept filters
-    </button>
+    <button type="submit" mat-button color="accent">Accept filters</button>
 
     <button
       type="submit"
@@ -72,6 +83,5 @@
   </div>
   <ng-template #disabled>
     <button mat-button disabled>Accept filters</button>
-    
   </ng-template>
 </form>

@@ -57,7 +57,7 @@ export class BooksComponent implements OnInit {
     filters?: IFilters,
     booksQuantity: number = 10,
     page: number = 0,
-    ): void {
+  ): void {
     this.loadingBooks = true;
     page += 1;
     this.books$ = this.booksService.getBooks(booksQuantity, page, filters)
