@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 import { IGenre } from '../../interfaces/genre';
 
+import { SidebarService } from './../../../layout/services/sidebar.service';
 import { MyValidator } from './../../validators/my.validator';
 
 export const MY_FORMATS = {
@@ -38,7 +40,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class FiltersComponent implements OnInit {
+export class FiltersComponent implements OnInit, AfterViewInit {
 
   public filtersForm: FormGroup;
   public showResetButton: boolean;
@@ -49,11 +51,23 @@ export class FiltersComponent implements OnInit {
   public applyForm: EventEmitter<object> = new EventEmitter();
   @Output()
   public resetForm: EventEmitter<object> = new EventEmitter();
+  @ViewChild(MatDrawer)
+  public drawer: MatDrawer;
 
-  constructor() { }
+  constructor(private sidebar: SidebarService) { }
 
   public ngOnInit(): void {
     this.initForm();
+  }
+  public ngAfterViewInit(): void {
+    this.sidebar.filSbOpen$.subscribe((data) => {
+      if (data) {
+        console.log(data)
+        this.drawer.open();
+      } else {
+        this.drawer.close();
+      }
+    });
   }
 
   public applyFilters(): void {
@@ -89,23 +103,3 @@ export class FiltersComponent implements OnInit {
   }
 
 }
-
-// public toRansack(filters)
-
-// filters = {
-//   cock: 1,
-//   genres: [1,2,3],
-//   releaseDate: '10-10-2010',
-// };
-
-// toRansack(filters, {
-//   genres: Ransack.In,
-//   releaseDate: Ransack.Gt,
-// })
-
-
-// => {
-//   cock: 1,
-//   genres_in: [1,2,3],
-//   releaseDate_gt: '10-10-2010',
-// }

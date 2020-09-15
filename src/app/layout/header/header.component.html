@@ -1,6 +1,9 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="showSideBar()" class="example-icon" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button (click)="showSideBar()" class="example-icon">
     <mat-icon>menu</mat-icon>
   </button>
   <h1>My Books</h1>
+  <button mat-icon-button *ngIf="booksPageIcon" (click)="showBooksFilters()" class="example-icon">
+    <mat-icon>filter_list</mat-icon>
+  </button>
 </mat-toolbar>

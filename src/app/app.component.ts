@@ -10,14 +10,14 @@ import { SidebarService } from './layout/services/sidebar.service';
 })
 export class AppComponent {
 
-  public showSideBar: boolean = false;
+  public showNavSideBar: boolean = false;
 
   constructor(private sbService: SidebarService) {
 
   }
-  public show(): void {
-    this.showSideBar = !this.showSideBar;
-    this.sbService.change(this.showSideBar);
+  public showNav(): void {
+    console.log('q')
+    this.showNavSideBar = !this.showNavSideBar;
+    this.sbService.changeNavSb(this.showNavSideBar);
   }
-
 }

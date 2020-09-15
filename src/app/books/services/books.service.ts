@@ -1,3 +1,4 @@
+import { Ransack } from './../ransack/ransack';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -21,36 +22,14 @@ export class BooksService {
   public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
     // params = toRansack(filters, {});
     let params = new HttpParams();
+    if (filters) {
+      params = Ransack.toRansack(filters);
+    }
     if (page) {
       params = params.append('page', `${page}`);
     }
     if (quantity) {
       params = params.append('limit', `${quantity}`);
-    }
-    if (filters) {
-      if (filters.genres) {
-        if (filters.genres.length > 0) {
-          filters.genres.forEach((genre) => {
-            params = params.append('q[genres_name_in][]', `${genre}`);
-          });
-        }
-      }
-      if (filters.prices) {
-        if (filters.prices.minPrice) {
-          params = params.append('q[price_gteq]', `${filters.prices.minPrice}`);
-        }
-        if (filters.prices.maxPrice) {
-          params = params.append('q[price_lteq]', `${filters.prices.maxPrice}`);
-        }
-      }
-      if (filters.releases) {
-        if (filters.releases.releaseFrom) {
-          params = params.append('q[release_date_gteq]', `${filters.releases.releaseFrom}`);
-        }
-        if (filters.releases.releaseTo) {
-          params = params.append('q[release_date_lteq]', `${filters.releases.releaseTo}`);
-        }
-      }
     }
 
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });

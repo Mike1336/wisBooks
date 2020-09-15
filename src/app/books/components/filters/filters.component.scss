@@ -1,24 +1,30 @@
-form {
-  display: flex;
-  flex-flow: column wrap;
-  margin: 10px;
-  mat-form-field{
-    width: 100%;
-    color: #ffffff;
+mat-drawer-container{
+  height: 100%;
+  mat-drawer{
+    background-color: #303030;
   }
-  mat-card {
-    width: max-content;
-    height: max-content;
-  }
-  mat-radio-group {
+  form {
     display: flex;
-    flex-direction: column;
-    mat-radio-button {
-      line-height: 2;
+    flex-flow: column wrap;
+    margin: 10px;
+    mat-form-field{
+      width: 100%;
+      color: #ffffff;
     }
-  }
-  #buttons{
-    display: flex;
-    flex-direction: column;
+    mat-card {
+      width: max-content;
+      height: max-content;
+    }
+    mat-radio-group {
+      display: flex;
+      flex-direction: column;
+      mat-radio-button {
+        line-height: 2;
+      }
+    }
+    #buttons{
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   public ngOnInit(): void {
   }
   public ngAfterViewInit(): void {
-    this.sidebar.sbOpen$.subscribe((data) => {
+    this.sidebar.navSbOpen$.subscribe((data) => {
       if (data) {
         this.drawer.open();
 

@@ -1,19 +1,40 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+import { SidebarService } from './../services/sidebar.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() public burgerClicked: EventEmitter<any> = new EventEmitter<any>();
+  public booksPageIcon: boolean;
+  public filtersDrawer: boolean;
 
-  constructor() { }
+  @Output()
+  public burgerClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  public filtersClicked: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private route: Router, private sbService: SidebarService) { }
 
   public ngOnInit(): void {
+    console.log(this.route.url);
+    if (this.route.url === '/') {
+      this.booksPageIcon = true;
+      console.log('q');
+    } else {
+      this.booksPageIcon = false;
+    }
   }
   public showSideBar(): void {
     this.burgerClicked.emit();
   }
+  public showBooksFilters(): void {
+    this.filtersDrawer = !this.filtersDrawer;
+    this.sbService.changeFilSb(this.filtersDrawer);
+  }
+
 }

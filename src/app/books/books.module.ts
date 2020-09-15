@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -52,6 +53,7 @@ import { BooksContentComponent } from './components/books-content/books-content.
     MatDatepickerModule,
     MatNativeDateModule,
     MatMomentDateModule,
+    MatSidenavModule,
     LayoutModule,
     CommaModule,
   ],
