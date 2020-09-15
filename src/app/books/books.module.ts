@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -12,7 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { CommaModule } from '../libs/comma/comma.module';
@@ -24,7 +25,6 @@ import { BookItemComponent } from './components/book-item/book-item.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { BooksContentComponent } from './components/books-content/books-content.component';
-import { CustomDateAdapter } from './date-adapter/custom-date-adapter';
 
 
 @NgModule({
@@ -54,11 +54,6 @@ import { CustomDateAdapter } from './date-adapter/custom-date-adapter';
     MatMomentDateModule,
     LayoutModule,
     CommaModule,
-  ],
-  providers: [
-    DatePipe,
-    CustomDateAdapter, // so we could inject services to 'CustomDateAdapter'
-      { provide: DateAdapter, useClass: CustomDateAdapter }, // Parse MatDatePicker Format
   ],
   bootstrap: [],
 })

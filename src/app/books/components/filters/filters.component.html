@@ -15,14 +15,12 @@
       <mat-error
         *ngIf="filtersForm.get('prices').get('minPrice').hasError('min')"
       >
-        Цена не может быть отрицательной
+        Price could not be a negative
       </mat-error>
       <mat-error
-        *ngIf="
-        filtersForm.get('prices').get('minPrice').hasError('minPriceError')
-        "
+        *ngIf="filtersForm.get('prices').get('minPrice').hasError('priceError')"
       >
-        Минимальная цена не может быть больше максимальной
+        Minimal price could not be biggest than maximal
       </mat-error>
     </mat-form-field>
 
@@ -32,7 +30,7 @@
       <mat-error
         *ngIf="filtersForm.get('prices').get('maxPrice').hasError('min')"
       >
-        Цена не может быть отрицательной
+        Price could not be a negative
       </mat-error>
     </mat-form-field>
   </div>
@@ -44,27 +42,49 @@
         matInput
         [matDatepicker]="pickerFrom"
         formControlName="releaseFrom"
-        disabled
-        />
-      <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-      <mat-datepicker #pickerFrom startView="multi-year" disabled="false"></mat-datepicker>
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerFrom"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom startView="multi-year"></mat-datepicker>
       <mat-error
-        *ngIf="filtersForm.get('releases').get('releaseFrom').hasError('fromToReleaseError')"
+        *ngIf="
+          filtersForm
+            .get('releases')
+            .get('releaseFrom')
+            .hasError('releaseError')
+        "
       >
-        Начальная дата не может быть больше конечной
+        First release date could not be biggest than second
+      </mat-error>
+      <mat-error
+        *ngIf="
+          filtersForm
+            .get('releases')
+            .get('releaseFrom')
+            .hasError('matDatepickerParse')
+        "
+      >
+        Date must be in format: YYYY-MM-DD
       </mat-error>
     </mat-form-field>
 
     <mat-form-field color="accent" appearance="fill">
       <mat-label>Release date to</mat-label>
-      <input 
-        matInput 
-        [matDatepicker]="pickerTo" 
-        formControlName="releaseTo"
-        disabled 
-      />
+      <input matInput [matDatepicker]="pickerTo" formControlName="releaseTo" />
       <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-      <mat-datepicker #pickerTo startView="multi-year" disabled="false"></mat-datepicker>
+      <mat-datepicker #pickerTo startView="multi-year"></mat-datepicker>
+      <mat-error
+        *ngIf="
+          filtersForm
+            .get('releases')
+            .get('releaseTo')
+            .hasError('matDatepickerParse')
+        "
+      >
+        Date must be in format: YYYY-MM-DD
+      </mat-error>
     </mat-form-field>
   </div>
 

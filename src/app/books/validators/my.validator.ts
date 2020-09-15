@@ -1,4 +1,4 @@
-import { FormGroup, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 export class MyValidator {
 
@@ -9,12 +9,14 @@ export class MyValidator {
             minPrice.value > maxPrice.value
         ) {
       minPrice.setErrors(
-              { minPriceError : true },
+              { priceError : true },
         );
     } else {
-      minPrice.setErrors(
-            null,
-      );
+      if (!minPrice.getError('min')) {
+        minPrice.setErrors(
+          null,
+        );
+      }
 
       return null;
     }
@@ -27,12 +29,14 @@ export class MyValidator {
             releaseFrom.value > releaseTo.value
         ) {
       releaseFrom.setErrors({
-        fromToReleaseError: true,
+        releaseError: true,
       });
     } else {
-      releaseFrom.setErrors(
+      if (!releaseFrom.getError('matDatepickerParse')) {
+        releaseFrom.setErrors(
           null,
         );
+      }
 
       return null;
     }

@@ -19,6 +19,7 @@ export class BooksService {
   constructor(private http: HttpClient) { }
 
   public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
+    // params = toRansack(filters, {});
     let params = new HttpParams();
     if (page) {
       params = params.append('page', `${page}`);
@@ -48,7 +49,7 @@ export class BooksService {
         }
         if (filters.releases.releaseTo) {
           params = params.append('q[release_date_lteq]', `${filters.releases.releaseTo}`);
-        }  
+        }
       }
     }
 
