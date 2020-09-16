@@ -1,9 +1,9 @@
-import { Ransack } from './../ransack/ransack';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import { Ransack, RansackMethod } from './../ransack/ransack';
 import { IBook, IBooks } from './../interfaces/book';
 import { IFilters } from './../interfaces/filters';
 
@@ -23,16 +23,20 @@ export class BooksService {
     // params = toRansack(filters, {});
     let params = new HttpParams();
     if (filters) {
-      params = Ransack.toRansack(filters);
-    }
-    if (page) {
-      params = params.append('page', `${page}`);
-    }
-    if (quantity) {
-      params = params.append('limit', `${quantity}`);
+      Ransack.toRansack(filters, {
+        genres: RansackMethod.In,
+        prices: {
+          minPrice: RansackMethod.Gt,
+          maxPrice: RansackMethod.Lt,
+        },
+        releases: {
+          releaseFrom: RansackMethod.Gt,
+          relesaseTo: RansackMethod.Lt,
+        }
+      });
     }
 
-    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
+    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`);
   }
   public getBookById(bookId: number): Observable<IBook> {
     return this.http.get<IBook>(`${this.apiUrl}${this.booksEndpoint}/${bookId}`);

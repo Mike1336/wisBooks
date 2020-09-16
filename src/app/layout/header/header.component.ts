@@ -21,10 +21,8 @@ export class HeaderComponent implements OnInit {
   constructor(private route: Router, private sbService: SidebarService) { }
 
   public ngOnInit(): void {
-    console.log(this.route.url);
     if (this.route.url === '/') {
       this.booksPageIcon = true;
-      console.log('q');
     } else {
       this.booksPageIcon = false;
     }

@@ -22,6 +22,5 @@ export class SidebarService {
     this.navSbOpened$.next(bol);
   }
   public changeFilSb(bol: boolean): void {
-    console.log(bol)
     this.filSbOpened$.next(bol);
   }}
