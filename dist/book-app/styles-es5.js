@@ -526,11 +526,11 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! /home/max/wisBooks/node_modules/@angular/material/prebuilt-themes/purple-green.css */
+      /*! /home/mike/wisBooks/node_modules/@angular/material/prebuilt-themes/purple-green.css */
       "./node_modules/@angular/material/prebuilt-themes/purple-green.css");
 
       module.exports = __webpack_require__(
-      /*! /home/max/wisBooks/src/styles.scss */
+      /*! /home/mike/wisBooks/src/styles.scss */
       "./src/styles.scss");
       /***/
     }

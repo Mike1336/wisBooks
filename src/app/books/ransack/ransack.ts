@@ -15,72 +15,54 @@ export class Ransack {
 
 
   public static toRansack(filters: IFilters, methods: Object) {
-    let ransackObj;
+    let rsObject: Object;
 
-    for (const key of Object.keys(methods)) {
-      if (typeof(methods[key]) === 'object') {
-        for (const methodName of Object.keys(methods[key])) {
-          for (const property of Object.keys(filters[key])) {
-            if (filters[key][property]._i) {
-              ransackObj[methodName] = filters[key][property]._i;
-              // params = Ransack.makeQuery(methodName,
-              //                            filters[key][property]._i,
-              //                            methods[key][methodName]);
-            } else {
-              ransackObj[methodName] = filters[key][property];
-              // params = Ransack.makeQuery(methodName,
-              //                            filters[key][property],
-              //                            methods[key][methodName]);
+    for (const key of Object.keys(methods)) { // loop for methods:{} properties`
+      for (const property of Object.keys(filters[key])) {
+        if (filters[key][property] !== '') { // if filter property not empty
+          // rsObject[key] = filters[key]
+          console.log(methods[key]+'>>>'+property+'>>>'+filters[key]+'>>>'+filters[key][property])
+          if (typeof(methods[key] === 'object')) {
+            for (const methodsProperty of Object.keys(methods[key])) {
+              console.log(property)
+              console.log(methods[key][methodsProperty]+'>>>'+property+'>>>'+filters[key]+'>>>'+filters[key][property])
             }
           }
         }
-      } else {
-        if (typeof(filters[key] === 'object')) {
-          for (const filterValue of filters[key]) {
-            ransackObj[key] = filters[key][filterValue];
-
-          //   params = Ransack.makeQuery(key, filterValue, methods[key]);
-          // }
-          }
-        }
       }
-
-      console.log(ransackObj);
-
-    // return params;
     }
   }
-  public static makeQuery(property: string, value: any, methodNumber: number): HttpParams {
-    if (property === 'minPrice' || property === 'maxPrice') {
-      property = 'price';
-    } else if (property === 'releaseFrom' || property === 'releaseTo') {
-      property = 'release_date';
-    }
-    console.log(property, value, methodNumber);
+  // public static makeQuery(property: string, value: any, methodNumber: number): HttpParams {
+  //   if (property === 'minPrice' || property === 'maxPrice') {
+  //     property = 'price';
+  //   } else if (property === 'releaseFrom' || property === 'releaseTo') {
+  //     property = 'release_date';
+  //   }
+  //   console.log(property, value, methodNumber);
 
-    let parameters = new HttpParams();
+  //   let parameters = new HttpParams();
 
-    switch (methodNumber) {
-      case RansackMethod.In:
-        parameters = parameters.append(`q[${property}_name_in]`, `${value}`);
-        console.log(parameters);
-        break;
-      case RansackMethod.Gt:
-        parameters = parameters.append(`q[${property}_gteq]`, `${value}`);
-        console.log(parameters);
-        break;
-      case RansackMethod.Lt:
-        parameters = parameters.append(`q[${property}_lteq]`, `${value}`);
-        console.log(parameters);
-        break;
+  //   switch (methodNumber) {
+  //     case RansackMethod.In:
+  //       parameters = parameters.append(`q[${property}_name_in]`, `${value}`);
+  //       console.log(parameters);
+  //       break;
+  //     case RansackMethod.Gt:
+  //       parameters = parameters.append(`q[${property}_gteq]`, `${value}`);
+  //       console.log(parameters);
+  //       break;
+  //     case RansackMethod.Lt:
+  //       parameters = parameters.append(`q[${property}_lteq]`, `${value}`);
+  //       console.log(parameters);
+  //       break;
 
-      default:
-        break;
-    }
-    console.log(parameters);
+  //     default:
+  //       break;
+  //   }
+  //   console.log(parameters);
 
-    return parameters;
-  }
+  //   return parameters;
+  // }
 
 }
 
