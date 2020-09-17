@@ -1,31 +1,36 @@
-p{
+p {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-mat-card{
+
+mat-card {
     cursor: pointer;
     width: 300px;
     height: 365px;
     margin: 20px 15px 15px 20px;
-    mat-card-header{
+
+    mat-card-header {
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
         height: 100px;
-        mat-card-title{
+
+        mat-card-title {
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
     }
-    mat-card-content{
+
+    mat-card-content {
         text-align: center;
     }
-    .book-img{
+
+    .book-img {
         width: 50%;
         height: 50%;
         margin-left: 50%;
@@ -33,13 +38,14 @@ mat-card{
     }
 }
 
-@media (max-width: 1053px){
-    mat-card{
+@media (max-width: 1053px) {
+    mat-card {
         width: 243px;
     }
 }
-@media (max-width: 646px){
-    mat-card{
+
+@media (max-width: 646px) {
+    mat-card {
         width: 70%;
     }
 }

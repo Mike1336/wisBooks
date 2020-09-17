@@ -72,7 +72,7 @@ export class BooksComponent implements OnInit {
         data.books.length > 0 ?
         this.emptyResult = false :
         this.emptyResult = true ;
-        console.log(data.books.length)
+
         return data.books;
       }));
     this.loadingBooks = false;
@@ -81,7 +81,6 @@ export class BooksComponent implements OnInit {
   public getFilteredBooks(filters): void {
     this.filters = filters;
     this.getBooks(filters);
-    console.log(filters);
   }
   public resetFilters(): void {
     this.form.showResetButton = false;

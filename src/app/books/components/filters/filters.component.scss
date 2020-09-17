@@ -1,28 +1,35 @@
-mat-drawer-container{
+mat-drawer-container {
   height: 100%;
-  mat-drawer{
+
+  mat-drawer {
     background-color: #303030;
   }
+
   form {
     display: flex;
     flex-flow: column wrap;
     margin: 10px;
-    mat-form-field{
+
+    mat-form-field {
       width: 100%;
       color: #ffffff;
     }
+
     mat-card {
       width: max-content;
       height: max-content;
     }
+
     mat-radio-group {
       display: flex;
       flex-direction: column;
+
       mat-radio-button {
         line-height: 2;
       }
     }
-    #buttons{
+
+    #buttons {
       display: flex;
       flex-direction: column;
     }

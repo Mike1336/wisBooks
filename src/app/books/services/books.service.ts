@@ -20,23 +20,29 @@ export class BooksService {
   constructor(private http: HttpClient) { }
 
   public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
-    // params = toRansack(filters, {});
     let params = new HttpParams();
     if (filters) {
-      Ransack.toRansack(filters, {
+      params = Ransack.toRansack(filters, {
         genres: RansackMethod.In,
         prices: {
-          minPrice: RansackMethod.Gt,
-          maxPrice: RansackMethod.Lt,
+          price_gt: RansackMethod.Gt,
+          price_lt: RansackMethod.Lt,
         },
         releases: {
-          releaseFrom: RansackMethod.Gt,
-          relesaseTo: RansackMethod.Lt,
-        }
+          release_date_gt: RansackMethod.Gt,
+          release_date_lt: RansackMethod.Lt,
+        },
       });
     }
 
-    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`);
+    if (page) {
+      params = params.append('page', `${page}`);
+    }
+    if (quantity) {
+      params = params.append('limit', `${quantity}`);
+    }
+    console.log(params)
+    return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }
   public getBookById(bookId: number): Observable<IBook> {
     return this.http.get<IBook>(`${this.apiUrl}${this.booksEndpoint}/${bookId}`);

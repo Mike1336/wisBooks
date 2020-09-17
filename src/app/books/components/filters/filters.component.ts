@@ -62,7 +62,6 @@ export class FiltersComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.sidebar.filSbOpen$.subscribe((data) => {
       if (data) {
-        console.log(data)
         this.drawer.open();
       } else {
         this.drawer.close();
@@ -71,6 +70,13 @@ export class FiltersComponent implements OnInit, AfterViewInit {
   }
 
   public applyFilters(): void {
+    if (this.filtersForm.value['releases']['release_date_gt']) {
+      this.filtersForm.value['releases']['release_date_gt'] = this.filtersForm.value['releases']['release_date_gt']._i;
+    }
+    if (this.filtersForm.value['releases']['release_date_lt']) {
+      this.filtersForm.value['releases']['release_date_lt'] = this.filtersForm.value['releases']['release_date_lt']._i;
+    }
+
     this.applyForm.emit(this.filtersForm.value);
     this.showResetButton = true;
   }
@@ -84,22 +90,24 @@ export class FiltersComponent implements OnInit, AfterViewInit {
     this.filtersForm = new FormGroup({
       genres: new FormControl([]),
       prices: new FormGroup({
-        minPrice: new FormControl('', [
+        price_gt: new FormControl('', [
           Validators.min(0),
         ]),
-        maxPrice: new FormControl('', [
+        price_lt: new FormControl('', [
           Validators.min(0),
         ]),
       },
       MyValidator.priceValidation,
       ),
       releases: new FormGroup({
-        releaseFrom: new FormControl(''),
-        releaseTo: new FormControl(''),
+        release_date_gt: new FormControl(''),
+        release_date_lt: new FormControl(''),
       },
       MyValidator.releaseValidation,
       ),
-    });
+    },
+    MyValidator.emptyFormValidation,
+    );
   }
 
 }

@@ -58,7 +58,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml, body {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n  background-color: #303030;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA,8EAAA;AAEA;EAAa,YAAA;AACb;AAAA;EAAO,SAAA;EAAW,iDAAA;EAAmD,yBAAA;AAMrE","file":"styles.scss","sourcesContent":["/* You can add global styles to this file, and also import other style files */\n\nhtml, body { height: 100%; }\nbody { margin: 0; font-family: Roboto, \"Helvetica Neue\", sans-serif; background-color: #303030;}\n"]}]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n  background-color: #303030;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA,8EAAA;AAEA;;EAEI,YAAA;AAAJ;AAGA;EACI,SAAA;EACA,iDAAA;EACA,yBAAA;AAAJ","file":"styles.scss","sourcesContent":["/* You can add global styles to this file, and also import other style files */\n\nhtml,\nbody {\n    height: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: Roboto, \"Helvetica Neue\", sans-serif;\n    background-color: #303030;\n}"]}]);
 // Exports
 module.exports = exports;
 
@@ -486,8 +486,8 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mike/wisBooks/node_modules/@angular/material/prebuilt-themes/purple-green.css */"./node_modules/@angular/material/prebuilt-themes/purple-green.css");
-module.exports = __webpack_require__(/*! /home/mike/wisBooks/src/styles.scss */"./src/styles.scss");
+__webpack_require__(/*! /home/max/wisBooks/node_modules/@angular/material/prebuilt-themes/purple-green.css */"./node_modules/@angular/material/prebuilt-themes/purple-green.css");
+module.exports = __webpack_require__(/*! /home/max/wisBooks/src/styles.scss */"./src/styles.scss");
 
 
 /***/ })

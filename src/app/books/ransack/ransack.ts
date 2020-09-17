@@ -6,7 +6,6 @@ export enum RansackMethod {
   In,
   Gt,
   Lt,
-  Eq,
 }
 
 export class Ransack {
@@ -14,58 +13,78 @@ export class Ransack {
   public ransackMethod = RansackMethod;
 
 
-  public static toRansack(filters: IFilters, methods: Object) {
-    let rsObject: Object;
+  public static toRansack(filters: IFilters, methods: Object): HttpParams {
+    let params = new HttpParams();
 
-    for (const key of Object.keys(methods)) { // loop for methods:{} properties`
-      for (const property of Object.keys(filters[key])) {
-        if (filters[key][property] !== '') { // if filter property not empty
-          // rsObject[key] = filters[key]
-          console.log(methods[key]+'>>>'+property+'>>>'+filters[key]+'>>>'+filters[key][property])
-          if (typeof(methods[key] === 'object')) {
-            for (const methodsProperty of Object.keys(methods[key])) {
-              console.log(property)
-              console.log(methods[key][methodsProperty]+'>>>'+property+'>>>'+filters[key]+'>>>'+filters[key][property])
+    for (const methodPropertyName of Object.keys(methods)) { // loop for methods:{} properties`
+      if (typeof(methods[methodPropertyName]) === 'object') {// if methods: {} property have own properties
+        for (const propertyOfMethodProperty of Object.keys(methods[methodPropertyName])) { // loop for methods:{} properties which have own properties
+          if (typeof(filters[methodPropertyName]) === 'object') { // if filters: {} property have own properties
+            if (filters[methodPropertyName][propertyOfMethodProperty]) { // if filter's property not undef
+              const queryParams = Ransack.makeQuery(
+                propertyOfMethodProperty,
+                filters[methodPropertyName][propertyOfMethodProperty],
+                methods[methodPropertyName][propertyOfMethodProperty]);
+
+              params = params.append(queryParams['property'], queryParams['value']);
             }
           }
         }
+      } else {
+        const queryParams = Ransack.makeQuery(methodPropertyName,
+                                              filters[methodPropertyName],
+                                              methods[methodPropertyName]);
+        if (queryParams['value'].length && queryParams['value'].length > 1) {
+          queryParams['value'].forEach((parValue) => {
+            params = params.append(queryParams['property'], parValue);
+          });
+        } else {
+          params = params.append(queryParams['property'], queryParams['value']);
+        }
       }
     }
+
+    return params;
   }
-  // public static makeQuery(property: string, value: any, methodNumber: number): HttpParams {
-  //   if (property === 'minPrice' || property === 'maxPrice') {
-  //     property = 'price';
-  //   } else if (property === 'releaseFrom' || property === 'releaseTo') {
-  //     property = 'release_date';
-  //   }
-  //   console.log(property, value, methodNumber);
 
-  //   let parameters = new HttpParams();
+  public static makeQuery(property: string, value: any, methodNumber: number): object {
+    switch (methodNumber) {
+      case RansackMethod.In:
+        if (value.length && value.length > 1) {
+          const values = [];
+          value.forEach((val) => {
+            values.push(val);
+          });
 
-  //   switch (methodNumber) {
-  //     case RansackMethod.In:
-  //       parameters = parameters.append(`q[${property}_name_in]`, `${value}`);
-  //       console.log(parameters);
-  //       break;
-  //     case RansackMethod.Gt:
-  //       parameters = parameters.append(`q[${property}_gteq]`, `${value}`);
-  //       console.log(parameters);
-  //       break;
-  //     case RansackMethod.Lt:
-  //       parameters = parameters.append(`q[${property}_lteq]`, `${value}`);
-  //       console.log(parameters);
-  //       break;
+          return {
+            property: `q[${property}_in]`,
+            value: values,
+          };
+        }
 
-  //     default:
-  //       break;
-  //   }
-  //   console.log(parameters);
+        return {
+          property: `q[${property}_in]`,
+          value,
+        };
 
-  //   return parameters;
-  // }
+
+      case RansackMethod.Gt :
+
+        return {
+          property: `q[${property}]`,
+          value,
+        };
+
+      case RansackMethod.Lt :
+
+        return {
+          property: `q[${property}]`,
+          value,
+        };
+    }
+  }
 
 }
-
 
 //   public static toRansack(filters: IFilters): HttpParams {
 

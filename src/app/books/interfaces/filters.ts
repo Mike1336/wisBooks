@@ -1,11 +1,11 @@
 export interface IFilters {
   genres: string[];
   prices: {
-    minPrice: string;
-    maxPrice: string;  
-  }
+    price_gt: string;
+    price_lt: string;
+  };
   releases: {
-    releaseFrom: Date;
-    releaseTo: Date;  
-  }
+    release_date_gt: Date;
+    release_date_lt: Date;
+  };
 }
