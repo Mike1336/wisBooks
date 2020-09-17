@@ -54,6 +54,7 @@ export class MyValidator {
         }
       }
     }
+
     return { emptyForm: true };
   }
 
