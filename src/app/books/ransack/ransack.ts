@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 
 import { IFilters } from './../interfaces/filters';
+import { IRsInstructions } from './../interfaces/ransack';
 
 export enum RansackMethod {
   In,
@@ -13,78 +14,54 @@ export class Ransack {
 
   public ransackMethod = RansackMethod;
 
-
   public static toRansack(filters: IFilters, methods: Object): HttpParams {
     let params = new HttpParams();
 
     for (const methodPropertyName of Object.keys(methods)) {
-      if (Array.isArray(methods[methodPropertyName])) {
+      if (
+        Array.isArray(methods[methodPropertyName])
+        ) {
         methods[methodPropertyName].forEach((propertyOfElement) => {
           if (typeof propertyOfElement === 'object' &&
-                     propertyOfElement !== null) {
-            if (filters[methodPropertyName][propertyOfElement['from']]) {
-              const query = {};
-              for (const propertyOfElProperty of Object.keys(propertyOfElement)) {
-                switch (propertyOfElProperty) {
-                  case 'matcher':
-                    query[propertyOfElProperty] =
-                    Ransack.matcherToString(propertyOfElement[propertyOfElProperty]);
-                    break;
+                     propertyOfElement !== null
+            ) {
+            if (filters[methodPropertyName][propertyOfElement['from']]
+) {
+              const query =
+              Ransack.checkObject(propertyOfElement,
+                                  Object.keys(propertyOfElement),
+                                  filters[methodPropertyName][propertyOfElement['from']]);
+              const queryString = `q[${query['name']
+                                    }${query['postfix'] ?? ''
+                                    }${query['matcher']}]`;
 
-                  case 'name':
-                    query[propertyOfElProperty] =
-                    propertyOfElement[propertyOfElProperty];
-                    break;
-
-                  case 'postfix':
-                    query[propertyOfElProperty] =
-                  `_${propertyOfElement[propertyOfElProperty]}`;
-                    break;
-
-                  case 'from':
-                    query['value'] =
-                    filters[methodPropertyName][propertyOfElement['from']];
-                    break;
-
-                  default:
-                    break;
-                }
-              }
-              params = params.append(`q[${query['name']}${query['postfix'] ?? ''}${query['matcher']}]`, `${query['value']}`);
+              params = params.append(queryString, `${query['value']}`);
             }
           }
         });
       } else if (typeof methods[methodPropertyName] === 'object' &&
-                      methods[methodPropertyName] !== null) {
+                        methods[methodPropertyName] !== null
+        ) {
         if (filters[methodPropertyName]) {
-          const query = {};
-          for (const objProperty of Object.keys(methods[methodPropertyName])) {
-            switch (objProperty) {
-              case 'matcher':
-                query[objProperty] =
-              Ransack.matcherToString(methods[methodPropertyName][objProperty]);
-                break;
+          const query =
+          Ransack.checkObject(methods[methodPropertyName],
+                              Object.keys(methods[methodPropertyName]));
+          let queryString = '';
 
-              case 'name':
-                query[objProperty] =
-              methods[methodPropertyName][objProperty];
-                break;
-
-              case 'postfix':
-                query[objProperty] =
-              methods[methodPropertyName][objProperty];
-                break;
-
-              default:
-                break;
-            }
-          }
           if (Array.isArray(filters[methodPropertyName])) {
             filters[methodPropertyName].forEach((elOfPropertiesArr) => {
-              params = params.append(`q[${query['name'] ?? methodPropertyName}_${query['postfix'] ?? ''}${query['matcher']}]`, `${elOfPropertiesArr}`);
+              queryString = `q[${query['name'] ?? methodPropertyName
+                              }${query['postfix'] ?? ''
+                              }${query['matcher']}]`;
+
+              params = params.append(queryString, `${elOfPropertiesArr}`);
             });
           } else {
-            params = params.append(`q[${query['name'] ?? methodPropertyName}_${query['postfix'] ?? ''}${query['matcher']}]`, `${filters[methodPropertyName]}`);
+            queryString = `q[${query['name'] ?? methodPropertyName
+                            }${query['postfix'] ?? ''
+                            }${query['matcher']}]`;
+
+            params = params.append(queryString, `${filters[methodPropertyName]}`);
           }
         }
       } else {
@@ -115,84 +92,31 @@ export class Ransack {
         break;
     }
   }
+  public static checkObject(instrObject: IRsInstructions,
+                            propArray: string[],
+                            propValueFromFilters?: any,
+    ): object {
+    const queryObject = {};
+    const simpleProps = propArray.filter((el) => el !== 'matcher' || 'from');
+
+    simpleProps.forEach((property) => {
+      if (instrObject.hasOwnProperty(property)) {
+        property === 'postfix' ?
+        queryObject[property] = `_${instrObject[property]}` :
+        queryObject[property] = instrObject[property];
+      }
+    });
+
+    if (instrObject.hasOwnProperty('matcher')) {
+      queryObject['matcher'] =
+      Ransack.matcherToString(instrObject['matcher']);
+    }
+
+    if (instrObject.hasOwnProperty('from')) {
+      queryObject['value'] = propValueFromFilters;
+    }
+
+    return queryObject;
+  }
 
 }
-//       params = params.append(Ransack.priceGt, `${filters.prices.minPrice}`);
-//     }
-//     if (filters.prices.maxPrice) {
-//       params = params.append(Ransack.priceLt, `${filters.prices.maxPrice}`);
-//     }
-//   }
-//   if (filters.releases) {
-//     if (filters.releases.releaseFrom) {
-//       params = params.append(Ransack.releaseGt, `${filters.releases.releaseFrom}`);
-//     }
-//     if (filters.releases.releaseTo) {
-//       params = params.append(Ransack.releaseLt, `${filters.releases.releaseTo}`);
-//     }
-//   }
-
-//   return params;
-// }
-
-// }
-// filters = {
-//   cock: 1,
-//   genres: [1,2,3],
-//   releaseDate: '10-10-2010',
-// };
-
-// toRansack(filters, {
-//   genres: Ransack.In,
-//   releaseDate: Ransack.Gt,
-// })
-
-
-// => {
-//   cock: 1,
-//   genres_in: [1,2,3],
-//   releaseDate_gt: '10-10-2010',
-// }
-
-
-//   public static toRansack(filters: IFilters): HttpParams {
-
-
-//   if (filters.prices) {
-//     if (filters.prices.minPrice) {
-//       params = params.append(Ransack.priceGt, `${filters.prices.minPrice}`);
-//     }
-//     if (filters.prices.maxPrice) {
-//       params = params.append(Ransack.priceLt, `${filters.prices.maxPrice}`);
-//     }
-//   }
-//   if (filters.releases) {
-//     if (filters.releases.releaseFrom) {
-//       params = params.append(Ransack.releaseGt, `${filters.releases.releaseFrom}`);
-//     }
-//     if (filters.releases.releaseTo) {
-//       params = params.append(Ransack.releaseLt, `${filters.releases.releaseTo}`);
-//     }
-//   }
-
-//   return params;
-// }
-
-// }
-// filters = {
-//   cock: 1,
-//   genres: [1,2,3],
-//   releaseDate: '10-10-2010',
-// };
-
-// toRansack(filters, {
-//   genres: Ransack.In,
-//   releaseDate: Ransack.Gt,
-// })
-
-
-// => {
-//   cock: 1,
-//   genres_in: [1,2,3],
-//   releaseDate_gt: '10-10-2010',
-// }

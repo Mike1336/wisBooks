@@ -65,7 +65,6 @@ export class BooksService {
     if (quantity) {
       params = params.append('limit', `${quantity}`);
     }
-    console.log(params);
 
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }
@@ -90,8 +89,3 @@ export class BooksService {
   }
 
 }
-
-// prices = {
-//   min: 1,
-//   max: 2,
-// }
