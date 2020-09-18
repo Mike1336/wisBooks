@@ -70,11 +70,11 @@ export class FiltersComponent implements OnInit, AfterViewInit {
   }
 
   public applyFilters(): void {
-    if (this.filtersForm.value['releases']['release_date_gt']) {
-      this.filtersForm.value['releases']['release_date_gt'] = this.filtersForm.value['releases']['release_date_gt']._i;
+    if (this.filtersForm.value['releases']['releaseDateFrom']) {
+      this.filtersForm.value['releases']['releaseDateFrom'] = this.filtersForm.value['releases']['releaseDateFrom']._i;
     }
-    if (this.filtersForm.value['releases']['release_date_lt']) {
-      this.filtersForm.value['releases']['release_date_lt'] = this.filtersForm.value['releases']['release_date_lt']._i;
+    if (this.filtersForm.value['releases']['releaseDateTo']) {
+      this.filtersForm.value['releases']['releaseDateTo'] = this.filtersForm.value['releases']['releaseDateTo']._i;
     }
 
     this.applyForm.emit(this.filtersForm.value);
@@ -90,18 +90,18 @@ export class FiltersComponent implements OnInit, AfterViewInit {
     this.filtersForm = new FormGroup({
       genres: new FormControl([]),
       prices: new FormGroup({
-        price_gt: new FormControl('', [
+        minPrice: new FormControl('', [
           Validators.min(0),
         ]),
-        price_lt: new FormControl('', [
+        maxPrice: new FormControl('', [
           Validators.min(0),
         ]),
       },
       MyValidator.priceValidation,
       ),
       releases: new FormGroup({
-        release_date_gt: new FormControl(''),
-        release_date_lt: new FormControl(''),
+        releaseDateFrom: new FormControl(''),
+        releaseDateTo: new FormControl(''),
       },
       MyValidator.releaseValidation,
       ),

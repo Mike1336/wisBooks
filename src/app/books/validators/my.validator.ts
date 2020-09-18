@@ -5,8 +5,8 @@ export class MyValidator {
   public static priceValidation(
     priceGroup: FormGroup,
   ): { [key: string]: boolean } {
-    const minPrice = priceGroup.get('price_gt');
-    const maxPrice = priceGroup.get('price_lt');
+    const minPrice = priceGroup.get('minPrice');
+    const maxPrice = priceGroup.get('maxPrice');
     if (
       minPrice.value > 0 &&
       maxPrice.value > 0 &&
@@ -25,8 +25,8 @@ export class MyValidator {
   public static releaseValidation(
     releaseFroup: FormGroup,
   ): { [key: string]: boolean } {
-    const releaseFrom = releaseFroup.get('release_date_gt');
-    const releaseTo = releaseFroup.get('release_date_lt');
+    const releaseFrom = releaseFroup.get('releaseDateFrom');
+    const releaseTo = releaseFroup.get('releaseDateTo');
     if (
       releaseFrom.value > 0 &&
       releaseTo.value > 0 &&

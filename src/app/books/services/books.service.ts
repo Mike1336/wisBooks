@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Ransack, RansackMethod } from './../ransack/ransack';
 import { IBook, IBooks } from './../interfaces/book';
 import { IFilters } from './../interfaces/filters';
+import { IRsTypes } from './../interfaces/ransack';
 
 
 @Injectable({
@@ -20,19 +21,42 @@ export class BooksService {
   constructor(private http: HttpClient) { }
 
   public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
+
     let params = new HttpParams();
+
+    const instructions: IRsTypes = {
+      genres: {
+        matcher: RansackMethod.In,
+        postfix: 'name',
+      },
+      prices: [
+        {
+          matcher: RansackMethod.Gt,
+          name: 'price',
+          from: 'minPrice',
+        },
+        {
+          matcher: RansackMethod.Lt,
+          name: 'price',
+          from: 'maxPrice',
+        },
+      ],
+      releases: [
+        {
+          matcher: RansackMethod.Gt,
+          name: 'release_date',
+          from: 'releaseDateFrom',
+        },
+        {
+          matcher: RansackMethod.Lt,
+          name: 'release_date',
+          from: 'releaseDateTo',
+        },
+      ],
+    };
+
     if (filters) {
-      params = Ransack.toRansack(filters, {
-        genres: RansackMethod.In,
-        prices: {
-          price_gt: RansackMethod.Gt,
-          price_lt: RansackMethod.Lt,
-        },
-        releases: {
-          release_date_gt: RansackMethod.Gt,
-          release_date_lt: RansackMethod.Lt,
-        },
-      });
+      params = Ransack.toRansack(filters, instructions);
     }
 
     if (page) {
@@ -41,7 +65,8 @@ export class BooksService {
     if (quantity) {
       params = params.append('limit', `${quantity}`);
     }
-    console.log(params)
+    console.log(params);
+
     return this.http.get<IBooks>(`${this.apiUrl}${this.booksEndpoint}`, { params });
   }
   public getBookById(bookId: number): Observable<IBook> {
@@ -65,3 +90,8 @@ export class BooksService {
   }
 
 }
+
+// prices = {
+//   min: 1,
+//   max: 2,
+// }
