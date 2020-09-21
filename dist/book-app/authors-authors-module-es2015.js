@@ -913,31 +913,42 @@ class AuthorsComponent {
         this.authorsService = authorsService;
         this.displayedColumns = ['id', 'first_name', 'last_name'];
         this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"]();
+        // stream for unsubscribe with takeUntil operator
         this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["ReplaySubject"](1);
     }
     ngOnInit() {
         this.loadingPage = true;
-        this.authorsService.getAuthorsInQuantity(1)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])((data) => {
-            return data.meta.records;
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])((quantity) => {
-            this.authorsQuantity = quantity;
-            return this.authorsService.getAuthorsInQuantity(quantity);
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["pluck"])('authors'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.destroy$))
+        this.getAuthors()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.destroy$))
             .subscribe((authors) => {
             this.dataSource.data = authors;
             this.dataSource.sort = this.sort;
-            setTimeout(() => {
-                this.loadingPage = false;
-            }, 1000);
+            this.loadingPage = false;
         });
     }
     ngOnDestroy() {
         this.destroy$.next(null);
         this.destroy$.complete();
     }
+    /**
+     * Takes in a paginator and set to dataSource
+     *
+     * @param paginator The MatPaginator object from own component
+     */
     takePaginator(paginator) {
         this.dataSource.paginator = paginator;
+    }
+    /**
+     * Returns Observable with authors list
+     */
+    getAuthors() {
+        return this.authorsService.getAuthorsInQuantity(1)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])((data) => {
+            return data.meta.records;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])((quantity) => {
+            this.authorsQuantity = quantity;
+            return this.authorsService.getAuthorsInQuantity(quantity);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["pluck"])('authors'));
     }
 }
 AuthorsComponent.ɵfac = function AuthorsComponent_Factory(t) { return new (t || AuthorsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_authors_service__WEBPACK_IMPORTED_MODULE_5__["AuthorService"])); };
@@ -1020,20 +1031,45 @@ class AuthorService {
         this.apiUrl = 'http://muzhikov.kubesh.ru/api/';
         this.authorsEndpoint = 'authors';
     }
+    /**
+     * Takes in an quantity and returns an authors list
+     *
+     * @param quantity A quantity of authors for getting list
+     */
     getAuthorsInQuantity(quantity) {
         return this.http.get(`${this.apiUrl}${this.authorsEndpoint}?limit=${quantity}`);
     }
+    /**
+     * Takes in an id and returns an authors list
+     *
+     * @param authorId An author's id for getting list
+     */
     getAuthorById(authorId) {
         return this.http.get(`${this.apiUrl}${this.authorsEndpoint}/${authorId}`);
     }
+    /**
+     * Takes in an author's object and returns an authors list
+     *
+     * @param author An author for create him in list
+     */
     createAuthor(author) {
         const url = `${this.apiUrl}${this.authorsEndpoint}`;
         return this.http.post(url, author);
     }
+    /**
+     * Takes in an author's object and returns an authors list
+     *
+     * @param author An author for editing him in list
+     */
     updateAuthor(author) {
         const url = `${this.apiUrl}${this.authorsEndpoint}/${author.id}`;
         return this.http.put(url, author);
     }
+    /**
+     * Takes in an anuthor's id and returns a list without the author
+     *
+     * @param authorId An author's id for delete him from list
+     */
     deleteAuthor(authorId) {
         return this.http.delete(`${this.apiUrl}${this.authorsEndpoint}/${authorId}`);
     }

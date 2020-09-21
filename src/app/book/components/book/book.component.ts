@@ -26,27 +26,37 @@ export class BookComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.loadingPage = true;
-    this.route.params
+
+    this.getBook()
       .pipe(
-        map((params) => {
-          return params.id;
-        }),
-        mergeMap((id: number): Observable<IBook> => {
-          return this.booksService.getBookById(id);
-        }),
-        takeUntil(this.destroy$))
+      takeUntil(this.destroy$),
+      )
       .subscribe(
         (data) => {
           this.book = data;
           this.loadingPage = false;
         },
-        (err) => { 
+        (err) => {
           this.router.navigate(['/404'], { skipLocationChange: true });
         });
   }
   public ngOnDestroy(): void {
     this.destroy$.next(null);
     this.destroy$.complete();
+  }
+  /**
+   * Returns an Observable with book data
+   */
+  public getBook(): Observable<IBook> {
+    return this.route.params
+      .pipe(
+          map((params) => {
+            return params.id;
+          }),
+          mergeMap((id: number): Observable<IBook> => {
+            return this.booksService.getBookById(id);
+          }),
+      );
   }
 
 }

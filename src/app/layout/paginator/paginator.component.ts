@@ -2,10 +2,12 @@ import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angu
 
 import { MatPaginator } from '@angular/material/paginator';
 
+import { IPaginatorData } from '../interfaces/paginator-data';
+
 @Component({
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.scss']
+  styleUrls: ['./paginator.component.scss'],
 })
 export class PaginatorComponent implements OnInit {
 
@@ -31,7 +33,7 @@ export class PaginatorComponent implements OnInit {
   public ngOnInit(): void {
     this.create.emit(this.paginator);
   }
-  public changedSize(page): void {
+  public changedSize(page: MatPaginator): void {
     this.pagData = {
       paginator: this.paginator,
       pageSize: page.pageSize,
@@ -45,10 +47,4 @@ export class PaginatorComponent implements OnInit {
     this.paginator.firstPage();
   }
 
-}
-export interface IPaginatorData {
-  paginator: MatPaginator;
-  pageSize: number;
-  pageIndex: number;
-  length: number;
 }

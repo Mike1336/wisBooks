@@ -1602,7 +1602,8 @@
 
           this.authorsService = authorsService;
           this.displayedColumns = ['id', 'first_name', 'last_name'];
-          this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"]();
+          this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_1__["MatTableDataSource"](); // stream for unsubscribe with takeUntil operator
+
           this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["ReplaySubject"](1);
         }
 
@@ -1612,17 +1613,10 @@
             var _this4 = this;
 
             this.loadingPage = true;
-            this.authorsService.getAuthorsInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (data) {
-              return data.meta.records;
-            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (quantity) {
-              _this4.authorsQuantity = quantity;
-              return _this4.authorsService.getAuthorsInQuantity(quantity);
-            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["pluck"])('authors'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.destroy$)).subscribe(function (authors) {
+            this.getAuthors().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.destroy$)).subscribe(function (authors) {
               _this4.dataSource.data = authors;
               _this4.dataSource.sort = _this4.sort;
-              setTimeout(function () {
-                _this4.loadingPage = false;
-              }, 1000);
+              _this4.loadingPage = false;
             });
           }
         }, {
@@ -1631,10 +1625,32 @@
             this.destroy$.next(null);
             this.destroy$.complete();
           }
+          /**
+           * Takes in a paginator and set to dataSource
+           *
+           * @param paginator The MatPaginator object from own component
+           */
+
         }, {
           key: "takePaginator",
           value: function takePaginator(paginator) {
             this.dataSource.paginator = paginator;
+          }
+          /**
+           * Returns Observable with authors list
+           */
+
+        }, {
+          key: "getAuthors",
+          value: function getAuthors() {
+            var _this5 = this;
+
+            return this.authorsService.getAuthorsInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (data) {
+              return data.meta.records;
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (quantity) {
+              _this5.authorsQuantity = quantity;
+              return _this5.authorsService.getAuthorsInQuantity(quantity);
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["pluck"])('authors'));
           }
         }]);
 
@@ -1808,29 +1824,59 @@
           this.apiUrl = 'http://muzhikov.kubesh.ru/api/';
           this.authorsEndpoint = 'authors';
         }
+        /**
+         * Takes in an quantity and returns an authors list
+         *
+         * @param quantity A quantity of authors for getting list
+         */
+
 
         _createClass(AuthorService, [{
           key: "getAuthorsInQuantity",
           value: function getAuthorsInQuantity(quantity) {
             return this.http.get("".concat(this.apiUrl).concat(this.authorsEndpoint, "?limit=").concat(quantity));
           }
+          /**
+           * Takes in an id and returns an authors list
+           *
+           * @param authorId An author's id for getting list
+           */
+
         }, {
           key: "getAuthorById",
           value: function getAuthorById(authorId) {
             return this.http.get("".concat(this.apiUrl).concat(this.authorsEndpoint, "/").concat(authorId));
           }
+          /**
+           * Takes in an author's object and returns an authors list
+           *
+           * @param author An author for create him in list
+           */
+
         }, {
           key: "createAuthor",
           value: function createAuthor(author) {
             var url = "".concat(this.apiUrl).concat(this.authorsEndpoint);
             return this.http.post(url, author);
           }
+          /**
+           * Takes in an author's object and returns an authors list
+           *
+           * @param author An author for editing him in list
+           */
+
         }, {
           key: "updateAuthor",
           value: function updateAuthor(author) {
             var url = "".concat(this.apiUrl).concat(this.authorsEndpoint, "/").concat(author.id);
             return this.http.put(url, author);
           }
+          /**
+           * Takes in an anuthor's id and returns a list without the author
+           *
+           * @param authorId An author's id for delete him from list
+           */
+
         }, {
           key: "deleteAuthor",
           value: function deleteAuthor(authorId) {

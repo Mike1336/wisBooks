@@ -19,7 +19,6 @@ import { IAuthor, IAuthors } from './../../interfaces/author';
 export class AuthorsComponent implements OnInit, OnDestroy {
 
   public loadingPage: boolean;
-  public loadingAuthors: boolean;
 
   public displayedColumns: string[] = ['id', 'first_name', 'last_name'];
   public dataSource = new MatTableDataSource();
@@ -30,13 +29,43 @@ export class AuthorsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   public sort: MatSort;
 
+  // stream for unsubscribe with takeUntil operator
   private destroy$: ReplaySubject<number> = new ReplaySubject(1);
+
   constructor(
     private authorsService: AuthorService,
     ) { }
+
   public ngOnInit(): void {
     this.loadingPage = true;
-    this.authorsService.getAuthorsInQuantity(1)
+    this.getAuthors()
+      .pipe(
+      takeUntil(this.destroy$),
+      )
+      .subscribe((authors) => {
+        this.dataSource.data = authors;
+        this.dataSource.sort = this.sort;
+        this.loadingPage = false;
+      });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
+  }
+  /**
+   * Takes in a paginator and set to dataSource
+   *
+   * @param paginator The MatPaginator object from own component
+   */
+  public takePaginator(paginator: MatPaginator): void {
+    this.dataSource.paginator = paginator;
+  }
+  /**
+   * Returns Observable with authors list
+   */
+  public getAuthors(): Observable<IAuthor[]> {
+    return this.authorsService.getAuthorsInQuantity(1)
       .pipe(
         map((data) => {
           return data.meta.records;
@@ -47,25 +76,7 @@ export class AuthorsComponent implements OnInit, OnDestroy {
           return this.authorsService.getAuthorsInQuantity(quantity);
         }),
         pluck('authors'),
-        takeUntil(this.destroy$),
-        )
-      .subscribe((authors) => {
-        this.dataSource.data = authors;
-        this.dataSource.sort = this.sort;
-        setTimeout(() => {
-          this.loadingPage = false;
-        }, 1000);
-      });
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(null);
-    this.destroy$.complete();
-  }
-
-  public takePaginator(paginator: MatPaginator): void {
-    this.dataSource.paginator = paginator;
-
+        );
   }
 
 }

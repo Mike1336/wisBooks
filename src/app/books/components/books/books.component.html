@@ -3,10 +3,8 @@
 
   <div id="content">
     <div id="viewBooks">
-      <app-books-content
-        *ngIf="books$ | async as books; else loading"
-        [books]="books"
-      >
+      <app-books-content *ngIf="books$ | async as books; else loading"
+        [books]="books">
       </app-books-content>
 
       <ng-template #loading>
@@ -15,12 +13,9 @@
         </div>
       </ng-template>
 
-      <app-paginator
-        [records]="booksQuantity"
+      <app-paginator [records]="booksQuantity"
         [limits]="[10, 25, 50, 75, 100, 125, 150]"
-        (changed)="changePageSize($event)"
-        [class.hide]="emptyResult"
-      >
+        (changed)="changePageSize($event)" [class.hide]="emptyResult">
       </app-paginator>
       <div id="nfBooks" *ngIf="emptyResult">
         <h2>Books not found</h2>
@@ -30,11 +25,8 @@
       </div>
     </div>
 
-    <app-filters
-      *ngIf="genres$ | async as genres"
-      [genres]="genres"
-      (applyForm)="getFilteredBooks($event)"
-      (resetForm)="resetFilters()"
-    ></app-filters>
+    <app-filters *ngIf="genres$ | async as genres" [genres]="genres"
+      (applyForm)="getFilteredBooks($event)" (resetForm)="resetFilters()">
+    </app-filters>
   </div>
 </div>

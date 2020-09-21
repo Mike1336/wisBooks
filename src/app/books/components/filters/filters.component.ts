@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDrawer } from '@angular/material/sidenav';
+
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
@@ -28,9 +31,6 @@ export const MY_FORMATS = {
   styleUrls: ['./filters.component.scss'],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -40,10 +40,11 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class FiltersComponent implements OnInit, AfterViewInit {
+export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public filtersForm: FormGroup;
   public showResetButton: boolean;
+
 
   @Input()
   public genres: IGenre[];
@@ -54,29 +55,33 @@ export class FiltersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatDrawer)
   public drawer: MatDrawer;
 
+  private destroy$: ReplaySubject<number> = new ReplaySubject(1);
+
   constructor(private sidebar: SidebarService) { }
 
   public ngOnInit(): void {
     this.initForm();
   }
   public ngAfterViewInit(): void {
-    this.sidebar.filSbOpen$.subscribe((data) => {
-      if (data) {
-        this.drawer.open();
-      } else {
-        this.drawer.close();
-      }
-    });
+    this.sidebar.filSbOpen$
+      .pipe(
+        takeUntil(this.destroy$),
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.drawer.open();
+        } else {
+          this.drawer.close();
+        }
+      });
+  }
+  public ngOnDestroy(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
   }
 
-  public applyFilters(): void {
-    if (this.filtersForm.value['releases']['releaseDateFrom']) {
-      this.filtersForm.value['releases']['releaseDateFrom'] = this.filtersForm.value['releases']['releaseDateFrom']._i;
-    }
-    if (this.filtersForm.value['releases']['releaseDateTo']) {
-      this.filtersForm.value['releases']['releaseDateTo'] = this.filtersForm.value['releases']['releaseDateTo']._i;
-    }
 
+  public applyFilters(): void {
     this.applyForm.emit(this.filtersForm.value);
     this.showResetButton = true;
   }

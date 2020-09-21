@@ -10,9 +10,8 @@ import { IFilters } from '../../interfaces/filters';
 import { FiltersComponent } from '../filters/filters.component';
 
 import { GenresService } from './../../services/genres.service';
-import { IPaginatorData,
-         PaginatorComponent,
- } from './../../../layout/paginator/paginator.component';
+import { PaginatorComponent } from './../../../layout/paginator/paginator.component';
+import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
 
 
 @Component({
@@ -53,6 +52,13 @@ export class BooksComponent implements OnInit {
   public changePageSize(pagData: IPaginatorData): void {
     this.getBooks(this.filters, pagData.pageSize, pagData.pageIndex);
   }
+  /**
+   * Takes in a 3 parameters and getting books
+   *
+   * @param filters The optional parameter - data from filters form
+   * @param booksQuantity The optional parameter for query with default value: 10
+   * @param page The optional parameter for query with default value: 0 (first page)
+   */
   public getBooks(
     filters?: IFilters,
     booksQuantity: number = 10,
@@ -64,8 +70,7 @@ export class BooksComponent implements OnInit {
     .pipe(
       map((data) => {
         this.booksQuantity = data.meta.records;
-        // если номер страницы выше чем 1, значит было вызвано отображение
-        // другой страницы одного жанра
+
         if (page === 1) {
           this.pag.moveToFirstPage();
         }
@@ -78,7 +83,7 @@ export class BooksComponent implements OnInit {
     this.loadingBooks = false;
   }
 
-  public getFilteredBooks(filters): void {
+  public getFilteredBooks(filters: IFilters): void {
     this.filters = filters;
     this.getBooks(filters);
   }
