@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe((event) => {
         if (event instanceof NavigationEnd) {
-          event.url === '/books' ?
+          event.urlAfterRedirects === '/books' ?
             this.booksPageIcon = true :
             this.booksPageIcon = false;
         }

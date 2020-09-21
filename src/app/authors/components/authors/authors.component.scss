@@ -1,40 +1,41 @@
-#authors{
+#authors {
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
     height: 100%;
-    mat-spinner{
+
+    mat-spinner {
         align-self: center;
     }
-    table{
+
+    table {
         width: 85vw;
-        tr{
+
+        tr {
             text-align: center;
-            th::ng-deep{
+
+            th::ng-deep {
                 font-size: 16px;
                 font-style: bold;
                 z-index: 0;
-                .mat-sort-header-container{
+
+                .mat-sort-header-container {
                     justify-content: center;
                 }
             }
-    
+
         }
     }
-    mat-paginator{
+
+    mat-paginator {
         width: 85vw;
         margin-top: 75px;
     }
 }
+
 #tableContent {
     position: absolute;
-    opacity: 0;
     height: 592px;
     overflow: auto;
     margin-top: 75px;
 }
-.show{
-    position: none !important;
-    opacity:1 !important;
-}
-

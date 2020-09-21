@@ -12,10 +12,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { LayoutModule } from './../layout/layout.module';
 import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorsComponent } from './components/authors/authors.component';
+import { AuthorsContainer } from './containers/authors/authors.container';
 
 @NgModule({
   declarations: [
     AuthorsComponent,
+    AuthorsContainer,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,9 @@
+<authors-component *ngIf="authors$ | async as authors; else loadingBlock"
+    [authors]="authors">
+</authors-component>
+
+<ng-template #loadingBlock>
+    <div id="spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

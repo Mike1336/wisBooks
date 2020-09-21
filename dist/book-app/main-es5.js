@@ -3333,7 +3333,7 @@
 
             this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function (event) {
               if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_0__["NavigationEnd"]) {
-                event.url === '/books' ? _this5.booksPageIcon = true : _this5.booksPageIcon = false;
+                event.urlAfterRedirects === '/books' ? _this5.booksPageIcon = true : _this5.booksPageIcon = false;
               }
             });
           }

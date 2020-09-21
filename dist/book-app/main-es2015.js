@@ -1938,7 +1938,7 @@ class HeaderComponent {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$))
             .subscribe((event) => {
             if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_0__["NavigationEnd"]) {
-                event.url === '/books' ?
+                event.urlAfterRedirects === '/books' ?
                     this.booksPageIcon = true :
                     this.booksPageIcon = false;
             }

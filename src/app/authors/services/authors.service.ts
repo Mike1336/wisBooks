@@ -9,7 +9,7 @@ import { IAuthor, IAuthors } from '../interfaces/author';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthorService {
+export class AuthorsService {
 
   private apiUrl = 'http://muzhikov.kubesh.ru/api/';
   private authorsEndpoint = 'authors';
