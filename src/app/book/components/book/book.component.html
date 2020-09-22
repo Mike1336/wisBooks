@@ -1,40 +1,29 @@
-<mat-spinner *ngIf="loadingPage; else bookContent"></mat-spinner>
-
-<ng-template #bookContent>
   <div id="bookDetails">
     <mat-grid-list cols="2" rowHeight="25%">
       <mat-grid-tile [colspan]="2">
-        <h1>{{ book?.title }}</h1>
+        <h1>{{ book.title }}</h1>
       </mat-grid-tile>
       <mat-grid-tile [rowspan]="2">
         <img src="../../../../assets//book.png" alt="Book image not found" />
       </mat-grid-tile>
       <mat-grid-tile>
         <pre>
-                    Author: {{ book?.author.first_name }} {{
-            book?.author.last_name
-          }}
+                    Author: {{ book.author.first_name }} {{ book.author.last_name }}
+                    
+                    Genres: {{ book.genres | comma }}
     
-                    Genres: {{ book?.genres | comma }}
+                    Writing date: {{ book?.writing_date | date: "dd MMMM yyyy" }} 
     
-                    Writing date: {{
-            book?.writing_date | date: "dd MMMM yyyy"
-          }} 
-    
-                    Release date: {{
-            book?.release_date | date: "dd MMMM yyyy"
-          }} 
-                </pre
-        >
+                    Release date: {{ book?.release_date | date: "dd MMMM yyyy" }} 
+        </pre>
       </mat-grid-tile>
       <mat-grid-tile col="2">
-        <h2>Price: {{ book?.price }}</h2>
+        <h2>Price: {{ book.price }}</h2>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2">
         <p>
-          {{ book?.description }}
+          {{ book.description }}
         </p>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
-</ng-template>

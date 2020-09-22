@@ -1,0 +1,7 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer class="example-sidenav" mode="side" position="end">
+        <filters-component [genres]="genres"
+            (applyForm)="applyForm.emit($event)" (resetForm)="resetForm.emit()">
+        </filters-component>
+    </mat-drawer>
+</mat-drawer-container>

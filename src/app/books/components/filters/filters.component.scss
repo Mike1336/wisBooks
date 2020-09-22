@@ -1,37 +1,29 @@
-mat-drawer-container {
-  height: 100%;
+form {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 10px;
 
-  mat-drawer {
-    background-color: #303030;
+  mat-form-field {
+    width: 100%;
+    color: #ffffff;
   }
 
-  form {
+  mat-card {
+    width: max-content;
+    height: max-content;
+  }
+
+  mat-radio-group {
     display: flex;
-    flex-flow: column wrap;
-    margin: 10px;
+    flex-direction: column;
 
-    mat-form-field {
-      width: 100%;
-      color: #ffffff;
+    mat-radio-button {
+      line-height: 2;
     }
+  }
 
-    mat-card {
-      width: max-content;
-      height: max-content;
-    }
-
-    mat-radio-group {
-      display: flex;
-      flex-direction: column;
-
-      mat-radio-button {
-        line-height: 2;
-      }
-    }
-
-    #buttons {
-      display: flex;
-      flex-direction: column;
-    }
+  #buttons {
+    display: flex;
+    flex-direction: column;
   }
 }

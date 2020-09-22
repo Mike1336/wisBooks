@@ -47,10 +47,12 @@ export class MyValidator {
     filtersForm: FormGroup,
   ): { [key: string]: boolean } {
     for (const controlsProperty of Object.keys(filtersForm.controls)) {
-      for (const propertyOfControlsProperty of
-            Object.keys(filtersForm.controls[controlsProperty].value)) {
-        if (filtersForm.controls[controlsProperty].value[propertyOfControlsProperty]) {
-          return null;
+      if (filtersForm.controls[controlsProperty].value) {
+        for (const propertyOfControlsProperty of
+              Object.keys(filtersForm.controls[controlsProperty].value)) {
+          if (filtersForm.controls[controlsProperty].value[propertyOfControlsProperty]) {
+            return null;
+          }
         }
       }
     }

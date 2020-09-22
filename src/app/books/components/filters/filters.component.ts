@@ -1,17 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDrawer } from '@angular/material/sidenav';
-
-import { ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 import { IGenre } from '../../interfaces/genre';
 
-import { SidebarService } from './../../../layout/services/sidebar.service';
 import { MyValidator } from './../../validators/my.validator';
 
 export const MY_FORMATS = {
@@ -26,7 +21,7 @@ export const MY_FORMATS = {
   },
 };
 @Component({
-  selector: 'app-filters',
+  selector: 'filters-component',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
   providers: [
@@ -40,55 +35,33 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FiltersComponent implements OnInit {
 
   public filtersForm: FormGroup;
-  public showResetButton: boolean;
 
 
   @Input()
   public genres: IGenre[];
+  @Input()
+  public sbStatus: boolean;
   @Output()
   public applyForm: EventEmitter<object> = new EventEmitter();
   @Output()
   public resetForm: EventEmitter<object> = new EventEmitter();
-  @ViewChild(MatDrawer)
-  public drawer: MatDrawer;
 
-  private destroy$: ReplaySubject<number> = new ReplaySubject(1);
-
-  constructor(private sidebar: SidebarService) { }
+  constructor() { }
 
   public ngOnInit(): void {
     this.initForm();
   }
-  public ngAfterViewInit(): void {
-    this.sidebar.filSbOpen$
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe((data) => {
-        if (data) {
-          this.drawer.open();
-        } else {
-          this.drawer.close();
-        }
-      });
-  }
-  public ngOnDestroy(): void {
-    this.destroy$.next(null);
-    this.destroy$.complete();
-  }
-
 
   public applyFilters(): void {
     this.applyForm.emit(this.filtersForm.value);
-    this.showResetButton = true;
   }
 
   public resetFilters(): void {
+    this.filtersForm.reset();
     this.resetForm.emit();
-    this.showResetButton = false;
   }
 
   public initForm(): void {

@@ -1,0 +1,8 @@
+<book-component *ngIf="book$ | async as book; else loading" [book]="book">
+</book-component>
+
+<ng-template #loading>
+    <div id="spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

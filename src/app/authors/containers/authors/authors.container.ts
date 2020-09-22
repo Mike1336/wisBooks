@@ -14,7 +14,6 @@ import { AuthorsService } from '../../services/authors.service';
 })
 export class AuthorsContainer implements OnInit {
 
-  public loading: boolean;
   public authorsQuantity: number;
 
   public authors$: Observable<IAuthor[]>;
@@ -22,7 +21,6 @@ export class AuthorsContainer implements OnInit {
   constructor(private authorsService: AuthorsService) { }
 
   public ngOnInit(): void {
-    this.loading = true;
     this.getAuthors();
   }
 
@@ -37,7 +35,6 @@ export class AuthorsContainer implements OnInit {
         }),
         mergeMap((quantity: number): Observable<IAuthors> => {
           this.authorsQuantity = quantity;
-          this.loading = false;
 
           return this.authorsService.getAuthorsInQuantity(quantity);
         }),

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BooksComponent } from './components/books/books.component';
+import { BooksContainer } from './containers/books/books.container';
 
 const routes: Routes = [
   {
     path: '',
-    component: BooksComponent,
+    component: BooksContainer,
   },
   {
     path: '**',

@@ -25,7 +25,8 @@ import { LayoutModule } from './../layout/layout.module';
 import { BookItemComponent } from './components/book-item/book-item.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
-import { BooksContentComponent } from './components/books-content/books-content.component';
+import { BooksContainer } from './containers/books/books.container';
+import { FiltersContainer } from './containers/filters/filters.container';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { BooksContentComponent } from './components/books-content/books-content.
     BookItemComponent,
     FiltersComponent,
     SearchFieldComponent,
-    BooksContentComponent,
+    BooksContainer,
+    FiltersContainer,
   ],
   imports: [
     CommonModule,

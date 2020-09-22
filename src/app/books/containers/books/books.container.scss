@@ -1,0 +1,54 @@
+#books {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+
+    mat-spinner {
+        align-self: center;
+    }
+
+    books-component {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
+    app-paginator {
+        width: 80%;
+    }
+}
+
+#content {
+    display: flex;
+    height: 92%;
+}
+
+#viewBooks {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+
+    .spinner {
+        height: 92%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+#nfBooks {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+        color: #fff;
+    }
+}
+
+.hide {
+    visibility: hidden;
+}

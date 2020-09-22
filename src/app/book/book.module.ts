@@ -11,11 +11,15 @@ import { CommaModule } from '../libs/comma/comma.module';
 
 import { BookRoutingModule } from './book-routing.module';
 import { BookComponent } from './components/book/book.component';
+import { BookContainer } from './containers/book/book.container';
+import { BookView } from './views/book/book.view';
 
 
 @NgModule({
   declarations: [
     BookComponent,
+    BookContainer,
+    BookView,
   ],
   imports: [
     CommonModule,
