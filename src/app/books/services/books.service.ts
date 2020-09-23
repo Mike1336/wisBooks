@@ -14,7 +14,7 @@ import { IRsTypes } from './../interfaces/ransack';
 })
 export class BooksService {
 
-  private _apiUrl = '_http://muzhikov.kubesh.ru/api/';
+  private _apiUrl = 'http://muzhikov.kubesh.ru/api/';
   private _booksEndpoint = 'books';
   private _authorsEndpoint = 'authors';
 

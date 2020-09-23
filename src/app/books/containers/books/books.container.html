@@ -1,30 +1,28 @@
 <div id="books">
-    <div id="content">
-        <div id="viewBooks">
-
-            <ng-container *ngIf="books$ | async as books; else loading">
-                <books-component [books]="books">
-                </books-component>
-                <app-paginator [records]="booksQuantity"
-                    [limits]="[10, 25, 50, 75, 100, 125, 150]"
-                    (changed)="changePageSize($event)"
-                    [class.hide]="emptyResult">
-                </app-paginator>
-            </ng-container>
-
-            <ng-template #loading>
-                <div id="spinner">
-                    <mat-spinner></mat-spinner>
-                </div>
-            </ng-template>
-
-            <div id="nfBooks" *ngIf="emptyResult">
-                <h2>Books not found</h2>
-            </div>
-        </div>
-
-        <filters-container *ngIf="genres$ | async as genres" [genres]="genres"
-            (applyForm)="getFilteredBooks($event)" (resetForm)="resetFilters()">
-        </filters-container>
+  <ng-container *ngIf="books$ | async as books; else loading">
+    <books-component [books]="books"> </books-component>
+    <div id="nfBooks" *ngIf="emptyResult">
+      <h2>Books not found</h2>
     </div>
+  </ng-container>
+  <app-paginator
+    [records]="booksQuantity"
+    [limits]="[10, 25, 50, 75, 100, 125, 150]"
+    (changed)="changePageSize($event)"
+    [class.hide]="emptyResult"
+  >
+  </app-paginator>
+  <ng-template #loading>
+    <div id="spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
 </div>
+<ng-container *ngIf="genres$ | async as genres">
+  <filters-container
+    [genres]="genres"
+    (applyForm)="getFilteredBooks($event)"
+    (resetForm)="resetFilters()"
+  >
+  </filters-container>
+</ng-container>

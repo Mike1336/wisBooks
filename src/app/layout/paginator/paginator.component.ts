@@ -1,16 +1,22 @@
-import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  OnInit,
+} from "@angular/core";
 
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator } from "@angular/material/paginator";
 
-import { IPaginatorData } from '../interfaces/paginator-data';
+import { IPaginatorData } from "../interfaces/paginator-data";
 
 @Component({
-  selector: 'app-paginator',
-  templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.scss'],
+  selector: "app-paginator",
+  templateUrl: "./paginator.component.html",
+  styleUrls: ["./paginator.component.scss"],
 })
 export class PaginatorComponent implements OnInit {
-
   @ViewChild(MatPaginator, { static: true })
   public paginator: MatPaginator;
 
@@ -28,7 +34,7 @@ export class PaginatorComponent implements OnInit {
 
   public pagData: IPaginatorData;
 
-  constructor() { }
+  constructor() {}
 
   public ngOnInit(): void {
     this.create.emit(this.paginator);
@@ -46,5 +52,4 @@ export class PaginatorComponent implements OnInit {
   public moveToFirstPage(): void {
     this.paginator.firstPage();
   }
-
 }

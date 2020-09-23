@@ -19,7 +19,6 @@ import { PaginatorComponent } from './../../../layout/paginator/paginator.compon
 })
 export class BooksContainer implements OnInit {
 
-  public loadingBooks: boolean;
   public emptyResult: boolean;
 
   public filters: IFilters;
@@ -31,11 +30,13 @@ export class BooksContainer implements OnInit {
   @ViewChild(PaginatorComponent)
   private pag: PaginatorComponent;
 
-  constructor(private booksService: BooksService, private genresService: GenresService) { }
+  constructor(
+    private booksService: BooksService,
+    private genresService: GenresService,
+  ) {}
 
   public ngOnInit(): void {
-    this.genres$ = this.genresService.getGenres()
-    .pipe(pluck('genres'));
+    this.genres$ = this.genresService.getGenres().pipe(pluck('genres'));
 
     this.getBooks();
   }
@@ -52,23 +53,18 @@ export class BooksContainer implements OnInit {
     booksQuantity: number = 10,
     page: number = 0,
   ): void {
-    this.loadingBooks = true;
     page += 1;
-    this.books$ = this.booksService.getBooks(booksQuantity, page, filters)
-    .pipe(
+    this.books$ = this.booksService.getBooks(booksQuantity, page, filters).pipe(
       map((data) => {
         this.booksQuantity = data.meta.records;
 
-        if (page === 1) {
-          this.pag.moveToFirstPage();
-        }
-        data.books.length > 0 ?
-        this.emptyResult = false :
-        this.emptyResult = true ;
+        data.books.length > 0
+          ? (this.emptyResult = false)
+          : (this.emptyResult = true);
 
         return data.books;
-      }));
-    this.loadingBooks = false;
+      }),
+    );
   }
 
   public changePageSize(pagData: IPaginatorData): void {
