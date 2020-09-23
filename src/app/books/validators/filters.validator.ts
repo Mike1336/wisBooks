@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 
-export class MyValidator {
+export class FiltersValidator {
 
   public static priceValidation(
     priceGroup: FormGroup,

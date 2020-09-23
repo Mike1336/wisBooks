@@ -11,21 +11,21 @@ import { IGenre } from './../interfaces/genre';
 })
 export class GenresService {
 
-  private apiUrl = 'http://muzhikov.kubesh.ru/api/';
-  private genresEndpoint = 'genres';
+  private _apiUrl = 'http://muzhikov.kubesh.ru/api/';
+  private _genresEndpoint = 'genres';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   public getGenres(): Observable<object> {
-    return this.http.get<IGenre[]>(`${this.apiUrl}${this.genresEndpoint}`);
+    return this._http.get<IGenre[]>(`${this._apiUrl}${this._genresEndpoint}`);
   }
   public getGenreById(genreId: number): Observable<object> {
-    return this.http.get<IGenre>(`${this.apiUrl}${this.genresEndpoint}/${genreId}`);
+    return this._http.get<IGenre>(`${this._apiUrl}${this._genresEndpoint}/${genreId}`);
   }
   public createGenre(genre: IGenre): Observable<object> {
-    const url = `${this.apiUrl}${this.genresEndpoint}`;
+    const url = `${this._apiUrl}${this._genresEndpoint}`;
 
-    return this.http.post<IGenre>(url, genre);
+    return this._http.post<IGenre>(url, genre);
   }
 
 }

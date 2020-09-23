@@ -22,13 +22,16 @@ import { BookView } from './views/book/book.view';
     BookView,
   ],
   imports: [
+    // Angular
     CommonModule,
     ReactiveFormsModule,
-    BookRoutingModule,
     HttpClientModule,
+    // Material
     MatTableModule,
     MatGridListModule,
     MatProgressSpinnerModule,
+    // Own
+    BookRoutingModule,
     CommaModule,
   ],
 })

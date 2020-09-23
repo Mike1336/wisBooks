@@ -1,5 +1,7 @@
-<book-component *ngIf="book$ | async as book; else loading" [book]="book">
-</book-component>
+<ng-container *ngIf="book$ | async as book; else loading">
+    <book-component [book]="book">
+    </book-component>
+</ng-container>
 
 <ng-template #loading>
     <div id="spinner">

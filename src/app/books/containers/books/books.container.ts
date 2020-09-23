@@ -13,7 +13,7 @@ import { GenresService } from './../../services/genres.service';
 import { PaginatorComponent } from './../../../layout/paginator/paginator.component';
 
 @Component({
-  selector: 'app-books',
+  selector: 'books-container',
   templateUrl: './books.container.html',
   styleUrls: ['./books.container.scss'],
 })

@@ -25,9 +25,11 @@ import { PaginatorComponent } from './paginator/paginator.component';
     PaginatorComponent,
   ],
   imports: [
+    // Angular
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    // Material
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

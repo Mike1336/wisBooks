@@ -20,25 +20,28 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   public genres: IGenre[];
+
   @Output()
   public applyForm: EventEmitter<object> = new EventEmitter();
+
   @Output()
   public resetForm: EventEmitter<object> = new EventEmitter();
+
   @ViewChild(MatDrawer)
   public drawer: MatDrawer;
 
-  private destroy$: ReplaySubject<number> = new ReplaySubject(1);
+  private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
 
-  constructor(private sidebarService: SidebarService) { }
+  constructor(private _sidebarService: SidebarService) { }
 
   public ngOnInit(): void {
   }
   public ngAfterViewInit(): void {
-    this.filtersSb$ = this.sidebarService.filSbOpen$;
+    this.filtersSb$ = this._sidebarService.filSbOpen$;
     this.filtersSb$
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntil(this._destroy$),
       )
       .subscribe((data) => {
         data ?
@@ -48,8 +51,8 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next(null);
-    this.destroy$.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
 

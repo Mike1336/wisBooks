@@ -8,7 +8,7 @@ import { AuthorsService } from '../../services/authors.service';
 
 
 @Component({
-  selector: 'app-authors',
+  selector: 'authors-container',
   templateUrl: './authors.container.html',
   styleUrls: ['./authors.container.scss'],
 })
@@ -18,7 +18,7 @@ export class AuthorsContainer implements OnInit {
 
   public authors$: Observable<IAuthor[]>;
 
-  constructor(private authorsService: AuthorsService) { }
+  constructor(private _authorsService: AuthorsService) { }
 
   public ngOnInit(): void {
     this.getAuthors();
@@ -28,7 +28,7 @@ export class AuthorsContainer implements OnInit {
    * Returns Observable with authors list
    */
   public getAuthors(): void {
-    this.authors$ = this.authorsService.getAuthorsInQuantity(1)
+    this.authors$ = this._authorsService.getAuthorsInQuantity(1)
       .pipe(
         map((data) => {
           return data.meta.records;
@@ -36,10 +36,10 @@ export class AuthorsContainer implements OnInit {
         mergeMap((quantity: number): Observable<IAuthors> => {
           this.authorsQuantity = quantity;
 
-          return this.authorsService.getAuthorsInQuantity(quantity);
+          return this._authorsService.getAuthorsInQuantity(quantity);
         }),
         pluck('authors'),
-        );
+      );
   }
 
 }

@@ -17,15 +17,16 @@ export class BookContainer implements OnInit {
 
   @Input()
   public queryId: number;
+
   @Output()
-  public nfContent: EventEmitter<Error> = new EventEmitter();
+  public contentNotFound: EventEmitter<Error> = new EventEmitter();
 
   constructor(private booksService: BooksService) { }
 
   public ngOnInit(): void {
     this.book$ = this.booksService.getBookById(this.queryId).pipe(
       catchError((err) => {
-        this.nfContent.emit(err);
+        this.contentNotFound.emit(err);
         throw new Error(`error in source. Details: ${err}`);
       }),
     );

@@ -1224,13 +1224,13 @@
       /* harmony import */
 
 
-      var _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./containers/authors/authors.container */
-      "./src/app/authors/containers/authors/authors.container.ts");
+      var _views_authors_authors_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./views/authors/authors.view */
+      "./src/app/authors/views/authors/authors.view.ts");
 
       var routes = [{
         path: '',
-        component: _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_2__["AuthorsContainer"]
+        component: _views_authors_authors_view__WEBPACK_IMPORTED_MODULE_2__["AuthorsView"]
       }, {
         path: '**',
         redirectTo: ''
@@ -1369,6 +1369,12 @@
       var _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! ./containers/authors/authors.container */
       "./src/app/authors/containers/authors/authors.container.ts");
+      /* harmony import */
+
+
+      var _views_authors_authors_view__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+      /*! ./views/authors/authors.view */
+      "./src/app/authors/views/authors/authors.view.ts");
 
       var AuthorsModule = function AuthorsModule() {
         _classCallCheck(this, AuthorsModule);
@@ -1381,13 +1387,19 @@
         factory: function AuthorsModule_Factory(t) {
           return new (t || AuthorsModule)();
         },
-        imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTableModule"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_8__["MatSortModule"], _authors_routing_module__WEBPACK_IMPORTED_MODULE_10__["AuthorsRoutingModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_9__["LayoutModule"]]]
+        imports: [[// Angular
+        _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], // Material
+        _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTableModule"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_8__["MatSortModule"], // Own
+        _authors_routing_module__WEBPACK_IMPORTED_MODULE_10__["AuthorsRoutingModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_9__["LayoutModule"]]]
       });
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](AuthorsModule, {
-          declarations: [_components_authors_authors_component__WEBPACK_IMPORTED_MODULE_11__["AuthorsComponent"], _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_12__["AuthorsContainer"]],
-          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTableModule"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_8__["MatSortModule"], _authors_routing_module__WEBPACK_IMPORTED_MODULE_10__["AuthorsRoutingModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_9__["LayoutModule"]]
+          declarations: [_components_authors_authors_component__WEBPACK_IMPORTED_MODULE_11__["AuthorsComponent"], _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_12__["AuthorsContainer"], _views_authors_authors_view__WEBPACK_IMPORTED_MODULE_13__["AuthorsView"]],
+          imports: [// Angular
+          _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], // Material
+          _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTableModule"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_8__["MatSortModule"], // Own
+          _authors_routing_module__WEBPACK_IMPORTED_MODULE_10__["AuthorsRoutingModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_9__["LayoutModule"]]
         });
       })();
       /*@__PURE__*/
@@ -1397,8 +1409,11 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthorsModule, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
-            declarations: [_components_authors_authors_component__WEBPACK_IMPORTED_MODULE_11__["AuthorsComponent"], _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_12__["AuthorsContainer"]],
-            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTableModule"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_8__["MatSortModule"], _authors_routing_module__WEBPACK_IMPORTED_MODULE_10__["AuthorsRoutingModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_9__["LayoutModule"]]
+            declarations: [_components_authors_authors_component__WEBPACK_IMPORTED_MODULE_11__["AuthorsComponent"], _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_12__["AuthorsContainer"], _views_authors_authors_view__WEBPACK_IMPORTED_MODULE_13__["AuthorsView"]],
+            imports: [// Angular
+            _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], // Material
+            _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_6__["MatTableModule"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"], _angular_material_sort__WEBPACK_IMPORTED_MODULE_8__["MatSortModule"], // Own
+            _authors_routing_module__WEBPACK_IMPORTED_MODULE_10__["AuthorsRoutingModule"], _layout_layout_module__WEBPACK_IMPORTED_MODULE_9__["LayoutModule"]]
           }]
         }], null, null);
       })();
@@ -1796,10 +1811,10 @@
       }
 
       var AuthorsContainer = /*#__PURE__*/function () {
-        function AuthorsContainer(authorsService) {
+        function AuthorsContainer(_authorsService) {
           _classCallCheck(this, AuthorsContainer);
 
-          this.authorsService = authorsService;
+          this._authorsService = _authorsService;
         }
 
         _createClass(AuthorsContainer, [{
@@ -1816,11 +1831,11 @@
           value: function getAuthors() {
             var _this4 = this;
 
-            this.authors$ = this.authorsService.getAuthorsInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) {
+            this.authors$ = this._authorsService.getAuthorsInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) {
               return data.meta.records;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (quantity) {
               _this4.authorsQuantity = quantity;
-              return _this4.authorsService.getAuthorsInQuantity(quantity);
+              return _this4._authorsService.getAuthorsInQuantity(quantity);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["pluck"])('authors'));
           }
         }]);
@@ -1834,7 +1849,7 @@
 
       AuthorsContainer.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
         type: AuthorsContainer,
-        selectors: [["app-authors"]],
+        selectors: [["authors-container"]],
         decls: 4,
         vars: 4,
         consts: [[3, "authors", 4, "ngIf", "ngIfElse"], ["loading", ""], [3, "authors"], ["id", "spinner"]],
@@ -1855,7 +1870,7 @@
         },
         directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _components_authors_authors_component__WEBPACK_IMPORTED_MODULE_4__["AuthorsComponent"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_5__["MatSpinner"]],
         pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["AsyncPipe"]],
-        styles: ["header[_ngcontent-%COMP%] {\n  position: relative;\n  z-index: 102;\n}\n\nmain[_ngcontent-%COMP%] {\n  position: relative;\n  height: 92%;\n}\n\nmain[_ngcontent-%COMP%]   #sidebar[_ngcontent-%COMP%] {\n  position: absolute;\n}\n\n#spinner[_ngcontent-%COMP%] {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9hdXRob3JzL2NvbnRhaW5lcnMvYXV0aG9ycy9hdXRob3JzLmNvbnRhaW5lci5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQU9BO0VBQ0ksa0JBQUE7RUFDQSxZQUFBO0FDTko7O0FEU0E7RUFDSSxrQkFBQTtFQUNBLFdBQUE7QUNOSjs7QURRSTtFQUNJLGtCQUFBO0FDTlI7O0FBVEE7RURESSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7QUNjSiIsImZpbGUiOiJzcmMvYXBwL2F1dGhvcnMvY29udGFpbmVycy9hdXRob3JzL2F1dGhvcnMuY29udGFpbmVyLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAbWl4aW4gc3Bpbm5lci1hbGlnbiB7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbn1cblxuaGVhZGVyIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgei1pbmRleDogMTAyO1xufVxuXG5tYWluIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgaGVpZ2h0OiA5MiU7XG5cbiAgICAjc2lkZWJhciB7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICB9XG59IiwiQGltcG9ydCAnLi4vLi4vLi4vYXBwLmNvbXBvbmVudC5zY3NzJztcblxuI3NwaW5uZXIge1xuICAgIEBpbmNsdWRlIHNwaW5uZXItYWxpZ247XG59Il19 */"]
+        styles: ["header[_ngcontent-%COMP%] {\n  position: fixed;\n  width: 100%;\n  z-index: 102;\n}\n\nmain[_ngcontent-%COMP%] {\n  position: relative;\n}\n\nmain[_ngcontent-%COMP%]   #sidebar[_ngcontent-%COMP%] {\n  position: absolute;\n}\n\n#spinner[_ngcontent-%COMP%] {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9hdXRob3JzL2NvbnRhaW5lcnMvYXV0aG9ycy9hdXRob3JzLmNvbnRhaW5lci5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQU9BO0VBQ0ksZUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FDTko7O0FEU0E7RUFDSSxrQkFBQTtBQ05KOztBRFFJO0VBQ0ksa0JBQUE7QUNOUjs7QUFUQTtFRERJLFlBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxtQkFBQTtBQ2NKIiwiZmlsZSI6InNyYy9hcHAvYXV0aG9ycy9jb250YWluZXJzL2F1dGhvcnMvYXV0aG9ycy5jb250YWluZXIuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBtaXhpbiBzcGlubmVyLWFsaWduIHtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xufVxuXG5oZWFkZXIge1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB3aWR0aDogMTAwJTtcbiAgICB6LWluZGV4OiAxMDI7XG59XG5cbm1haW4ge1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuICAgICNzaWRlYmFyIHtcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIH1cbn0iLCJAaW1wb3J0ICcuLi8uLi8uLi9hcHAuY29tcG9uZW50LnNjc3MnO1xuXG4jc3Bpbm5lciB7XG4gICAgQGluY2x1ZGUgc3Bpbm5lci1hbGlnbjtcbn0iXX0= */"]
       });
       /*@__PURE__*/
 
@@ -1863,7 +1878,7 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthorsContainer, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
           args: [{
-            selector: 'app-authors',
+            selector: 'authors-container',
             templateUrl: './authors.container.html',
             styleUrls: ['./authors.container.scss']
           }]
@@ -2001,6 +2016,86 @@
           return [{
             type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
           }];
+        }, null);
+      })();
+      /***/
+
+    },
+
+    /***/
+    "./src/app/authors/views/authors/authors.view.ts":
+    /*!*******************************************************!*\
+      !*** ./src/app/authors/views/authors/authors.view.ts ***!
+      \*******************************************************/
+
+    /*! exports provided: AuthorsView */
+
+    /***/
+    function srcAppAuthorsViewsAuthorsAuthorsViewTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "AuthorsView", function () {
+        return AuthorsView;
+      });
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var _containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ../../containers/authors/authors.container */
+      "./src/app/authors/containers/authors/authors.container.ts");
+
+      var AuthorsView = /*#__PURE__*/function () {
+        function AuthorsView() {
+          _classCallCheck(this, AuthorsView);
+        }
+
+        _createClass(AuthorsView, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {}
+        }]);
+
+        return AuthorsView;
+      }();
+
+      AuthorsView.ɵfac = function AuthorsView_Factory(t) {
+        return new (t || AuthorsView)();
+      };
+
+      AuthorsView.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+        type: AuthorsView,
+        selectors: [["app-authors"]],
+        decls: 1,
+        vars: 0,
+        template: function AuthorsView_Template(rf, ctx) {
+          if (rf & 1) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "authors-container");
+          }
+        },
+        directives: [_containers_authors_authors_container__WEBPACK_IMPORTED_MODULE_1__["AuthorsContainer"]],
+        styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2F1dGhvcnMvdmlld3MvYXV0aG9ycy9hdXRob3JzLnZpZXcuc2NzcyJ9 */"]
+      });
+      /*@__PURE__*/
+
+      (function () {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AuthorsView, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+          args: [{
+            selector: 'app-authors',
+            templateUrl: './authors.view.html',
+            styleUrls: ['./authors.view.scss']
+          }]
+        }], function () {
+          return [];
         }, null);
       })();
       /***/

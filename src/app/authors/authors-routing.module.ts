@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthorsComponent } from './components/authors/authors.component';
-import { AuthorsContainer } from './containers/authors/authors.container';
+import { AuthorsView } from './views/authors/authors.view';
 
 const routes: Routes = [
   {
     path: '',
-    component: AuthorsContainer,
+    component: AuthorsView,
   },
   {
     path: '**',

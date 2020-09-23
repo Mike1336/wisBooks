@@ -1,12 +1,10 @@
+@import '../../../app.component.scss';
+
 #books {
     height: 100%;
     display: flex;
     flex-flow: column;
     justify-content: center;
-
-    mat-spinner {
-        align-self: center;
-    }
 
     books-component {
         display: flex;
@@ -21,18 +19,13 @@
 
 #content {
     display: flex;
-    height: 92%;
 }
 
 #viewBooks {
-    height: 100%;
     width: 100%;
-    overflow: auto;
 
-    .spinner {
-        height: 92%;
-        display: flex;
-        justify-content: center;
+    #spinner {
+        @include spinner-align
     }
 }
 

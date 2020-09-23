@@ -6,8 +6,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 import { IGenre } from '../../interfaces/genre';
-
-import { MyValidator } from './../../validators/my.validator';
+import { FiltersValidator } from '../../validators/filters.validator';
 
 export const MY_FORMATS = {
   parse: {
@@ -42,10 +41,13 @@ export class FiltersComponent implements OnInit {
 
   @Input()
   public genres: IGenre[];
+
   @Input()
   public sbStatus: boolean;
+
   @Output()
   public applyForm: EventEmitter<object> = new EventEmitter();
+
   @Output()
   public resetForm: EventEmitter<object> = new EventEmitter();
 
@@ -75,16 +77,16 @@ export class FiltersComponent implements OnInit {
           Validators.min(0),
         ]),
       },
-      MyValidator.priceValidation,
+      FiltersValidator.priceValidation,
       ),
       releases: new FormGroup({
         releaseDateFrom: new FormControl(''),
         releaseDateTo: new FormControl(''),
       },
-      MyValidator.releaseValidation,
+      FiltersValidator.releaseValidation,
       ),
     },
-    MyValidator.emptyFormValidation,
+    FiltersValidator.emptyFormValidation,
     );
   }
 

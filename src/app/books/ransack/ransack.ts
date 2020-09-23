@@ -14,23 +14,20 @@ export class Ransack {
 
   public ransackMethod = RansackMethod;
 
-  public static toRansack(filters: IFilters, methods: Object): HttpParams {
+  public static toRansack(filters: IFilters, schema: Object): HttpParams {
     let params = new HttpParams();
 
-    for (const methodPropertyName of Object.keys(methods)) {
-      if (
-        Array.isArray(methods[methodPropertyName])
-        ) {
-        methods[methodPropertyName].forEach((propertyOfElement) => {
-          if (typeof propertyOfElement === 'object' &&
-                     propertyOfElement !== null
-            ) {
-            if (filters[methodPropertyName][propertyOfElement['from']]
-) {
-              const query =
-              Ransack.checkObject(propertyOfElement,
-                                  Object.keys(propertyOfElement),
-                                  filters[methodPropertyName][propertyOfElement['from']]);
+    Object.keys(schema).forEach((schemaPropertyName) => {
+      if (Array.isArray(schema[schemaPropertyName])) {
+        schema[schemaPropertyName].forEach((propertyOfElement) => {
+          if (typeof propertyOfElement === 'object' && propertyOfElement !== null) {
+            if (filters[schemaPropertyName][propertyOfElement['from']]) {
+              const query = Ransack.checkObject(
+                              propertyOfElement,
+                              Object.keys(propertyOfElement),
+                              filters[schemaPropertyName][propertyOfElement['from']],
+                            );
+
               const queryString = `q[${query['name']
                                     }${query['postfix'] ?? ''
                                     }${query['matcher']}]`;
@@ -39,55 +36,56 @@ export class Ransack {
             }
           }
         });
-      } else if (typeof methods[methodPropertyName] === 'object' &&
-                        methods[methodPropertyName] !== null
-        ) {
-        if (filters[methodPropertyName]) {
-          const query =
-          Ransack.checkObject(methods[methodPropertyName],
-                              Object.keys(methods[methodPropertyName]));
+      } else if (typeof schema[schemaPropertyName] === 'object'
+                  && schema[schemaPropertyName] !== null) {
+        if (filters[schemaPropertyName]) {
+          const query = Ransack.checkObject(
+                          schema[schemaPropertyName],
+                          Object.keys(schema[schemaPropertyName]),
+                        );
+
           let queryString = '';
 
-          if (Array.isArray(filters[methodPropertyName])) {
-            filters[methodPropertyName].forEach((elOfPropertiesArr) => {
-              queryString = `q[${query['name'] ?? methodPropertyName
+          if (Array.isArray(filters[schemaPropertyName])) {
+            filters[schemaPropertyName].forEach((elOfPropertiesArr) => {
+              queryString = `q[${query['name'] ?? schemaPropertyName
                               }${query['postfix'] ?? ''
                               }${query['matcher']}]`;
-
               params = params.append(queryString, `${elOfPropertiesArr}`);
             });
           } else {
-            queryString = `q[${query['name'] ?? methodPropertyName
-                            }${query['postfix'] ?? ''
-                            }${query['matcher']}]`;
-
-            params = params.append(queryString, `${filters[methodPropertyName]}`);
+            queryString = `q[${query['name'] ?? schemaPropertyName
+                              }${query['postfix'] ?? ''
+                              }${query['matcher']}]`;
+            params = params.append(queryString, `${filters[schemaPropertyName]}`);
           }
         }
       } else {
-        const matcher = Ransack.matcherToString(methods[methodPropertyName]);
-        params = params.append(`q[${methodPropertyName}${matcher}]`,
-                               `${filters[methodPropertyName]}`);
+        const matcher = Ransack.matcherToString(schema[schemaPropertyName]);
+        params = params.append(`q[${schemaPropertyName}${matcher}]`,
+                               `${filters[schemaPropertyName]}`,
+                 );
       }
-    }
+    });
 
     return params;
   }
 
   public static matcherToString(matcher: RansackMethod): string {
     switch (matcher) {
-      case RansackMethod.In:
+      case RansackMethod.In: {
         return '_in';
-
-      case RansackMethod.Gt:
+      }
+      case RansackMethod.Gt: {
         return '_gt';
-
-      case RansackMethod.Lt:
+      }
+      case RansackMethod.Lt: {
         return '_lt';
+      }
 
-      case RansackMethod.Eq:
+      case RansackMethod.Eq: {
         return '_eq';
-
+      }
       default:
         break;
     }
@@ -95,7 +93,7 @@ export class Ransack {
   public static checkObject(instrObject: IRsInstructions,
                             propArray: string[],
                             propValueFromFilters?: any,
-    ): object {
+                            ): object {
     const queryObject = {};
     const simpleProps = propArray.filter((el) => el !== 'matcher' || 'from');
 
@@ -108,8 +106,7 @@ export class Ransack {
     });
 
     if (instrObject.hasOwnProperty('matcher')) {
-      queryObject['matcher'] =
-      Ransack.matcherToString(instrObject['matcher']);
+      queryObject['matcher'] = Ransack.matcherToString(instrObject['matcher']);
     }
 
     if (instrObject.hasOwnProperty('from')) {

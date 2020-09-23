@@ -27,6 +27,7 @@ import { FiltersComponent } from './components/filters/filters.component';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { BooksContainer } from './containers/books/books.container';
 import { FiltersContainer } from './containers/filters/filters.container';
+import { BooksView } from './views/books/books.view';
 
 
 @NgModule({
@@ -37,13 +38,15 @@ import { FiltersContainer } from './containers/filters/filters.container';
     SearchFieldComponent,
     BooksContainer,
     FiltersContainer,
+    BooksView,
   ],
   imports: [
+    // Angular
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BooksRoutingModule,
     HttpClientModule,
+    // Material
     MatCardModule,
     MatButtonModule,
     MatProgressSpinnerModule,
@@ -56,10 +59,11 @@ import { FiltersContainer } from './containers/filters/filters.container';
     MatNativeDateModule,
     MatMomentDateModule,
     MatSidenavModule,
+    // Own
     LayoutModule,
     CommaModule,
+    BooksRoutingModule,
   ],
-  bootstrap: [],
 })
 export class BooksModule {
 
