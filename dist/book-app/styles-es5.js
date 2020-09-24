@@ -79,13 +79,13 @@
 
       exports = ___CSS_LOADER_API_IMPORT___(true); // Module
 
-      exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n  background-color: #303030;\n}", "", {
+      exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n  background-color: #303030;\n}\nbody .cdk-overlay-pane {\n  width: -webkit-max-content !important;\n  width: -moz-max-content !important;\n  width: max-content !important;\n}", "", {
         "version": 3,
         "sources": ["styles.scss"],
         "names": [],
-        "mappings": "AAAA,8EAAA;AAEA;;EAEI,YAAA;AAAJ;AAGA;EACI,SAAA;EACA,iDAAA;EACA,yBAAA;AAAJ",
+        "mappings": "AAAA,8EAAA;AAEA;;EAEI,YAAA;AAAJ;AAGA;EACI,SAAA;EACA,iDAAA;EACA,yBAAA;AAAJ;AACI;EACI,qCAAA;EAAA,kCAAA;EAAA,6BAAA;AACR",
         "file": "styles.scss",
-        "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\n\nhtml,\nbody {\n    height: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: Roboto, \"Helvetica Neue\", sans-serif;\n    background-color: #303030;\n}"]
+        "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\n\nhtml,\nbody {\n    height: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: Roboto, \"Helvetica Neue\", sans-serif;\n    background-color: #303030;\n    .cdk-overlay-pane{\n        width: max-content !important;\n    }\n}\n"]
       }]); // Exports
 
       module.exports = exports;

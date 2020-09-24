@@ -7,20 +7,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class SidebarService {
 
-  private navSbOpened$ = new BehaviorSubject(false);
-  private filSbOpened$ = new BehaviorSubject(false);
+  private _navSbStatus$ = new BehaviorSubject(false);
+  private _filSbStatus$ = new BehaviorSubject(false);
 
   constructor() { }
 
-  public get navSbOpen$(): Observable<boolean> {
-    return this.navSbOpened$;
+  public get navSbStatus$(): Observable<boolean> {
+    return this._navSbStatus$;
   }
-  public get filSbOpen$(): Observable<boolean> {
-    return this.filSbOpened$;
+  public get filSbStatus$(): Observable<boolean> {
+    return this._filSbStatus$;
   }
   public changeNavSb(bol: boolean): void {
-    this.navSbOpened$.next(bol);
+    this._navSbStatus$.next(bol);
   }
   public changeFilSb(bol: boolean): void {
-    this.filSbOpened$.next(bol);
-  }}
+    this._filSbStatus$.next(bol);
+  }
+
+}

@@ -38,7 +38,7 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   public ngOnInit(): void {
   }
   public ngAfterViewInit(): void {
-    this.filtersSb$ = this._sidebarService.filSbOpen$;
+    this.filtersSb$ = this._sidebarService.filSbStatus$;
     this.filtersSb$
       .pipe(
         takeUntil(this._destroy$),
@@ -53,6 +53,10 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   public ngOnDestroy(): void {
     this._destroy$.next(null);
     this._destroy$.complete();
+  }
+
+  public changeFilDrawer(data: boolean): void {
+    this._sidebarService.changeFilSb(data);
   }
 
 

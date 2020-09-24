@@ -1,58 +1,58 @@
 import { NavigationEnd, Router } from '@angular/router';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { SidebarService } from './../../services/sidebar.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'header-component',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  public booksPageIcon: boolean;
-  public filtersDrawer: boolean;
-  public navigateDrawer: boolean;
+  public filtersIcon: boolean;
+
+  @Input()
+  public urlStream$: Observable<string>;
 
   @Output()
   public burgerClicked: EventEmitter<any> = new EventEmitter<any>();
+
   @Output()
   public filtersClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  private destroy$: ReplaySubject<number> = new ReplaySubject(1);
+  private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private router: Router, private sbService: SidebarService) {}
+  constructor() {}
 
   public ngOnInit(): void {
-    this.router.events
+    this.urlStream$
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntil(this._destroy$),
       )
-      .subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          event.urlAfterRedirects === '/books' ?
-            this.booksPageIcon = true :
-            this.booksPageIcon = false;
-        }
-      });
+      .subscribe(
+        (url) => {
+          url === '/books'
+          ? this.filtersIcon = true
+          : this.filtersIcon = false;
+        },
+    );
   }
 
   public ngOnDestroy(): void {
-    this.destroy$.next(null);
-    this.destroy$.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 
   public showSideBar(): void {
-    this.navigateDrawer = !this.navigateDrawer;
-    this.sbService.changeNavSb(this.navigateDrawer);
+    this.burgerClicked.emit();
   }
 
   public showBooksFilters(): void {
-    this.filtersDrawer = !this.filtersDrawer;
-    this.sbService.changeFilSb(this.filtersDrawer);
+    this.filtersClicked.emit();
   }
 
 }

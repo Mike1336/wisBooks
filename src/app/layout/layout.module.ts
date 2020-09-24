@@ -18,6 +18,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SearchComponent } from './components/search/search.component';
+import { HeaderContainer } from './containers/header/header.container';
+import { HeaderView } from './views/header/header.view';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { SearchComponent } from './components/search/search.component';
     SidebarComponent,
     PaginatorComponent,
     SearchComponent,
+    HeaderContainer,
+    HeaderView,
   ],
   imports: [
     // Angular
@@ -45,7 +49,7 @@ import { SearchComponent } from './components/search/search.component';
     MatAutocompleteModule,
   ],
   exports: [
-    HeaderComponent,
+    HeaderView,
     SidebarComponent,
     PaginatorComponent,
   ],
