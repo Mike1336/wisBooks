@@ -31,7 +31,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchForm.get('searchField').valueChanges
       .pipe(
         map((word) => {
-          return word.toLowerCase();
+          if (word) {
+            return word.toLowerCase();
+          }
+
+          return word;
         }),
         debounceTime(500),
         takeUntil(this._destroy$),

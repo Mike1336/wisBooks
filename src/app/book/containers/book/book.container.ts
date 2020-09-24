@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { catchError, takeUntil } from 'rxjs/operators';
 
+import { BookView } from './../../views/book/book.view';
 import { IBook } from './../../../books/interfaces/book';
 import { BooksService } from './../../../books/services/books.service';
 
@@ -11,25 +12,38 @@ import { BooksService } from './../../../books/services/books.service';
   templateUrl: './book.container.html',
   styleUrls: ['./book.container.scss'],
 })
-export class BookContainer implements OnInit {
+export class BookContainer implements OnInit, OnDestroy {
 
   public book$: Observable<IBook>;
-
-  @Input()
-  public queryId: number;
 
   @Output()
   public contentNotFound: EventEmitter<Error> = new EventEmitter();
 
-  constructor(private booksService: BooksService) { }
+  private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
+
+  constructor(private booksService: BooksService, private bookView: BookView) { }
 
   public ngOnInit(): void {
-    this.book$ = this.booksService.getBookById(this.queryId).pipe(
-      catchError((err) => {
-        this.contentNotFound.emit(err);
-        throw new Error(`error in source. Details: ${err}`);
-      }),
-    );
+    this.bookView.paramsStream$
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe(
+        (id) => {
+          this.book$ = this.booksService.getBookById(id).pipe(
+            catchError((err) => {
+              this.contentNotFound.emit(err);
+              throw new Error(`error in source. Details: ${err}`);
+            }),
+          );
+        },
+      );
   }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next(null);
+    this._destroy$.complete();
+  }
+
 
 }
