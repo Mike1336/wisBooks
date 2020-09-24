@@ -10,7 +10,7 @@ import { IGenre } from '../../interfaces/genre';
 import { BooksService } from './../../services/books.service';
 import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
 import { GenresService } from './../../services/genres.service';
-import { PaginatorComponent } from './../../../layout/paginator/paginator.component';
+import { PaginatorComponent } from './../../../layout/components/paginator/paginator.component';
 
 @Component({
   selector: 'books-container',

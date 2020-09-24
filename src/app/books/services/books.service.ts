@@ -71,6 +71,11 @@ export class BooksService {
   public getBookById(bookId: number): Observable<IBook> {
     return this._http.get<IBook>(`${this._apiUrl}${this._booksEndpoint}/${bookId}`);
   }
+  public getBooksByTItle(bookTitle: string): Observable<IBooks> {
+    return this._http.get<IBooks>(
+      `${this._apiUrl}${this._booksEndpoint}?q[title_cont]=${bookTitle}`,
+      );
+  }
   public getBookByAuthor(authorId: number): Observable<object> {
     return this._http.get(
       `${this._apiUrl}${this._authorsEndpoint}/${authorId}/${this._booksEndpoint}`,

@@ -24,7 +24,6 @@ import { BooksComponent } from './components/books/books.component';
 import { LayoutModule } from './../layout/layout.module';
 import { BookItemComponent } from './components/book-item/book-item.component';
 import { FiltersComponent } from './components/filters/filters.component';
-import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { BooksContainer } from './containers/books/books.container';
 import { FiltersContainer } from './containers/filters/filters.container';
 import { BooksView } from './views/books/books.view';
@@ -35,7 +34,6 @@ import { BooksView } from './views/books/books.view';
     BooksComponent,
     BookItemComponent,
     FiltersComponent,
-    SearchFieldComponent,
     BooksContainer,
     FiltersContainer,
     BooksView,

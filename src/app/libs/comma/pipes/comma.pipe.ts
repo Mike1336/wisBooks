@@ -9,7 +9,7 @@ export class CommaPipe implements PipeTransform {
 
   public transform(arr: IGenre[]): string {
 
-    return arr.join();
+    return arr.map((genre) => genre.name).join();
   }
 
 }

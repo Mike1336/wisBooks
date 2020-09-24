@@ -12,10 +12,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { HeaderComponent } from './header/header.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { PaginatorComponent } from './paginator/paginator.component';
+import { HeaderComponent } from './components/header/header.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
     HeaderComponent,
     SidebarComponent,
     PaginatorComponent,
+    SearchComponent,
   ],
   imports: [
     // Angular
@@ -39,6 +42,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
     MatCheckboxModule,
     MatInputModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
   ],
   exports: [
     HeaderComponent,
