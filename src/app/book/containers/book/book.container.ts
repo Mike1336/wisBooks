@@ -16,6 +16,9 @@ export class BookContainer implements OnInit, OnDestroy {
 
   public book$: Observable<IBook>;
 
+  @Input()
+  public paramsStream$: Observable<number>;
+
   @Output()
   public contentNotFound: EventEmitter<Error> = new EventEmitter();
 
@@ -24,7 +27,7 @@ export class BookContainer implements OnInit, OnDestroy {
   constructor(private booksService: BooksService, private bookView: BookView) { }
 
   public ngOnInit(): void {
-    this.bookView.paramsStream$
+    this.paramsStream$
       .pipe(
         takeUntil(this._destroy$),
       )
