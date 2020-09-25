@@ -1,0 +1,136 @@
+  <mat-horizontal-stepper linear="false" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your information</ng-template>
+        <mat-form-field>
+          <mat-label>Firstname</mat-label>
+          <input 
+            formControlName="firstNameCtl" 
+            notDigits
+            [control]="firstFormGroup.controls['firstNameCtl']"
+            matInput 
+            placeholder="John" 
+            required
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Lastname</mat-label>
+          <input
+            formControlName="lastNameCtl" 
+            notDigits
+            [control]="firstFormGroup.controls['lastNameCtl']"
+            matInput 
+            placeholder="Prison" 
+            required
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input 
+            matInput 
+            placeholder="jprison@gmail.com" 
+            formControlName="emailCtl" 
+            required
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input
+            id="tel"
+            formControlName="phoneNumberCtl" 
+            matInput 
+            phoneMask
+            [preValue]="firstFormGroup.value.phoneNumberCtl"  
+            [phoneControl]="firstFormGroup.controls['phoneNumberCtl']"
+            maxlength="14"  
+            placeholder="(123) 456-6789" 
+            required
+          >
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+      <form [formGroup]="secondFormGroup">
+        <mat-form-field class="example-full-width">
+          <input 
+            matInput
+            notDigits
+            [control]="secondFormGroup.controls['countryCtl']"
+            placeholder="Country"
+            [matAutocomplete]="auto"
+            [formControl]="secondFormGroup.controls['countryCtl']"
+            required
+          >
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let country of filteredCountries$ | async" [value]="country.name">
+              <img class="country-option-img" aria-hidden [src]="country.flag" height="25">
+              <span>{{country.name}}</span> |
+              <small>Population: {{country.population}}</small>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input 
+            matInput 
+            formControlName="addressCtl" 
+            placeholder="Ex. 1 Main St, New York, NY"
+            required
+          >
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Fill out your card information</ng-template>
+        <mat-form-field>
+          <mat-label>Card number</mat-label>
+          <input
+            cardNumberMask
+            [control]="thirdFormGroup.controls['cardNumberCtl']" 
+            formControlName="cardNumberCtl" 
+            matInput 
+            maxlength="19"
+            placeholder="1234 5678 9012 3456" 
+            required
+          >
+        </mat-form-field>
+        <div id="cardInf"> 
+          <mat-form-field>
+            <input
+              cardNumberMask
+              [control]="thirdFormGroup.controls['cardExpiryDateCtl']" 
+              formControlName="cardExpiryDateCtl" 
+              matInput 
+              placeholder="MM/YY" 
+              maxlength="5"
+              required
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <input 
+            type="password"
+            cardNumberMask
+            [control]="thirdFormGroup.controls['cardCVVCtl']" 
+            formControlName="cardCVVCtl" 
+            matInput 
+            placeholder="CVV" 
+            maxlength="3"
+            required
+           >
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>

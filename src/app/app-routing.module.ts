@@ -32,6 +32,15 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'register',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./register/register.module').then((m) => m.RegisterModule),
+      },
+    ],
+  },
+  {
     path: '',
     redirectTo: '/books',
     pathMatch: 'full',
