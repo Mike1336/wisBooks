@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 
@@ -70,12 +70,8 @@ export class FiltersComponent implements OnInit {
     this.filtersForm = new FormGroup({
       genres: new FormControl([]),
       prices: new FormGroup({
-        minPrice: new FormControl('', [
-          Validators.min(0),
-        ]),
-        maxPrice: new FormControl('', [
-          Validators.min(0),
-        ]),
+        minPrice: new FormControl(''),
+        maxPrice: new FormControl(''),
       },
       FiltersValidator.priceValidation,
       ),
@@ -89,5 +85,21 @@ export class FiltersComponent implements OnInit {
     FiltersValidator.emptyFormValidation,
     );
   }
+  public get minPrice(): AbstractControl {
+    return this.filtersForm.get('prices').get('minPrice');
+  }
+
+  public get maxPrice(): AbstractControl {
+    return this.filtersForm.get('prices').get('maxPrice');
+  }
+
+  public get releaseDateFrom(): AbstractControl {
+    return this.filtersForm.get('releases').get('releaseDateFrom');
+  }
+
+  public get releaseDateTo(): AbstractControl {
+    return this.filtersForm.get('releases').get('releaseDateTo');
+  }
+
 
 }

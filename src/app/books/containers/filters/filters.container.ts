@@ -5,6 +5,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import {IFilters} from '../../interfaces/filters';
 
 import { SidebarService } from './../../../layout/services/sidebar.service';
 import { IGenre } from './../../interfaces/genre';
@@ -59,5 +60,14 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
     this._sidebarService.changeFilSb(data);
   }
 
+  public closeDrawerAndEmit(filters: IFilters): void {
+    this.drawer.close();
+    this.applyForm.emit(filters);
+  }
+
+  public closeDrawerAndReset(): void {
+    this.drawer.close();
+    this.resetForm.emit();
+  }
 
 }

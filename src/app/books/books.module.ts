@@ -14,6 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -27,6 +29,8 @@ import { FiltersComponent } from './components/filters/filters.component';
 import { BooksContainer } from './containers/books/books.container';
 import { FiltersContainer } from './containers/filters/filters.container';
 import { BooksView } from './views/books/books.view';
+import { NotLettersDirective } from './directives/not-letters.directive';
+import { DateMaskDirective } from './directives/date-mask.directive';
 
 
 @NgModule({
@@ -37,6 +41,8 @@ import { BooksView } from './views/books/books.view';
     BooksContainer,
     FiltersContainer,
     BooksView,
+    NotLettersDirective,
+    DateMaskDirective,
   ],
   imports: [
     // Angular
@@ -57,6 +63,8 @@ import { BooksView } from './views/books/books.view';
     MatNativeDateModule,
     MatMomentDateModule,
     MatSidenavModule,
+    MatExpansionModule,
+    MatIconModule,
     // Own
     LayoutModule,
     CommaModule,
