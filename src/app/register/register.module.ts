@@ -15,6 +15,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { NotDigitsDirective } from './directives/not-digits.directive';
 import { CardNumberMaskDirective } from './directives/card-number-mask.directive';
+import { CardDateMaskDirective } from './directives/card-date.directive';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { CardNumberMaskDirective } from './directives/card-number-mask.directive
     PhoneMaskDirective,
     NotDigitsDirective,
     CardNumberMaskDirective,
+    CardDateMaskDirective,
   ],
   imports: [
     // Angular

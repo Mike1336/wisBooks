@@ -1,11 +1,8 @@
-h1 {
-    width: 100%;
-    text-align: center;
-}
-
 mat-toolbar {
-    box-shadow: 1px 8px 20px black;
+    box-shadow: 3px 4px 20px black;
     height: 56px;
+    display: flex;
+    justify-content: space-between;
 }
 app-search{
     margin-right: 20px;

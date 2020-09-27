@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 
 import { IAuthor } from './../../interfaces/author';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -29,9 +30,10 @@ export class AuthorsComponent implements OnInit {
   @ViewChild(MatSort)
   public sort: MatSort;
 
-  constructor() { }
+  constructor(private _title: Title) { }
 
   public ngOnInit(): void {
+    this._title.setTitle('All authors');
     this.dataSource.data = this.authors;
   }
 

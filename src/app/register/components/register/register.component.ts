@@ -87,6 +87,12 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  public registre(): void {
+    console.log(this.firstFormGroup.value);
+    console.log(this.secondFormGroup.value);
+    console.log(this.thirdFormGroup.value);
+  }
+
   private _filterCountries(value: string): ICountry[] {
     const filterValue = value.toLowerCase();
 

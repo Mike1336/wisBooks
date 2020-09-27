@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {Title} from '@angular/platform-browser';
 
 import { IBook } from '../../interfaces/book';
 
@@ -12,11 +13,11 @@ export class BooksComponent implements OnInit {
   @Input()
   public books: IBook[];
 
-  constructor() {
-
+  constructor(private _title: Title) {
   }
 
   public ngOnInit(): void {
+    this._title.setTitle('All books');
   }
 
 }
