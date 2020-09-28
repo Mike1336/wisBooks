@@ -1,5 +1,5 @@
-import { Directive, Input, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { Directive, OnDestroy, OnInit } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,18 +9,13 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CardNumberMaskDirective implements OnInit, OnDestroy {
 
-  private _control: AbstractControl;
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  @Input()
-  set control(control: AbstractControl) {
-    this._control = control;
-  }
-
-  constructor() { }
+  constructor(private _control: NgControl) { }
 
   public ngOnInit(): void {
-    this._control.valueChanges
+    const control = this._control.control;
+    control.valueChanges
       .pipe(
         takeUntil(this._destroy$),
       )
@@ -38,7 +33,7 @@ export class CardNumberMaskDirective implements OnInit, OnDestroy {
             newVal = newVal.replace(/^(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})(.*)/, '$1 $2 $3 $4');
           }
 
-          this._control.setValue(newVal, { emitEvent: false });
+          control.setValue(newVal, { emitEvent: false });
         },
       );
   }

@@ -1,5 +1,5 @@
-import { Directive, OnDestroy, OnInit, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { Directive, OnDestroy, OnInit } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,24 +9,19 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class NotDigitsDirective implements OnInit, OnDestroy {
 
-  private _control: AbstractControl;
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  @Input()
-  set control(control: AbstractControl) {
-    this._control = control;
-  }
-
-  constructor() { }
+  constructor(private _control: NgControl) { }
 
   public ngOnInit(): void {
-    this._control.valueChanges
+    const control = this._control.control;
+    control.valueChanges
       .pipe(
         takeUntil(this._destroy$),
       )
       .subscribe(
         (data) => {
-          this._control.setValue(data.replace(/\d/, ''), { emitEvent: false });
+          control.setValue(data.replace(/\d/, ''), { emitEvent: false });
         },
       );
   }

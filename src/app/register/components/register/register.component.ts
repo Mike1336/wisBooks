@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
       ],
       ],
       phoneNumberCtl: ['', [
-        Validators.pattern(/^\(\d{3}\)\s\d{3}-\d{4}$/),
+        Validators.minLength(17),
         Validators.required,
       ],
       ],
@@ -61,15 +61,15 @@ export class RegisterComponent implements OnInit {
     });
     this.thirdFormGroup = this._formBuilder.group({
       cardNumberCtl: ['', [
-        Validators.pattern(/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/),
+        Validators.minLength(19),
         Validators.required],
       ],
       cardExpiryDateCtl: ['', [
-        Validators.pattern(/^\d{2}\/\d{2}$/),
+        Validators.minLength(5),
         Validators.required],
       ],
       cardCVVCtl: ['', [
-        Validators.pattern(/^\d{3}$/),
+        Validators.minLength(3),
         Validators.required],
       ],
     });
@@ -88,9 +88,47 @@ export class RegisterComponent implements OnInit {
   }
 
   public registre(): void {
-    console.log(this.firstFormGroup.value);
-    console.log(this.secondFormGroup.value);
-    console.log(this.thirdFormGroup.value);
+    console.log({
+      ...this.firstFormGroup.value,
+      ...this.secondFormGroup.value,
+      ...this.thirdFormGroup.value,
+    });
+  }
+
+  public get firstName(): AbstractControl {
+    return this.firstFormGroup.get('firstNameCtl');
+  }
+
+  public get lastName(): AbstractControl {
+    return this.firstFormGroup.get('lastNameCtl');
+  }
+
+  public get email(): AbstractControl {
+    return this.firstFormGroup.get('emailCtl');
+  }
+
+  public get phoneNumber(): AbstractControl {
+    return this.firstFormGroup.get('phoneNumberCtl');
+  }
+
+  public get country(): AbstractControl {
+    return this.secondFormGroup.get('countryCtl');
+  }
+
+  public get address(): AbstractControl {
+    return this.secondFormGroup.get('addressCtl');
+  }
+
+  public get cardNumber(): AbstractControl {
+    return this.thirdFormGroup.get('cardNumberCtl');
+  }
+
+  public get cardExpiryDate(): AbstractControl {
+    return this.thirdFormGroup.get('cardExpiryDateCtl');
+  }
+
+  public get cardCVV(): AbstractControl {
+    return this.thirdFormGroup.get('cardCVVCtl');
   }
 
   private _filterCountries(value: string): ICountry[] {

@@ -23,7 +23,6 @@
         <input 
           matInput
           notLetters
-          [control]="minPrice"
           formControlName="minPrice"
           maxlength="5"
         />
@@ -35,9 +34,8 @@
       <mat-form-field class="example-full-width">
         <mat-label>Price to</mat-label>
         <input 
-          notLetters
-          [control]="maxPrice"
           matInput 
+          notLetters
           formControlName="maxPrice"
           maxlength="5"
         />
@@ -59,6 +57,7 @@
         <mat-label>Release date from</mat-label>
         <input 
           matInput
+          dateMask
           [matDatepicker]="pickerFrom"
           formControlName="releaseDateFrom"
           maxlength="10"
@@ -78,6 +77,7 @@
         <mat-label>Release date to</mat-label>
         <input 
           matInput
+          dateMask
           [matDatepicker]="pickerTo"
           formControlName="releaseDateTo"
           maxlength="10"
