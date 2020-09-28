@@ -1,0 +1,40 @@
+    <form [formGroup]="secondFormGroup">
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          notDigits
+          placeholder="Country name"
+          [matAutocomplete]="auto"
+          [formControl]="country"
+          required
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let country of countries$ | async"
+            [value]="country.name"
+          >
+            <img
+              class="country-option-img"
+              aria-hidden
+              [src]="country.flag"
+              height="25"
+            />
+            <span>{{ country.name }}</span> |
+            <small>Population: {{ country.population | number:'1.0-0' }}</small>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          formControlName="addressCtl"
+          placeholder="Ex. 1 Main St, New York, NY"
+          required
+        />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>

@@ -1,0 +1,17 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    mat-form-field{
+        text-align: center;
+    }
+
+}
+#cardInf{
+    display: flex;
+    justify-content: center;
+    mat-form-field{
+        margin-right:10px;
+        width: 60px;
+    }
+}

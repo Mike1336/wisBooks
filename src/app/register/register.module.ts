@@ -16,6 +16,9 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { NotDigitsDirective } from './directives/not-digits.directive';
 import { CardNumberMaskDirective } from './directives/card-number-mask.directive';
 import { CardDateMaskDirective } from './directives/card-date.directive';
+import { FirstStepComponent } from './components/first-step/first-step.component';
+import { SecondStepComponent } from './components/second-step/second-step.component';
+import { ThirdStepComponent } from './components/third-step/third-step.component';
 
 
 @NgModule({
@@ -27,6 +30,9 @@ import { CardDateMaskDirective } from './directives/card-date.directive';
     NotDigitsDirective,
     CardNumberMaskDirective,
     CardDateMaskDirective,
+    FirstStepComponent,
+    SecondStepComponent,
+    ThirdStepComponent,
   ],
   imports: [
     // Angular

@@ -1,0 +1,45 @@
+<form [formGroup]="thirdFormGroup">
+  <mat-form-field>
+    <mat-label>Card number</mat-label>
+    <input
+      matInput
+      cardNumberMask
+      formControlName="cardNumberCtl"
+      maxlength="19"
+      placeholder="1234 5678 9012 3456"
+      required
+    />
+  </mat-form-field>
+  <div id="cardInf">
+    <mat-form-field>
+      <input
+        matInput
+        cardDateMask
+        formControlName="cardExpiryDateCtl"
+        placeholder="MM/YY"
+        maxlength="5"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        cardNumberMask
+        formControlName="cardCVVCtl"
+        placeholder="CVV"
+        maxlength="3"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-button matStepperPrevious>Back</button>
+    <ng-container *ngIf="thirdFormGroup.valid; else invalidForm">
+      <button mat-button>Registrate</button>
+    </ng-container>
+    <ng-template #invalidForm>
+      <button mat-button disabled>Registrate</button>
+    </ng-template>
+  </div>
+</form>

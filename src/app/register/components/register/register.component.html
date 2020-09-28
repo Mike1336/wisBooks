@@ -1,141 +1,15 @@
 <h1>Registration in 3 steps</h1>
 <mat-horizontal-stepper linear="false" #stepper>
   <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out your information</ng-template>
-      <mat-form-field>
-        <mat-label>Firstname</mat-label>
-        <input
-          matInput
-          notDigits
-          formControlName="firstNameCtl"
-          placeholder="John"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Lastname</mat-label>
-        <input
-          matInput
-          notDigits
-          formControlName="lastNameCtl"
-          placeholder="Prison"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>E-mail</mat-label>
-        <input
-          matInput
-          placeholder="jprison@gmail.com"
-          formControlName="emailCtl"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Phone number</mat-label>
-        <input
-          matInput
-          phoneMask
-          formControlName="phoneNumberCtl"
-          maxlength="17"
-          placeholder="+1(234) 567-89-01"
-          required
-        />
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
+    <ng-template matStepLabel>Fill out your information</ng-template>
+    <first-step></first-step>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-    <form [formGroup]="secondFormGroup">
-      <mat-form-field class="example-full-width">
-        <input
-          matInput
-          notDigits
-          placeholder="Country name"
-          [matAutocomplete]="auto"
-          [formControl]="country"
-          required
-        />
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let country of filteredCountries$ | async"
-            [value]="country.name"
-          >
-            <img
-              class="country-option-img"
-              aria-hidden
-              [src]="country.flag"
-              height="25"
-            />
-            <span>{{ country.name }}</span> |
-            <small>Population: {{ country.population }}</small>
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input
-          matInput
-          formControlName="addressCtl"
-          placeholder="Ex. 1 Main St, New York, NY"
-          required
-        />
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
+  <mat-step [stepControl]="secondFormGroup">
+    <ng-template matStepLabel>Fill out your address</ng-template>
+    <second-step></second-step>
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup">
-    <form [formGroup]="thirdFormGroup">
-      <ng-template matStepLabel>Fill out your card information</ng-template>
-      <mat-form-field>
-        <mat-label>Card number</mat-label>
-        <input
-          matInput
-          cardNumberMask
-          formControlName="cardNumberCtl"
-          maxlength="19"
-          placeholder="1234 5678 9012 3456"
-          required
-        />
-      </mat-form-field>
-      <div id="cardInf">
-        <mat-form-field>
-          <input
-            matInput
-            cardDateMask
-            formControlName="cardExpiryDateCtl"
-            placeholder="MM/YY"
-            maxlength="5"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            type="password"
-            matInput
-            cardNumberMask
-            formControlName="cardCVVCtl"
-            placeholder="CVV"
-            maxlength="3"
-            required
-          />
-        </mat-form-field>
-      </div>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <ng-container *ngIf="thirdFormGroup.valid; else invalidForm">
-          <button mat-button (click)="registre()">Registrate</button>
-        </ng-container>
-        <ng-template #invalidForm>
-          <button mat-button disabled>Registrate</button>
-        </ng-template>
-      </div>
-    </form>
+    <ng-template matStepLabel>Fill out your card information</ng-template>
+    <third-step></third-step>
   </mat-step>
 </mat-horizontal-stepper>
