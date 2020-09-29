@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, ReplaySubject } from 'rxjs';
@@ -13,9 +13,11 @@ import { CountryService } from '../../services/country.service';
 })
 export class SecondStepComponent implements OnInit, OnDestroy {
 
-  public secondFormGroup: FormGroup;
 
   public countries$: Observable<object>;
+
+  @Input('form')
+  public secondFormGroup: FormGroup;
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 

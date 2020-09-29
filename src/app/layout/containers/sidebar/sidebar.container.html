@@ -1,0 +1,6 @@
+<mat-drawer-container class="example-container" hasBackdrop [class.hide]="!drawer?.opened">
+    <mat-drawer class="example-sidenav" mode="side" (openedChange)="changeNavDrawer($event)" >
+        <sidebar-component></sidebar-component>
+    </mat-drawer>
+  </mat-drawer-container>
+  

@@ -11,7 +11,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterView } from './views/register/register.view';
 import { RegisterContainer } from './containers/register/register.container';
-import { RegisterComponent } from './components/register/register.component';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { NotDigitsDirective } from './directives/not-digits.directive';
 import { CardNumberMaskDirective } from './directives/card-number-mask.directive';
@@ -23,7 +22,6 @@ import { ThirdStepComponent } from './components/third-step/third-step.component
 
 @NgModule({
   declarations: [
-    RegisterComponent,
     RegisterContainer,
     RegisterView,
     PhoneMaskDirective,

@@ -4,14 +4,15 @@
     <div id="nfBooks" *ngIf="emptyResult">
       <h2>Books not found</h2>
     </div>
+    <app-paginator
+      [records]="booksQuantity"
+      [limits]="[10, 25, 50, 75, 100, 125, 150]"
+      [index]="booksIndex"
+      (changed)="changePageSize($event)"
+      [class.hide]="emptyResult"
+    >
+    </app-paginator>
   </ng-container>
-  <app-paginator
-    [records]="booksQuantity"
-    [limits]="[10, 25, 50, 75, 100, 125, 150]"
-    (changed)="changePageSize($event)"
-    [class.hide]="emptyResult"
-  >
-  </app-paginator>
   <ng-template #loading>
     <div id="spinner">
       <mat-spinner></mat-spinner>

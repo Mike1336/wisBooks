@@ -1,4 +1,4 @@
-<mat-drawer-container class="example-container" hasBackdrop="true" [class.hide]="!drawer?.opened">
+<mat-drawer-container class="example-container" hasBackdrop [class.hide]="!drawer?.opened">
     <mat-drawer class="example-sidenav" mode="side" position="end" (openedChange)="changeFilDrawer($event)">
         <filters-component [genres]="genres"
             (applyForm)="closeDrawerAndEmit($event)" (resetForm)="closeDrawerAndReset()">

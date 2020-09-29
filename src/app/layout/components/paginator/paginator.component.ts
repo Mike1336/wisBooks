@@ -27,6 +27,9 @@ export class PaginatorComponent implements OnInit {
   @Input()
   public limits: number[] = [];
 
+  @Input()
+  public index?: number;
+
   @Output()
   public create: EventEmitter<MatPaginator> = new EventEmitter();
 

@@ -23,12 +23,10 @@ export class BooksContainer implements OnInit {
 
   public filters: IFilters;
   public booksQuantity: number = 0;
+  public booksIndex: number = 0;
 
   public books$: Observable<IBook[]>;
   public genres$: Observable<IGenre[]>;
-
-  @ViewChild(PaginatorComponent)
-  private pag: PaginatorComponent;
 
   constructor(
     private booksService: BooksService,
@@ -53,14 +51,14 @@ export class BooksContainer implements OnInit {
     booksQuantity: number = 10,
     page: number = 0,
   ): void {
-    page += 1;
     this.books$ = this.booksService.getBooks(booksQuantity, page, filters).pipe(
       map((data) => {
         this.booksQuantity = data.meta.records;
+        this.booksIndex = data.meta.page;
 
         data.books.length > 0
-          ? (this.emptyResult = false)
-          : (this.emptyResult = true);
+          ? this.emptyResult = false
+          : this.emptyResult = true;
 
         return data.books;
       }),

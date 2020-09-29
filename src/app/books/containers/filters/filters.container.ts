@@ -5,7 +5,8 @@ import { MatDrawer } from '@angular/material/sidenav';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {IFilters} from '../../interfaces/filters';
+
+import { IFilters } from '../../interfaces/filters';
 
 import { SidebarService } from './../../../layout/services/sidebar.service';
 import { IGenre } from './../../interfaces/genre';

@@ -20,16 +20,20 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SearchComponent } from './components/search/search.component';
 import { HeaderContainer } from './containers/header/header.container';
 import { HeaderView } from './views/header/header.view';
+import { SidebarContainer } from './containers/sidebar/sidebar.container';
+import { SidebarView } from './views/sidebar/sidebar.view';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    SidebarComponent,
-    PaginatorComponent,
-    SearchComponent,
     HeaderContainer,
     HeaderView,
+    SidebarComponent,
+    SidebarContainer,
+    PaginatorComponent,
+    SearchComponent,
+    SidebarView,
   ],
   imports: [
     // Angular
@@ -49,9 +53,9 @@ import { HeaderView } from './views/header/header.view';
     MatAutocompleteModule,
   ],
   exports: [
-    HeaderView,
-    SidebarComponent,
+    SidebarView,
     PaginatorComponent,
+    HeaderView,
   ],
 })
 export class LayoutModule { }

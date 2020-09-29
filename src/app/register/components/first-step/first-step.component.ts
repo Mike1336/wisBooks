@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'first-step',
@@ -8,24 +8,27 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 })
 export class FirstStepComponent implements OnInit {
 
+  @Input('form')
   public firstFormGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor() { }
 
   public ngOnInit(): void {
-    this.firstFormGroup = this._formBuilder.group({
-      firstNameCtl: ['', Validators.required],
-      lastNameCtl: ['', Validators.required],
-      emailCtl: ['', [
+    this.firstFormGroup = new FormGroup({
+      firstNameCtl: new FormControl('', [
+        Validators.required,
+      ]),
+      lastNameCtl: new FormControl('', [
+        Validators.required,
+      ]),
+      emailCtl: new FormControl('', [
         Validators.email,
         Validators.required,
-      ],
-      ],
-      phoneNumberCtl: ['', [
+      ]),
+      phoneNumberCtl: new FormControl('', [
         Validators.minLength(17),
         Validators.required,
-      ],
-      ],
+      ]),
     });
   }
 
