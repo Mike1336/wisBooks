@@ -11,16 +11,27 @@
     />
   </mat-form-field>
   <div id="cardInf">
-    <mat-form-field>
-      <input
-        matInput
-        cardDateMask
-        formControlName="cardExpiryDateCtl"
-        placeholder="MM/YY"
-        maxlength="5"
-        required
-      />
-    </mat-form-field>
+    <div id="cardDate">
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="cardMonthCtl"
+          placeholder="MM"
+          maxlength="2"
+          required
+        />
+      </mat-form-field>
+      <p>/</p>
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="cardYearCtl"
+          placeholder="YY"
+          maxlength="2"
+          required
+        />
+      </mat-form-field>
+    </div>
     <mat-form-field>
       <input
         type="password"
@@ -36,7 +47,7 @@
   <div>
     <button mat-button matStepperPrevious>Back</button>
     <ng-container *ngIf="thirdFormGroup.valid; else invalidForm">
-      <button mat-button>Registrate</button>
+      <button mat-button (click)="clickRegister.emit()">Registrate</button>
     </ng-container>
     <ng-template #invalidForm>
       <button mat-button disabled>Registrate</button>

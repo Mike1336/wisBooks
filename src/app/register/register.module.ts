@@ -46,6 +46,6 @@ import { ThirdStepComponent } from './components/third-step/third-step.component
     MatAutocompleteModule,
     // Own
     RegisterRoutingModule,
-  ]
+  ],
 })
 export class RegisterModule { }

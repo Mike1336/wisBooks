@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,8 @@ export class ThirdStepComponent implements OnInit {
 
   public thirdFormGroup: FormGroup;
 
+  @Output()
+  public clickRegister = new EventEmitter();
 
   constructor(private _formBuilder: FormBuilder) { }
 
@@ -19,8 +21,13 @@ export class ThirdStepComponent implements OnInit {
         Validators.minLength(19),
         Validators.required],
       ],
-      cardExpiryDateCtl: ['', [
-        Validators.minLength(5),
+      cardMonthCtl: ['', [
+        Validators.minLength(2),
+        Validators.max(12),
+        Validators.required],
+      ],
+      cardYearCtl: ['', [
+        Validators.minLength(2),
         Validators.required],
       ],
       cardCVVCtl: ['', [

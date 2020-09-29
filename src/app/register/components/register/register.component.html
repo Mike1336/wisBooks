@@ -1,5 +1,5 @@
 <h1>Registration in 3 steps</h1>
-<mat-horizontal-stepper linear="false" #stepper>
+<mat-horizontal-stepper linear #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <ng-template matStepLabel>Fill out your information</ng-template>
     <first-step></first-step>
@@ -10,6 +10,6 @@
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup">
     <ng-template matStepLabel>Fill out your card information</ng-template>
-    <third-step></third-step>
+    <third-step (clickRegister)="registre()"></third-step>
   </mat-step>
 </mat-horizontal-stepper>

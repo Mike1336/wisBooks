@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
+import { ThirdStepComponent } from './../third-step/third-step.component';
+import { SecondStepComponent } from './../second-step/second-step.component';
+import { FirstStepComponent } from './../first-step/first-step.component';
 
 @Component({
   selector: 'register-component',
@@ -13,19 +17,27 @@ export class RegisterComponent implements OnInit {
   public secondFormGroup: FormGroup;
   public thirdFormGroup: FormGroup;
 
+  @ViewChild(FirstStepComponent)
+  public firstStep: FirstStepComponent;
+
+  @ViewChild(SecondStepComponent)
+  public secondtStep: SecondStepComponent;
+
+  @ViewChild(ThirdStepComponent)
+  public thirdStep: ThirdStepComponent;
+
   constructor() {
   }
 
   public ngOnInit(): void {
   }
 
-
   public registre(): void {
-    // console.log({
-    //   ...this.firstFormGroup.value,
-    //   ...this.secondFormGroup.value,
-    //   ...this.thirdFormGroup.value,
-    // });
+    console.log({
+      ...this.firstStep.firstFormGroup.value,
+      ...this.secondtStep.secondFormGroup.value,
+      ...this.thirdStep.thirdFormGroup.value,
+    });
   }
 
 }

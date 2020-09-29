@@ -11,7 +11,15 @@ form {
     display: flex;
     justify-content: center;
     mat-form-field{
-        margin-right:10px;
         width: 60px;
+    }
+    #cardDate{
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        
+        mat-form-field{
+            width: 40px;
+        }
     }
 }
