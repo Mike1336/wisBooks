@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'first-step',
   templateUrl: './first-step.component.html',
   styleUrls: ['./first-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FirstStepComponent implements OnInit {
 

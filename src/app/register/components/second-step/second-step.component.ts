@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, ReplaySubject } from 'rxjs';
@@ -10,6 +10,7 @@ import { CountryService } from '../../services/country.service';
   selector: 'second-step',
   templateUrl: './second-step.component.html',
   styleUrls: ['./second-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecondStepComponent implements OnInit, OnDestroy {
 

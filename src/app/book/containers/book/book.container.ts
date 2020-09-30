@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { BookView } from './../../views/book/book.view';
 import { IBook } from './../../../books/interfaces/book';
 import { BooksService } from './../../../books/services/books.service';
 
@@ -11,6 +10,7 @@ import { BooksService } from './../../../books/services/books.service';
   selector: 'book-container',
   templateUrl: './book.container.html',
   styleUrls: ['./book.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookContainer implements OnInit, OnDestroy {
 
@@ -24,7 +24,7 @@ export class BookContainer implements OnInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private booksService: BooksService, private bookView: BookView) { }
+  constructor(private booksService: BooksService) { }
 
   public ngOnInit(): void {
     this.paramsStream$

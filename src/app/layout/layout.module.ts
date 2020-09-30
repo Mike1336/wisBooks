@@ -17,11 +17,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HeaderComponent } from './components/header/header.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { SearchComponent } from './components/search/search.component';
 import { HeaderContainer } from './containers/header/header.container';
 import { HeaderView } from './views/header/header.view';
 import { SidebarContainer } from './containers/sidebar/sidebar.container';
 import { SidebarView } from './views/sidebar/sidebar.view';
+import { SearchContainer } from './containers/search/search.container';
 
 
 @NgModule({
@@ -31,9 +31,9 @@ import { SidebarView } from './views/sidebar/sidebar.view';
     HeaderView,
     SidebarComponent,
     SidebarContainer,
-    PaginatorComponent,
-    SearchComponent,
     SidebarView,
+    PaginatorComponent,
+    SearchContainer,
   ],
   imports: [
     // Angular

@@ -1,4 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild, OnDestroy, AfterViewInit
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  OnDestroy,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { MatDrawer } from '@angular/material/sidenav';
@@ -15,6 +25,7 @@ import { IGenre } from './../../interfaces/genre';
   selector: 'filters-container',
   templateUrl: './filters.container.html',
   styleUrls: ['./filters.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
 
@@ -35,7 +46,7 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
 
-  constructor(private _sidebarService: SidebarService) { }
+  constructor(private _sidebarService: SidebarService, private _cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
   }
@@ -49,6 +60,8 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
         data ?
         this.drawer.open() :
         this.drawer.close();
+
+        this._cdRef.markForCheck();
       });
   }
 

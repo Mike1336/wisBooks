@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-books',
   templateUrl: './books.view.html',
   styleUrls: ['./books.view.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksView implements OnInit {
 

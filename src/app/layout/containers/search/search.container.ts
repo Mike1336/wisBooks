@@ -1,18 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, debounceTime, takeUntil } from 'rxjs/operators';
 
 import { BooksService } from './../../../books/services/books.service';
-import { IBook, IBooks } from './../../../books/interfaces/book';
+import { IBooks, IBook } from './../../../books/interfaces/book';
+
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
+  selector: 'search-container',
+  templateUrl: './search.container.html',
+  styleUrls: ['./search.container.scss']
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchContainer implements OnInit, OnDestroy {
 
   public emptyResult: boolean;
 
@@ -22,7 +23,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private _booksService: BooksService) {}
+  constructor(private _booksService: BooksService, private _cdRef: ChangeDetectorRef) {}
 
   public ngOnInit(): void {
     this.searchForm = new FormGroup({
@@ -43,6 +44,8 @@ export class SearchComponent implements OnInit, OnDestroy {
       .subscribe(
         (fieldString) => {
           this.findBooks(fieldString);
+
+          this._cdRef.markForCheck();
         });
   }
 
@@ -59,6 +62,8 @@ export class SearchComponent implements OnInit, OnDestroy {
           data.books.length === 0
           ? this.emptyResult = true
           : this.emptyResult = false;
+
+          this._cdRef.markForCheck();
 
           return data.books;
         }));

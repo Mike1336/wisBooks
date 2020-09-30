@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 
 import { MatDrawer } from '@angular/material/sidenav';
 
@@ -11,6 +19,7 @@ import { SidebarService } from '../../services/sidebar.service';
   selector: 'sidebar-container',
   templateUrl: './sidebar.container.html',
   styleUrls: ['./sidebar.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarContainer implements OnInit, AfterViewInit, OnDestroy {
 
@@ -19,7 +28,7 @@ export class SidebarContainer implements OnInit, AfterViewInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private _sidebarService: SidebarService) { }
+  constructor(private _sidebarService: SidebarService, private _cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
   }
@@ -30,11 +39,11 @@ export class SidebarContainer implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe((data) => {
-        if (data) {
-          this.drawer.open();
-        } else {
-          this.drawer.close();
-        }
+        data
+          ? this.drawer.open()
+          : this.drawer.close();
+
+        this._cdRef.markForCheck();
       });
   }
 

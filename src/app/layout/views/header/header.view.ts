@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { ReplaySubject, Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
   selector: 'header-view',
   templateUrl: './header.view.html',
   styleUrls: ['./header.view.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderView implements OnInit, OnDestroy {
 
@@ -15,7 +16,7 @@ export class HeaderView implements OnInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
     this.router.events
@@ -26,6 +27,7 @@ export class HeaderView implements OnInit, OnDestroy {
         if (event instanceof NavigationEnd) {
           this._urlStream$.next(event.urlAfterRedirects);
         }
+        this._cdRef.markForCheck();
       });
   }
 
@@ -35,7 +37,7 @@ export class HeaderView implements OnInit, OnDestroy {
   }
 
   public get urlStream$(): Observable<string> {
-    return this._urlStream$;
+    return this._urlStream$.asObservable();
   }
 
 

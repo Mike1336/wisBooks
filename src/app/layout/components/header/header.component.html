@@ -2,10 +2,10 @@
   <button mat-icon-button (click)="showSideBar()" class="example-icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <app-search></app-search>
+  <search-container></search-container>
   <button
     mat-icon-button
-    *ngIf="filtersIcon"
+    *ngIf="isBooksPage"
     (click)="showBooksFilters()"
     class="example-icon"
   >

@@ -34,7 +34,7 @@ export class BookView implements OnInit, OnDestroy {
   }
 
   public get paramsStream$(): Observable<number> {
-    return this._paramsStream$;
+    return this._paramsStream$.asObservable();
   }
 
   public show404(): void {

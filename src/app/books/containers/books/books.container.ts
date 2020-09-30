@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
@@ -10,12 +10,12 @@ import { IGenre } from '../../interfaces/genre';
 import { BooksService } from './../../services/books.service';
 import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
 import { GenresService } from './../../services/genres.service';
-import { PaginatorComponent } from './../../../layout/components/paginator/paginator.component';
 
 @Component({
   selector: 'books-container',
   templateUrl: './books.container.html',
   styleUrls: ['./books.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksContainer implements OnInit {
 
@@ -46,15 +46,10 @@ export class BooksContainer implements OnInit {
    * @param booksQuantity The optional parameter for query with default value: 10
    * @param page The optional parameter for query with default value: 0 (first page)
    */
-  public getBooks(
-    filters?: IFilters,
-    booksQuantity: number = 10,
-    page: number = 0,
-  ): void {
+  public getBooks(filters?: IFilters, booksQuantity: number = 10, page: number = 0): void {
     this.books$ = this.booksService.getBooks(booksQuantity, page, filters).pipe(
       map((data) => {
         this.booksQuantity = data.meta.records;
-        this.booksIndex = data.meta.page;
 
         data.books.length > 0
           ? this.emptyResult = false

@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ViewChild,
   OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -15,6 +16,7 @@ import { IPaginatorData } from './../../interfaces/paginator-data';
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginatorComponent implements OnInit {
 
@@ -26,9 +28,6 @@ export class PaginatorComponent implements OnInit {
 
   @Input()
   public limits: number[] = [];
-
-  @Input()
-  public index?: number;
 
   @Output()
   public create: EventEmitter<MatPaginator> = new EventEmitter();

@@ -1,28 +1,24 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { Observable } from 'rxjs';
-
 import { IAuthor } from './../../interfaces/author';
-import {Title} from '@angular/platform-browser';
 
 
 @Component({
   selector: 'authors-component',
   templateUrl: './authors.component.html',
   styleUrls: ['./authors.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthorsComponent implements OnInit {
 
 
   public displayedColumns: string[] = ['id', 'first_name', 'last_name'];
   public dataSource = new MatTableDataSource();
-  public authorsQuantity: number;
-
-  public authors$: Observable<IAuthor[]>;
 
   @Input()
   public authors: IAuthor[];

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { FirstStepComponent } from '../../components/first-step/first-step.component';
 import { SecondStepComponent } from '../../components/second-step/second-step.component';
@@ -9,6 +9,7 @@ import { ThirdStepComponent } from '../../components/third-step/third-step.compo
   selector: 'register-container',
   templateUrl: './register.container.html',
   styleUrls: ['./register.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterContainer implements OnInit {
 
@@ -25,7 +26,7 @@ export class RegisterContainer implements OnInit {
   @ViewChild(ThirdStepComponent)
   public thirdStep: ThirdStepComponent;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor() { }
 
   public ngOnInit(): void {
     this.firstFormGroup = new FormGroup({

@@ -1,22 +1,25 @@
-import { NavigationEnd, Router } from '@angular/router';
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
-import { ReplaySubject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
-import { SidebarService } from './../../services/sidebar.service';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'header-component',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  public filtersIcon: boolean;
-
   @Input()
-  public urlStream$: Observable<string>;
+  public isBooksPage: boolean;
 
   @Output()
   public burgerClicked: EventEmitter<any> = new EventEmitter<any>();
@@ -29,17 +32,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor() {}
 
   public ngOnInit(): void {
-    this.urlStream$
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe(
-        (url) => {
-          url === '/books'
-          ? this.filtersIcon = true
-          : this.filtersIcon = false;
-        },
-    );
   }
 
   public ngOnDestroy(): void {

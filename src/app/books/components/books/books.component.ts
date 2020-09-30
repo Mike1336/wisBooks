@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {Title} from '@angular/platform-browser';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { IBook } from '../../interfaces/book';
 
@@ -7,6 +7,7 @@ import { IBook } from '../../interfaces/book';
   selector: 'books-component',
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksComponent implements OnInit {
 

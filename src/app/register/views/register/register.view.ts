@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.view.html',
-  styleUrls: ['./register.view.scss']
+  styleUrls: ['./register.view.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterView implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
 }
