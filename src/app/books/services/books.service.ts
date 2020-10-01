@@ -21,7 +21,6 @@ export class BooksService {
   constructor(private _http: HttpClient) { }
 
   public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
-
     let params = new HttpParams();
 
     const instructions: IRsTypes = {
@@ -81,17 +80,17 @@ export class BooksService {
       `${this._apiUrl}${this._authorsEndpoint}/${authorId}/${this._booksEndpoint}`,
       );
   }
-  public createBook(book: IBook): Observable<object> {
+  public createBook(book: IBook): Observable<IBook> {
     const url = `${this._apiUrl}${this._authorsEndpoint}/${book.author_id}/${this._booksEndpoint}`;
 
     return this._http.post<IBook>(url, book);
   }
-  public updateBook(book: IBook): Observable<object> {
+  public updateBook(book: IBook): Observable<IBook> {
     const url = `${this._apiUrl}${this._booksEndpoint}/${book.id}`;
 
     return this._http.put<IBook>(url, book);
   }
-  public deleteBook(bookId: number): Observable<object> {
+  public deleteBook(bookId: number): Observable<IBook> {
     return this._http.delete<IBook>(`${this._apiUrl}${this._booksEndpoint}/${bookId}`);
   }
 

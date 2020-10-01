@@ -1,0 +1,49 @@
+p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+mat-card {
+    position: relative;
+    cursor: pointer;
+    width: 270px;
+    height: 365px;
+    margin: 20px 15px 15px 20px;
+
+    mat-card-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 100px;
+
+        mat-card-title {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+
+    mat-card-content {
+        text-align: center;
+    }
+
+    .book-img {
+        width: 50%;
+        height: 50%;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #editButtons {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

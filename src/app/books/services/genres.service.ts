@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IGenre } from './../interfaces/genre';
+import { IGenre, IGenres } from './../interfaces/genre';
 
 
 @Injectable({
@@ -16,8 +16,8 @@ export class GenresService {
 
   constructor(private _http: HttpClient) { }
 
-  public getGenres(): Observable<object> {
-    return this._http.get<IGenre[]>(`${this._apiUrl}${this._genresEndpoint}`);
+  public getGenresInQuantity(quantity: number): Observable<IGenres> {
+    return this._http.get<IGenres>(`${this._apiUrl}${this._genresEndpoint}?limit=${quantity}`);
   }
   public getGenreById(genreId: number): Observable<object> {
     return this._http.get<IGenre>(`${this._apiUrl}${this._genresEndpoint}/${genreId}`);

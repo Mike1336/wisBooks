@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -24,25 +25,27 @@ import { CommaModule } from '../libs/comma/comma.module';
 import { BooksRoutingModule } from './books-routing.module';
 import { BooksComponent } from './components/books/books.component';
 import { LayoutModule } from './../layout/layout.module';
-import { BookItemComponent } from './components/book-item/book-item.component';
 import { FiltersComponent } from './components/filters/filters.component';
 import { BooksContainer } from './containers/books/books.container';
 import { FiltersContainer } from './containers/filters/filters.container';
 import { BooksView } from './views/books/books.view';
 import { NotLettersDirective } from './directives/not-letters.directive';
 import { DateMaskDirective } from './directives/date-mask.directive';
+import { ConfirmingDeleteModalComponent } from './components/confirming-delete-modal/confirming-delete-modal.component';
+import { BookEditModalComponent } from './components/book-edit-modal/book-edit-modal.component';
 
 
 @NgModule({
   declarations: [
     BooksComponent,
-    BookItemComponent,
     FiltersComponent,
     BooksContainer,
     FiltersContainer,
     BooksView,
     NotLettersDirective,
     DateMaskDirective,
+    ConfirmingDeleteModalComponent,
+    BookEditModalComponent,
   ],
   imports: [
     // Angular
@@ -65,6 +68,7 @@ import { DateMaskDirective } from './directives/date-mask.directive';
     MatSidenavModule,
     MatExpansionModule,
     MatIconModule,
+    MatDialogModule,
     // Own
     LayoutModule,
     CommaModule,

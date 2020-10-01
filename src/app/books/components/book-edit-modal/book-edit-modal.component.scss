@@ -1,0 +1,17 @@
+#editingContent {
+    display: flex;
+    justify-content: space-around;
+    img{
+        width: 300px;
+        height: auto;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        mat-form-field {
+            width: 200px;
+        }
+    }
+}

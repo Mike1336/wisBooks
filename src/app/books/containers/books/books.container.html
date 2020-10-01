@@ -1,6 +1,10 @@
 <div id="books">
   <ng-container *ngIf="books$ | async as books; else loading">
-    <books-component [books]="books"> </books-component>
+    <books-component 
+      [books]="books"
+      (editClicked)="showEditModal($event)"
+      (deleteClicked)="showDeleteModal($event)"
+    > </books-component>
     <div id="nfBooks" *ngIf="emptyResult">
       <h2>Books not found</h2>
     </div>
