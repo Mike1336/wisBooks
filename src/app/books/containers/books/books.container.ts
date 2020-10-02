@@ -131,12 +131,12 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     deleteModal.afterClosed()
       .pipe(
-      // mergeMap((bookData) => {
-      //   if (bookData) {
-      //     return this._booksService.updateBook(bookData);
-      //   }
-      // }),
-      // takeUntil(this._destroy$),
+      mergeMap((bookData) => {
+        if (bookData) {
+          return this._booksService.updateBook(bookData);
+        }
+      }),
+      takeUntil(this._destroy$),
       )
       .subscribe((result) => {
         console.log(result);

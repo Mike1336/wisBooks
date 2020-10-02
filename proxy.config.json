@@ -1,0 +1,8 @@
+{
+    "/api/*": {
+      "target": "http://muzhikov.kubesh.ru/",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true
+    }
+  }
