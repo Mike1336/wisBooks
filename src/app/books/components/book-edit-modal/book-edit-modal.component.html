@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Book's editing</h1>
 <div mat-dialog-content>
   <div id="editingContent">
-    <img src="../../../../assets//book.png" />
+    <img src="../../../../assets/book.png" />
     <form [formGroup]="bookEditForm">
       <mat-form-field>
         <mat-label>Book title</mat-label>
@@ -22,7 +22,7 @@
         <mat-select formControlName="authorCtl" required>
           <mat-option
             *ngFor="let author of data.authors"
-            [value]="[author.first_name, author.last_name]"
+            [value]="author.id"
           >
             {{ author.first_name }} {{ author.last_name }}
           </mat-option>
@@ -89,8 +89,16 @@
 
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="false">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.book" cdkFocusInitial>
-      Apply
-    </button>
+    <ng-container *ngIf="bookEditForm.valid; else disabled">
+      <button mat-button [mat-dialog-close]="onConfirm()" cdkFocusInitial>
+        Apply
+      </button>
+    </ng-container>
+    <ng-template #disabled>
+      <button mat-button disabled>
+        Apply
+      </button>
+    </ng-template>
+    
   </div>
 </div>

@@ -1,20 +1,18 @@
 import { IAuthor } from '../../authors/interfaces/author';
 
+import { IGenre } from './genre';
+
 export interface IBook {
-  id: number;
-  description: string;
   author_id: number;
-  title: string;
-  price: number;
-  genres:
-      {
-        id: number;
-        name: string;
-      }[];
-  previews: [];
+  description: string;
+  genres: IGenre[];
+  id: number;
   image: string;
-  writing_date: string;
+  previews: [];
+  price: number;
   release_date: string;
+  title: string;
+  writing_date: string;
   author?: IAuthor;
 
 }

@@ -122,23 +122,25 @@ export class BooksContainer implements OnInit, OnDestroy {
   }
 
   public showEditModal(book: IBook): void {
-    const deleteModal = this.dialog.open(BookEditModalComponent, {
+    const editModal = this.dialog.open(BookEditModalComponent, {
       data: {
         book,
         authors: this.authors,
         genres: this.genres,
       },
     });
-    deleteModal.afterClosed()
+    editModal.afterClosed()
       .pipe(
-      mergeMap((bookData) => {
-        if (bookData) {
-          return this._booksService.updateBook(bookData);
-        }
-      }),
+      // mergeMap((bookData) => {
+      //   if (bookData) {
+      //     return this._booksService.updateBook(bookData);
+      //   }
+      // }),
       takeUntil(this._destroy$),
       )
       .subscribe((result) => {
+        console.log(JSON.stringify(book) === JSON.stringify(result));
+        console.log(book);
         console.log(result);
       });
   }
