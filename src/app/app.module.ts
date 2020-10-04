@@ -9,6 +9,7 @@ import { BooksModule } from './books/books.module';
 import { BookModule } from './book/book.module';
 import { LayoutModule } from './layout/layout.module';
 import { RegisterModule } from './register/register.module';
+import { AuthModule } from './auth/auth.module';
 import { NotFoundModule } from './not-found/not-found.module';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NotFoundModule } from './not-found/not-found.module';
     BookModule,
     LayoutModule,
     RegisterModule,
+    AuthModule,
     CommaModule,
     NotFoundModule,
   ],

@@ -41,6 +41,15 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'login',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+      },
+    ],
+  },
+  {
     path: '',
     redirectTo: '/books',
     pathMatch: 'full',
