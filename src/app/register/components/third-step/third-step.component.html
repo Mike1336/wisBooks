@@ -1,56 +1,29 @@
-<form [formGroup]="thirdFormGroup">
-  <mat-form-field>
-    <mat-label>Card number</mat-label>
-    <input
-      matInput
-      cardNumberMask
-      formControlName="cardNumberCtl"
-      maxlength="19"
-      placeholder="1234 5678 9012 3456"
-      required
-    />
-  </mat-form-field>
-  <div id="cardInf">
-    <div id="cardDate">
-      <mat-form-field>
-        <input
-          matInput
-          formControlName="cardMonthCtl"
-          placeholder="MM"
-          maxlength="2"
-          required
-        />
-      </mat-form-field>
-      <p>/</p>
-      <mat-form-field>
-        <input
-          matInput
-          formControlName="cardYearCtl"
-          placeholder="YY"
-          maxlength="2"
-          required
-        />
-      </mat-form-field>
-    </div>
+<form [formGroup]="form">
     <mat-form-field>
-      <input
-        type="password"
-        matInput
-        cardNumberMask
-        formControlName="cardCVVCtl"
-        placeholder="CVV"
-        maxlength="3"
-        required
-      />
+        <mat-label>Card number</mat-label>
+        <input matInput cardNumberMask formControlName="cardNumberCtl" maxlength="19" placeholder="1234 5678 9012 3456" required />
     </mat-form-field>
-  </div>
-  <div>
-    <button mat-button matStepperPrevious>Back</button>
-    <ng-container *ngIf="thirdFormGroup.valid; else invalidForm">
-      <button mat-button (click)="clickRegister.emit()">Registrate</button>
-    </ng-container>
-    <ng-template #invalidForm>
-      <button mat-button disabled>Registrate</button>
-    </ng-template>
-  </div>
+    <div id="cardInf">
+        <div id="cardDate">
+            <mat-form-field>
+                <input matInput formControlName="cardMonthCtl" placeholder="MM" maxlength="2" required />
+            </mat-form-field>
+            <p>/</p>
+            <mat-form-field>
+                <input matInput formControlName="cardYearCtl" placeholder="YY" maxlength="2" required />
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <input type="password" matInput cardNumberMask formControlName="cardCVVCtl" placeholder="CVV" maxlength="3" required />
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <ng-container *ngIf="form.valid; else invalidForm">
+            <button mat-button (click)="clickRegister.emit()">Registrate</button>
+        </ng-container>
+        <ng-template #invalidForm>
+            <button mat-button disabled>Registrate</button>
+        </ng-template>
+    </div>
 </form>

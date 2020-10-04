@@ -9,9 +9,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 })
 export class ThirdStepComponent implements OnInit {
 
-
-  @Input('form')
-  public thirdFormGroup: FormGroup;
+  public form: FormGroup;
 
   @Output()
   public clickRegister = new EventEmitter();
@@ -19,7 +17,7 @@ export class ThirdStepComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder) { }
 
   public ngOnInit(): void {
-    this.thirdFormGroup = this._formBuilder.group({
+    this.form = this._formBuilder.group({
       cardNumberCtl: ['', [
         Validators.minLength(19),
         Validators.required],
@@ -41,15 +39,15 @@ export class ThirdStepComponent implements OnInit {
   }
 
   public get cardNumber(): AbstractControl {
-    return this.thirdFormGroup.get('cardNumberCtl');
+    return this.form.get('cardNumberCtl');
   }
 
   public get cardExpiryDate(): AbstractControl {
-    return this.thirdFormGroup.get('cardExpiryDateCtl');
+    return this.form.get('cardExpiryDateCtl');
   }
 
   public get cardCVV(): AbstractControl {
-    return this.thirdFormGroup.get('cardCVVCtl');
+    return this.form.get('cardCVVCtl');
   }
 
 

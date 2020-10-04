@@ -14,23 +14,21 @@ import { CountryService } from '../../services/country.service';
 })
 export class SecondStepComponent implements OnInit, OnDestroy {
 
-
   public countries$: Observable<object>;
 
-  @Input('form')
-  public secondFormGroup: FormGroup;
+  public form: FormGroup;
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(private _formBuilder: FormBuilder, private countryService: CountryService) { }
 
   public ngOnInit(): void {
-    this.secondFormGroup = this._formBuilder.group({
+    this.form = this._formBuilder.group({
       countryCtl: ['', Validators.required],
       addressCtl: ['', Validators.required],
     });
 
-    this.secondFormGroup.get('countryCtl').valueChanges
+    this.form.get('countryCtl').valueChanges
       .pipe(
       startWith(''),
       debounceTime(500),
@@ -51,11 +49,11 @@ export class SecondStepComponent implements OnInit, OnDestroy {
   }
 
   public get country(): AbstractControl {
-    return this.secondFormGroup.get('countryCtl');
+    return this.form.get('countryCtl');
   }
 
   public get address(): AbstractControl {
-    return this.secondFormGroup.get('addressCtl');
+    return this.form.get('addressCtl');
   }
 
 }

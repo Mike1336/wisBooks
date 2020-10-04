@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'first-step',
@@ -9,13 +9,12 @@ import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from
 })
 export class FirstStepComponent implements OnInit {
 
-  @Input('form')
-  public firstFormGroup: FormGroup;
+  public form: FormGroup;
 
   constructor() { }
 
   public ngOnInit(): void {
-    this.firstFormGroup = new FormGroup({
+    this.form = new FormGroup({
       firstNameCtl: new FormControl('', [
         Validators.required,
       ]),
@@ -34,19 +33,19 @@ export class FirstStepComponent implements OnInit {
   }
 
   public get firstName(): AbstractControl {
-    return this.firstFormGroup.get('firstNameCtl');
+    return this.form.get('firstNameCtl');
   }
 
   public get lastName(): AbstractControl {
-    return this.firstFormGroup.get('lastNameCtl');
+    return this.form.get('lastNameCtl');
   }
 
   public get email(): AbstractControl {
-    return this.firstFormGroup.get('emailCtl');
+    return this.form.get('emailCtl');
   }
 
   public get phoneNumber(): AbstractControl {
-    return this.firstFormGroup.get('phoneNumberCtl');
+    return this.form.get('phoneNumberCtl');
   }
 
 

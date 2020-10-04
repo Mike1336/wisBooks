@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { FirstStepComponent } from '../../components/first-step/first-step.component';
@@ -11,7 +11,7 @@ import { ThirdStepComponent } from '../../components/third-step/third-step.compo
   styleUrls: ['./register.container.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterContainer implements OnInit {
+export class RegisterContainer implements OnInit, AfterViewInit {
 
   public firstFormGroup: FormGroup;
   public secondFormGroup: FormGroup;
@@ -29,29 +29,18 @@ export class RegisterContainer implements OnInit {
   constructor() { }
 
   public ngOnInit(): void {
-    this.firstFormGroup = new FormGroup({
-      firstNameCtl: new FormControl('', [
-        Validators.required,
-      ]),
-      lastNameCtl: new FormControl('', [
-        Validators.required,
-      ]),
-      emailCtl: new FormControl('', [
-        Validators.email,
-        Validators.required,
-      ]),
-      phoneNumberCtl: new FormControl('', [
-        Validators.minLength(17),
-        Validators.required,
-      ]),
-    });
   }
-
+  
+  public ngAfterViewInit(): void {
+    this.firstFormGroup = this.firstStep.form;
+    this.secondFormGroup = this.secondtStep.form;
+    this.thirdFormGroup = this.thirdStep.form;
+  }
   public registre(): void {
     console.log({
-      ...this.firstStep.firstFormGroup.value,
-      ...this.secondtStep.secondFormGroup.value,
-      ...this.thirdStep.thirdFormGroup.value,
+      ...this.firstStep.form.value,
+      ...this.secondtStep.form.value,
+      ...this.thirdStep.form.value,
     });
   }
 
