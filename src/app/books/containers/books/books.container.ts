@@ -33,7 +33,6 @@ export class BooksContainer implements OnInit, OnDestroy {
   public booksIndex: number = 0;
 
   public books$: Observable<IBook[]>;
-  public genres$: Observable<IGenre[]>;
 
   public genres: IGenre[] = [];
   public authors: IAuthor[] = [];

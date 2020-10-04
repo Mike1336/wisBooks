@@ -13,10 +13,10 @@ export class SidebarService {
   constructor() { }
 
   public get navSbStatus$(): Observable<boolean> {
-    return this._navSbStatus$;
+    return this._navSbStatus$.asObservable();
   }
   public get filSbStatus$(): Observable<boolean> {
-    return this._filSbStatus$;
+    return this._filSbStatus$.asObservable();
   }
   public changeNavSb(bol: boolean): void {
     this._navSbStatus$.next(bol);

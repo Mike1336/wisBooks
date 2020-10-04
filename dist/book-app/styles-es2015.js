@@ -58,7 +58,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}\nbody .cdk-overlay-pane {\n  width: -webkit-max-content !important;\n  width: -moz-max-content !important;\n  width: max-content !important;\n}\nhtml, body {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA,8EAAA;AAEA;;EAEI,YAAA;AAAJ;AAGA;EACI,SAAA;EACA,iDAAA;AAAJ;AACI;EACI,qCAAA;EAAA,kCAAA;EAAA,6BAAA;AACR;AAGA;EAAa,YAAA;AACb;AAAA;EAAO,SAAA;EAAW,iDAAA;AAKlB","file":"styles.scss","sourcesContent":["/* You can add global styles to this file, and also import other style files */\n\nhtml,\nbody {\n    height: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: Roboto, \"Helvetica Neue\", sans-serif;\n    .cdk-overlay-pane{\n        width: max-content !important;\n    }\n}\n\nhtml, body { height: 100%; }\nbody { margin: 0; font-family: Roboto, \"Helvetica Neue\", sans-serif; }\n"]}]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}\nbody .cdk-overlay-pane {\n  width: -webkit-max-content !important;\n  width: -moz-max-content !important;\n  width: max-content !important;\n}\nhtml, body {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA,8EAAA;AAEA;;EAEI,YAAA;AAAJ;AAGA;EACI,SAAA;EACA,iDAAA;AAAJ;AACI;EACI,qCAAA;EAAA,kCAAA;EAAA,6BAAA;AACR;AAGA;EAAa,YAAA;AACb;AAAA;EAAO,SAAA;EAAW,iDAAA;AAKlB","file":"styles.scss","sourcesContent":["/* You can add global styles to this file, and also import other style files */\r\n\r\nhtml,\r\nbody {\r\n    height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0;\r\n    font-family: Roboto, \"Helvetica Neue\", sans-serif;\r\n    .cdk-overlay-pane{\r\n        width: max-content !important;\r\n    }\r\n}\r\n\r\nhtml, body { height: 100%; }\r\nbody { margin: 0; font-family: Roboto, \"Helvetica Neue\", sans-serif; }\r\n"]}]);
 // Exports
 module.exports = exports;
 
@@ -486,8 +486,8 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/max/wisBooks/node_modules/@angular/material/prebuilt-themes/indigo-pink.css */"./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
-module.exports = __webpack_require__(/*! /home/max/wisBooks/src/styles.scss */"./src/styles.scss");
+__webpack_require__(/*! C:\Users\Mike\Desktop\wisBooks\node_modules\@angular\material\prebuilt-themes\indigo-pink.css */"./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
+module.exports = __webpack_require__(/*! C:\Users\Mike\Desktop\wisBooks\src\styles.scss */"./src/styles.scss");
 
 
 /***/ })

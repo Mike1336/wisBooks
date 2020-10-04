@@ -1,17 +1,30 @@
-#editingContent {
-    display: flex;
-    justify-content: space-around;
-    img{
-        width: 300px;
-        height: auto;
-    }
-    form {
+.mat-dialog-content {
+    overflow: unset;
+    max-height: 100%;
+}
+
+form {
+    #imgAndFields {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 20px;
-        mat-form-field {
-            width: 200px;
+        img {
+            width: 300px;
+            height: auto;
         }
+        #fields {
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+        }
+        margin-bottom: 10px;
     }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.mat-dialog-actions {
+    justify-content: center;
 }

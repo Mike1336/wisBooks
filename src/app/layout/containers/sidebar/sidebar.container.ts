@@ -40,8 +40,8 @@ export class SidebarContainer implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe((data) => {
         data
-          ? this.drawer.open()
-          : this.drawer.close();
+        ? this.drawer.open()
+        : this.drawer.close();
 
         this._cdRef.markForCheck();
       });

@@ -29,8 +29,6 @@ import { IGenre } from './../../interfaces/genre';
 })
 export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
 
-  public filtersSb$: Observable<boolean>;
-
   @Input()
   public genres: IGenre[];
 
@@ -50,16 +48,16 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnInit(): void {
   }
+
   public ngAfterViewInit(): void {
-    this.filtersSb$ = this._sidebarService.filSbStatus$;
-    this.filtersSb$
+    this._sidebarService.filSbStatus$
       .pipe(
         takeUntil(this._destroy$),
       )
       .subscribe((data) => {
-        data ?
-        this.drawer.open() :
-        this.drawer.close();
+        data
+        ? this.drawer.open()
+        : this.drawer.close();
 
         this._cdRef.markForCheck();
       });

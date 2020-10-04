@@ -40,7 +40,6 @@ export class BookEditModalComponent implements OnInit {
 
     this.bookEditForm = new FormGroup({
       titleCtl: new FormControl(this.data.book.title, [
-        Validators.
         Validators.required,
       ]),
       genresCtl: new FormControl(bookGenres, [
