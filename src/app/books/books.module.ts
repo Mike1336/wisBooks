@@ -17,6 +17,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -69,6 +70,7 @@ import { BookEditModalComponent } from './components/book-edit-modal/book-edit-m
     MatExpansionModule,
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
     // Own
     LayoutModule,
     CommaModule,

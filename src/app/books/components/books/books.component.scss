@@ -11,14 +11,12 @@ mat-card {
     width: 270px;
     height: 365px;
     margin: 20px 15px 15px 20px;
-
     mat-card-header {
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
         height: 100px;
-
         mat-card-title {
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -26,18 +24,15 @@ mat-card {
             overflow: hidden;
         }
     }
-
     mat-card-content {
         text-align: center;
     }
-
     .book-img {
         width: 50%;
         height: 50%;
         margin-left: 50%;
         transform: translateX(-50%);
     }
-
     #editButtons {
         position: absolute;
         top: 0;
@@ -45,5 +40,51 @@ mat-card {
         width: 100%;
         display: flex;
         justify-content: space-between;
+    }
+}
+
+.emptyCard {
+    mat-card-header {
+        width: 100%;
+        mat-card-title {
+            width: 270px;
+            height: 20px;
+            background: lightgrey;
+        }
+        mat-card-subtitle {
+            width: 100px;
+            height: 20px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            background: lightgrey;
+        }
+    }
+    mat-card-content {
+        height: 80px;
+        background: lightgrey;
+    }
+    .emptyImg {
+        margin-left: 50%;
+        margin-bottom: 10px;
+        transform: translateX(-50%);
+        background: lightgrey;
+        height: 50%;
+    }
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient( 90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+        animation: shimmer 2s infinite;
+        content: '';
+    }
+}
+
+@keyframes shimmer {
+    50% {
+        transform: translateX(5%);
     }
 }

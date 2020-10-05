@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, pluck, mergeMap, takeUntil } from 'rxjs/operators';
@@ -40,10 +41,11 @@ export class BooksContainer implements OnInit, OnDestroy {
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(
+    public dialog: MatDialog,
     private _booksService: BooksService,
     private _genresService: GenresService,
     private _authorsService: AuthorsService,
-    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
   ) {}
 
   public ngOnInit(): void {
@@ -74,6 +76,8 @@ export class BooksContainer implements OnInit, OnDestroy {
         data.books.length > 0
           ? this.emptyResult = false
           : this.emptyResult = true;
+
+        this.goToTop();
 
         return data.books;
       }),
@@ -130,17 +134,17 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     editModal.afterClosed()
       .pipe(
-      // mergeMap((bookData) => {
-      //   if (bookData) {
-      //     return this._booksService.updateBook(bookData);
-      //   }
-      // }),
+      mergeMap((bookData) => {
+        console.log(bookData)
+        if (bookData) {
+          return this._booksService.updateBook(bookData);
+        }
+      }),
       takeUntil(this._destroy$),
       )
       .subscribe((result) => {
-        console.log(JSON.stringify(book) === JSON.stringify(result));
-        console.log(book);
-        console.log(result);
+        // console.log(result);
+        this.openSnackBar('Book had been updated');
       });
   }
 
@@ -157,9 +161,21 @@ export class BooksContainer implements OnInit, OnDestroy {
       }),
       takeUntil(this._destroy$),
       )
-      .subscribe((result) => {
-        console.log(result);
+      .subscribe((result: IBook) => {
+        this.openSnackBar(`Book with name '${result.title}' was successfully deleted.`);
       });
+  }
+  public openSnackBar(message: string): void {
+    this._snackBar.open(message, 'OK', {
+      duration: 2000,
+    });
+  }
+
+  public goToTop(): void {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
 }

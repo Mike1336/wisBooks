@@ -18900,7 +18900,7 @@
     /***/
     function _(module, exports, __webpack_require__) {
       __webpack_require__(
-      /*! C:\Users\Mike\Desktop\wisBooks\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\es5-polyfills.js */
+      /*! /home/wis-employee/wisBooks/node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/es5-polyfills.js */
       "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/es5-polyfills.js");
 
       __webpack_require__(
@@ -18908,7 +18908,7 @@
       "./node_modules/zone.js/dist/zone-legacy.js");
 
       module.exports = __webpack_require__(
-      /*! C:\Users\Mike\Desktop\wisBooks\src\polyfills.ts */
+      /*! /home/wis-employee/wisBooks/src/polyfills.ts */
       "./src/polyfills.ts");
       /***/
     }

@@ -11,6 +11,8 @@ import { IBook } from '../../interfaces/book';
 })
 export class BooksComponent implements OnInit {
 
+  public emptyBooks = [];
+
   @Input()
   public books: IBook[];
 
@@ -24,6 +26,9 @@ export class BooksComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    for (let i = 0; i < 10; i++) {
+      this.emptyBooks.push({});
+    }
     this._title.setTitle('All books');
   }
 

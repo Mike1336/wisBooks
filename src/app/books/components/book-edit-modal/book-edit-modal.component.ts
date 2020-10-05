@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { IBook } from '../../interfaces/book';
 
@@ -26,7 +26,10 @@ export class BookEditModalComponent implements OnInit {
 
   public bookEditForm: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: IImportingBookData) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: IImportingBookData,
+    public dialogRef: MatDialogRef<IBook>,
+    ) { }
 
   public ngOnInit(): void {
     this.initForm();
@@ -79,8 +82,8 @@ export class BookEditModalComponent implements OnInit {
     ]);
   }
 
-  public onConfirm(): IBook {
-    return {
+  public onConfirm(): void {
+    const newBook = {
       id: this.data.book.id,
       description: this.description.value,
       author_id: this.author.value,
@@ -92,6 +95,7 @@ export class BookEditModalComponent implements OnInit {
       writing_date: this.writingDate.value,
       release_date: this.releaseDate.value,
     };
+    this.dialogRef.close(newBook);
   }
 
   public convertGenresToObj(genresArray: string[]): IGenre[] {
