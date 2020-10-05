@@ -13,13 +13,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import { CommaModule } from '../libs/comma/comma.module';
 
@@ -35,6 +35,18 @@ import { DateMaskDirective } from './directives/date-mask.directive';
 import { ConfirmingDeleteModalComponent } from './components/confirming-delete-modal/confirming-delete-modal.component';
 import { BookEditModalComponent } from './components/book-edit-modal/book-edit-modal.component';
 
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY-MM-DD',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY-MM',
+    dateA11yLabel: 'YYYY-MM-DD',
+    monthYearA11yLabel: 'YYYY-MM-DD',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -76,6 +88,16 @@ import { BookEditModalComponent } from './components/book-edit-modal/book-edit-m
     CommaModule,
     BooksRoutingModule,
   ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
+
 })
 export class BooksModule {
 

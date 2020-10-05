@@ -69,13 +69,16 @@
 
     <div></div>
 
-    <div id="buttons" *ngIf="filtersForm.touched && filtersForm.valid; else disabled">
-        <button type="submit" mat-button color="primary">Accept filters</button>
-
-        <button type="submit" mat-button color="warn" (click)="resetFilters()" *ngIf="!filtersForm.hasError('emptyForm')">
-      Reset filters
-    </button>
-    </div>
+    <ng-container *ngIf="filtersForm.touched && filtersForm.valid; else disabled">
+        <div id="buttons">
+            <button type="submit" mat-button color="primary">Accept filters</button>
+            <ng-container *ngIf="!filtersForm.hasError('emptyForm')">
+                <button type="submit" mat-button color="warn" (click)="resetFilters()">
+          Reset filters
+        </button>
+            </ng-container>
+        </div>
+    </ng-container>
     <ng-template #disabled>
         <button mat-button disabled>Accept filters</button>
     </ng-template>

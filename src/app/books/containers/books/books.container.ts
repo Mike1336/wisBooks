@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,7 +31,8 @@ export class BooksContainer implements OnInit, OnDestroy {
 
   public filters: IFilters;
   public booksQuantity: number = 0;
-  public booksIndex: number = 0;
+  public booksPageIndex: number = 0;
+  public booksPageSize: number = 0;
 
   public books$: Observable<IBook[]>;
 
@@ -46,6 +47,7 @@ export class BooksContainer implements OnInit, OnDestroy {
     private _genresService: GenresService,
     private _authorsService: AuthorsService,
     private _snackBar: MatSnackBar,
+    private _cdRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit(): void {
@@ -76,8 +78,7 @@ export class BooksContainer implements OnInit, OnDestroy {
         data.books.length > 0
           ? this.emptyResult = false
           : this.emptyResult = true;
-
-        this.goToTop();
+        this.scrollToTop();
 
         return data.books;
       }),
@@ -112,7 +113,10 @@ export class BooksContainer implements OnInit, OnDestroy {
   }
 
   public changePageSize(pagData: IPaginatorData): void {
-    this.getBooks(this.filters, pagData.pageSize, pagData.pageIndex);
+    this.booksPageSize = pagData.pageSize;
+    this.booksPageIndex = pagData.pageIndex + 1;
+
+    this.getBooks(this.filters, pagData.pageSize, this.booksPageIndex);
   }
 
   public getFilteredBooks(filters: IFilters): void {
@@ -135,15 +139,16 @@ export class BooksContainer implements OnInit, OnDestroy {
     editModal.afterClosed()
       .pipe(
       mergeMap((bookData) => {
-        console.log(bookData)
         if (bookData) {
           return this._booksService.updateBook(bookData);
         }
       }),
       takeUntil(this._destroy$),
       )
-      .subscribe((result) => {
-        // console.log(result);
+      .subscribe(() => {
+        this._cdRef.markForCheck();
+
+        this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
         this.openSnackBar('Book had been updated');
       });
   }
@@ -162,6 +167,9 @@ export class BooksContainer implements OnInit, OnDestroy {
       takeUntil(this._destroy$),
       )
       .subscribe((result: IBook) => {
+        this._cdRef.markForCheck();
+
+        this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
         this.openSnackBar(`Book with name '${result.title}' was successfully deleted.`);
       });
   }
@@ -171,7 +179,7 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
   }
 
-  public goToTop(): void {
+  public scrollToTop(): void {
     window.scroll({
       top: 0,
       behavior: 'smooth',

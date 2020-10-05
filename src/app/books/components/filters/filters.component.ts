@@ -1,38 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 
 import { IGenre } from '../../interfaces/genre';
 import { FiltersValidator } from '../../validators/filters.validator';
 
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'YYYY-MM-DD',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'YYYY-MM',
-    dateA11yLabel: 'YYYY-MM-DD',
-    monthYearA11yLabel: 'YYYY-MM-DD',
-  },
-};
 @Component({
   selector: 'filters-component',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiltersComponent implements OnInit {
@@ -72,18 +47,18 @@ export class FiltersComponent implements OnInit {
       prices: new FormGroup({
         minPrice: new FormControl(''),
         maxPrice: new FormControl(''),
-      },
-      FiltersValidator.priceValidation,
-      ),
+      }, [
+        FiltersValidator.priceValidation,
+      ]),
       releases: new FormGroup({
         releaseDateFrom: new FormControl(''),
         releaseDateTo: new FormControl(''),
-      },
-      FiltersValidator.releaseValidation,
-      ),
-    },
-    FiltersValidator.emptyFormValidation,
-    );
+      }, [
+        FiltersValidator.releaseValidation,
+      ]),
+    }, [
+      FiltersValidator.emptyFormValidation,
+    ]);
   }
   public get minPrice(): AbstractControl {
     return this.filtersForm.get('prices').get('minPrice');

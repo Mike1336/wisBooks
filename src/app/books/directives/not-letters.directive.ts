@@ -15,13 +15,14 @@ export class NotLettersDirective implements OnInit, OnDestroy{
 
   public ngOnInit(): void {
     const control = this._control.control;
+
     control.valueChanges
       .pipe(
         takeUntil(this._destroy$),
       )
       .subscribe(
         (data) => {
-          control.setValue(data.replace(/\D/, ''), { emitEvent: false });
+          control.setValue(data.replace(/\D/g, ''), { emitEvent: false });
         },
       );
   }
