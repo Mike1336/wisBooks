@@ -40,5 +40,8 @@ export class HeaderView implements OnInit, OnDestroy {
     return this._urlStream$.asObservable();
   }
 
+  public goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
 
 }

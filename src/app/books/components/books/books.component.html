@@ -1,6 +1,6 @@
 <ng-container *ngIf="books; else loadingTemplate">
     <mat-card *ngFor="let book of books" class="example-card">
-        <div id="editButtons">
+        <div id="editButtons" *ngIf="auth.isAuth()">
             <button mat-icon-button (click)="editClicked.emit(book)">
         <mat-icon>edit</mat-icon>
       </button>

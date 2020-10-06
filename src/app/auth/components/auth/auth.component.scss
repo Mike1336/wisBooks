@@ -2,3 +2,29 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.animated_dots {
+    display: inline-block;
+    vertical-align: text-bottom;
+    font-size: 25px;
+    color: #4157b5;
+    width: 0;
+    margin-left: 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: animateDots 1s steps(4) infinite alternate;
+}
+
+@keyframes animateDots {
+    from {
+        width: 0;
+    }
+    to {
+        width: 1em;
+    }
+}

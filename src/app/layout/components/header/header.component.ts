@@ -10,6 +10,8 @@ import {
 
 import { ReplaySubject } from 'rxjs';
 
+import { AuthService } from './../../../auth/services/auth.service';
+
 @Component({
   selector: 'header-component',
   templateUrl: './header.component.html',
@@ -22,6 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isBooksPage: boolean;
 
   @Output()
+  public logout: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
   public burgerClicked: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
@@ -29,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor() {}
+  constructor(public auth: AuthService) {}
 
   public ngOnInit(): void {
   }
@@ -45,6 +50,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public showBooksFilters(): void {
     this.filtersClicked.emit();
+  }
+
+  public logoutEmit(): void {
+    this.logout.emit();
+    this.auth.logout();
   }
 
 }

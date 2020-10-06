@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ReplaySubject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthComponent } from '../../components/auth/auth.component';
 
@@ -23,8 +23,9 @@ export class AuthContainer implements OnInit, OnDestroy {
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(
-    private _auth: AuthService,
+    public auth: AuthService,
     private _router: Router,
+    private _cdRef: ChangeDetectorRef,
   ) { }
 
   public ngOnInit(): void {
@@ -36,14 +37,26 @@ export class AuthContainer implements OnInit, OnDestroy {
   }
 
   public login(user: IUser): void {
-    this._auth.login(user)
+    this.auth.nextToSubmit(true);
+
+    this.auth.login(user)
       .pipe(
         takeUntil(this._destroy$),
       )
-      .subscribe(() => {
-        this.component.loginForm.reset();
-        this._router.navigate(['/books']);
-      });
+      .subscribe(
+        // tslint:disable-next-line: rxjs-prefer-observer
+        () => {
+          this.auth.nextToSubmit(false);
+          this.component.loginForm.reset();
+          this._router.navigate(['/books']);
+        },
+        // tslint:disable-next-line: rxjs-prefer-observer
+        (error) => {
+          setTimeout(() => {
+            this.auth.nextToSubmit(false);
+          }, 1000);
+        },
+      );
   }
 
 }

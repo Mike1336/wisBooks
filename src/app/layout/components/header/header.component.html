@@ -1,14 +1,17 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="showSideBar()" class="example-icon">
+    <button mat-icon-button (click)="showSideBar()" class="example-icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <search-container></search-container>
-  <button
-    mat-icon-button
-    *ngIf="isBooksPage"
-    (click)="showBooksFilters()"
-    class="example-icon"
-  >
-    <mat-icon>filter_list</mat-icon>
-  </button>
+    <search-container></search-container>
+    <div>
+        <button mat-icon-button *ngIf="isBooksPage" (click)="showBooksFilters()" class="example-icon">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+        <button mat-icon-button *ngIf="auth.isAuth()" [matMenuTriggerFor]="adminMenu" class="example-icon">
+      <mat-icon>person</mat-icon>
+    </button>
+        <mat-menu #adminMenu>
+            <button mat-menu-item (click)="logoutEmit()">Logout</button>
+        </mat-menu>
+    </div>
 </mat-toolbar>

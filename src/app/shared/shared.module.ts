@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -72,6 +73,7 @@ import { CommaPipe } from './pipes/comma.pipe';
     MatTableModule,
     MatGridListModule,
     MatSortModule,
+    MatMenuModule,
   ],
   exports: [
     // Material
@@ -99,6 +101,7 @@ import { CommaPipe } from './pipes/comma.pipe';
     MatTableModule,
     MatGridListModule,
     MatSortModule,
+    MatMenuModule,
     // Own
     CommaPipe,
     DateMaskDirective,

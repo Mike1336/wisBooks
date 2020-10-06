@@ -18,6 +18,7 @@ import { ConfirmingDeleteModalComponent } from './../../components/confirming-de
 import { BooksService } from './../../services/books.service';
 import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
 import { GenresService } from './../../services/genres.service';
+import { AuthService } from './../../../auth/services/auth.service';
 
 @Component({
   selector: 'books-container',
@@ -43,6 +44,7 @@ export class BooksContainer implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
+    public auth: AuthService,
     private _booksService: BooksService,
     private _genresService: GenresService,
     private _authorsService: AuthorsService,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,6 +19,9 @@ export class HeaderContainer implements OnInit, OnDestroy {
 
   @Input()
   public urlStream$: Observable<string>;
+
+  @Output()
+  public logout: EventEmitter<any> = new EventEmitter<any>();
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 

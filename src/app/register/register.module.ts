@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AuthGuard } from './services/auth.guard';
 import { RegisterRoutingModule } from './register-routing.module';
 import { SharedModule } from './../shared/shared.module';
 import { FirstStepComponent } from './components/first-step/first-step.component';
@@ -27,5 +28,6 @@ import { RegisterView } from './views/register/register.view';
     RegisterRoutingModule,
     SharedModule,
   ],
+  providers: [AuthGuard],
 })
 export class RegisterModule { }

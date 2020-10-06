@@ -3,6 +3,8 @@ import { Title } from '@angular/platform-browser';
 
 import { IBook } from '../../interfaces/book';
 
+import { AuthService } from './../../../auth/services/auth.service';
+
 @Component({
   selector: 'books-component',
   templateUrl: './books.component.html',
@@ -22,7 +24,7 @@ export class BooksComponent implements OnInit {
   @Output()
   public deleteClicked: EventEmitter<IBook> = new EventEmitter();
 
-  constructor(private _title: Title) {
+  constructor(private _title: Title, public auth: AuthService) {
   }
 
   public ngOnInit(): void {

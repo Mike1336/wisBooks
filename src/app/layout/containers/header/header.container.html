@@ -1,5 +1,2 @@
-<header-component 
-    [isBooksPage]="isBooksPage"
-    (burgerClicked)="changeSbStatus()"
-    (filtersClicked)="changeFilStatus()"
-></header-component>
+<header-component [isBooksPage]="isBooksPage" (burgerClicked)="changeSbStatus()" (filtersClicked)="changeFilStatus()" (logout)="logout.emit()">
+</header-component>

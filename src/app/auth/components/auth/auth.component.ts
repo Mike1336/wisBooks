@@ -1,6 +1,9 @@
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Component, OnInit, Output, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
-import {IUser} from '../../interfaces/user';
+import { Component, OnInit, Output, ChangeDetectionStrategy, EventEmitter, Input } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
+import { IUser } from '../../interfaces/user';
 
 @Component({
   selector: 'auth-component',
@@ -11,6 +14,12 @@ import {IUser} from '../../interfaces/user';
 export class AuthComponent implements OnInit {
 
   public hidePas = true;
+
+  @Input()
+  public submit$: Observable<boolean>;
+
+  @Input()
+  public formErrors$: Observable<object>;
 
   public loginForm: FormGroup;
 
@@ -36,6 +45,7 @@ export class AuthComponent implements OnInit {
       email: this.email.value,
       password: this.password.value,
     };
+
     this.submitForm.emit(user);
   }
 
