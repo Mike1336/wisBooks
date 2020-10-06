@@ -3,12 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatTableModule } from '@angular/material/table';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-import { CommaModule } from '../libs/comma/comma.module';
-
+import { SharedModule } from './../shared/shared.module';
 import { BookRoutingModule } from './book-routing.module';
 import { BookComponent } from './components/book/book.component';
 import { BookContainer } from './containers/book/book.container';
@@ -26,13 +21,9 @@ import { BookView } from './views/book/book.view';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // Material
-    MatTableModule,
-    MatGridListModule,
-    MatProgressSpinnerModule,
     // Own
     BookRoutingModule,
-    CommaModule,
+    SharedModule,
   ],
 })
 export class BookModule { }
