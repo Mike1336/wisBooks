@@ -1,19 +1,19 @@
 <form [formGroup]="form">
     <mat-form-field>
         <mat-label>Firstname</mat-label>
-        <input matInput notDigits formControlName="firstNameCtl" placeholder="John" required />
+        <input matInput notDigits formControlName="firstName" placeholder="John" required />
     </mat-form-field>
     <mat-form-field>
         <mat-label>Lastname</mat-label>
-        <input matInput notDigits formControlName="lastNameCtl" placeholder="Prison" required />
+        <input matInput notDigits formControlName="lastName" placeholder="Doe" required />
     </mat-form-field>
     <mat-form-field>
         <mat-label>E-mail</mat-label>
-        <input matInput placeholder="jprison@gmail.com" formControlName="emailCtl" required />
+        <input matInput placeholder="jdoe@gmail.com" formControlName="email" required />
     </mat-form-field>
     <mat-form-field>
         <mat-label>Phone number</mat-label>
-        <input matInput phoneMask formControlName="phoneNumberCtl" maxlength="17" placeholder="+1(234) 567-89-01" required />
+        <input matInput phoneMask formControlName="phoneNumber" maxlength="17" placeholder="+1(234) 567-89-01" required />
     </mat-form-field>
     <div>
         <button mat-button matStepperNext>Next</button>

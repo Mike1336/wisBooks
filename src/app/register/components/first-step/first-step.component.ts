@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -9,44 +9,36 @@ import { AbstractControl, FormGroup, Validators, FormControl } from '@angular/fo
 })
 export class FirstStepComponent implements OnInit {
 
+  @Input()
   public form: FormGroup;
+
+  public firstNameCtl: AbstractControl;
+  public lastNameCtl: AbstractControl;
+  public emailCtl: AbstractControl;
+  public phoneNumberCtl: AbstractControl;
 
   constructor() { }
 
   public ngOnInit(): void {
-    this.form = new FormGroup({
-      firstNameCtl: new FormControl('', [
-        Validators.required,
-      ]),
-      lastNameCtl: new FormControl('', [
-        Validators.required,
-      ]),
-      emailCtl: new FormControl('', [
-        Validators.email,
-        Validators.required,
-      ]),
-      phoneNumberCtl: new FormControl('', [
-        Validators.minLength(17),
-        Validators.required,
-      ]),
-    });
-  }
+    this.firstNameCtl = new FormControl('', [
+      Validators.required,
+    ]);
+    this.lastNameCtl = new FormControl('', [
+      Validators.required,
+    ]);
+    this.emailCtl = new FormControl('', [
+      Validators.email,
+      Validators.required,
+    ]);
+    this.phoneNumberCtl = new FormControl('', [
+      Validators.minLength(17),
+      Validators.required,
+    ]);
 
-  public get firstName(): AbstractControl {
-    return this.form.get('firstNameCtl');
+    this.form.setControl('firstName', this.firstNameCtl);
+    this.form.setControl('lastName', this.lastNameCtl);
+    this.form.setControl('email', this.emailCtl);
+    this.form.setControl('phoneNumber', this.phoneNumberCtl);
   }
-
-  public get lastName(): AbstractControl {
-    return this.form.get('lastNameCtl');
-  }
-
-  public get email(): AbstractControl {
-    return this.form.get('emailCtl');
-  }
-
-  public get phoneNumber(): AbstractControl {
-    return this.form.get('phoneNumberCtl');
-  }
-
 
 }

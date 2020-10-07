@@ -1,77 +1,106 @@
 <h1 mat-dialog-title>Book's editing</h1>
 <div mat-dialog-content>
-    <form [formGroup]="bookEditForm">
-        <div id="imgAndFields">
-            <img src="../../../../assets/book.png" />
-            <div id="fields">
-                <mat-form-field>
-                    <mat-label>Book title</mat-label>
-                    <input matInput notDigits formControlName="titleCtl" required />
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Genres</mat-label>
-                    <mat-select formControlName="genresCtl" multiple required>
-                        <mat-option *ngFor="let genre of data.genres" [value]="genre.name">
-                            {{ genre.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Author</mat-label>
-                    <mat-select formControlName="authorCtl" required>
-                        <mat-option *ngFor="let author of data.authors" [value]="author.id">
-                            {{ author.first_name }} {{ author.last_name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Price</mat-label>
-                    <input matInput notLetters formControlName="priceCtl" maxlength="6" required />
-                </mat-form-field>
-
-                <mat-form-field color="accent" appearance="fill">
-                    <mat-label>Release date</mat-label>
-                    <input matInput dateMask [matDatepicker]="releasePicker" formControlName="releaseDateCtl" maxlength="10" />
-                    <mat-datepicker-toggle matSuffix [for]="releasePicker">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #releasePicker startView="multi-year"></mat-datepicker>
-                    <mat-error *ngIf="releaseDate.hasError('matDatepickerParse')">
-                        Date must be in format: YYYY-MM-DD
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field color="accent" appearance="fill">
-                    <mat-label>Writing date</mat-label>
-                    <input matInput dateMask [matDatepicker]="writingPicker" formControlName="writingDateCtl" maxlength="10" />
-                    <mat-datepicker-toggle matSuffix [for]="writingPicker">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #writingPicker startView="multi-year"></mat-datepicker>
-                    <mat-error *ngIf="writingDate.hasError('matDatepickerParse')">
-                        Date must be in format: YYYY-MM-DD
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <mat-form-field>
-            <mat-label>Description</mat-label>
-            <textarea matInput cols="30" rows="5" formControlName="descriptionCtl" required></textarea>
+  <form [formGroup]="bookEditForm">
+    <div id="imgAndFields">
+      <img src="../../../../assets/book.png" />
+      <div id="fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Book title</mat-label>
+          <input matInput notDigits formControlName="titleCtl" required />
         </mat-form-field>
-    </form>
 
-    <div mat-dialog-actions>
-        <button mat-button color="warn" mat-dialog-close>Cancel</button>
-        <button mat-button color="primary" (click)="onConfirm()" cdkFocusInitial>
+        <mat-form-field appearance="outline">
+          <mat-label>Genres</mat-label>
+          <mat-select formControlName="genresCtl" multiple required>
+            <mat-option *ngFor="let genre of data.genres" [value]="genre.name">
+              {{ genre.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Author</mat-label>
+          <mat-select formControlName="authorCtl" required>
+            <mat-option *ngFor="let author of data.authors" [value]="author.id">
+              {{ author.first_name }} {{ author.last_name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input
+            matInput
+            notLetters
+            formControlName="priceCtl"
+            maxlength="6"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Release date</mat-label>
+          <input
+            matInput
+            dateMask
+            [matDatepicker]="releasePicker"
+            formControlName="releaseDateCtl"
+            maxlength="10"
+          />
+          <mat-datepicker-toggle matSuffix [for]="releasePicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker
+            #releasePicker
+            startView="multi-year"
+          ></mat-datepicker>
+          <mat-error *ngIf="releaseDate.hasError('matDatepickerParse')">
+            Date must be in format: YYYY-MM-DD
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field color="accent" appearance="outline">
+          <mat-label>Writing date</mat-label>
+          <input
+            matInput
+            dateMask
+            [matDatepicker]="writingPicker"
+            formControlName="writingDateCtl"
+            maxlength="10"
+          />
+          <mat-datepicker-toggle matSuffix [for]="writingPicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker
+            #writingPicker
+            startView="multi-year"
+          ></mat-datepicker>
+          <mat-error *ngIf="writingDate.hasError('matDatepickerParse')">
+            Date must be in format: YYYY-MM-DD
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        cols="30"
+        rows="5"
+        formControlName="descriptionCtl"
+        required
+      ></textarea>
+    </mat-form-field>
+  </form>
+
+  <div mat-dialog-actions>
+    <button mat-button color="warn" mat-dialog-close>Cancel</button>
+    <button
+      mat-button
+      color="primary"
+      (click)="onConfirm()"
+      cdkFocusInitial
+      [disabled]="bookEditForm.invalid"
+    >
       Apply
     </button>
-        <!-- <ng-container *ngIf="bookEditForm.valid; else disabled">
-    </ng-container> -->
-        <!-- <ng-template #disabled>
-      <button mat-button disabled>
-        Apply
-      </button>
-    </ng-template> -->
-    </div>
+  </div>
 </div>

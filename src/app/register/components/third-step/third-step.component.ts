@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'third-step',
@@ -9,46 +9,46 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 })
 export class ThirdStepComponent implements OnInit {
 
+  @Input()
   public form: FormGroup;
+
+  public cardNumberCtl: AbstractControl;
+  public cardMonthCtl: AbstractControl;
+  public cardYearCtl: AbstractControl;
+  public cardCVVCtl: AbstractControl;
 
   @Output()
   public clickRegister = new EventEmitter();
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor() { }
 
   public ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      cardNumberCtl: ['', [
-        Validators.minLength(19),
-        Validators.required],
-      ],
-      cardMonthCtl: ['', [
-        Validators.minLength(2),
-        Validators.max(12),
-        Validators.required],
-      ],
-      cardYearCtl: ['', [
-        Validators.minLength(2),
-        Validators.required],
-      ],
-      cardCVVCtl: ['', [
-        Validators.minLength(3),
-        Validators.required],
-      ],
-    });
+    this.cardNumberCtl = new FormControl('', [
+      Validators.minLength(19),
+      Validators.required,
+    ]);
+    this.cardMonthCtl = new FormControl('', [
+      Validators.minLength(2),
+      Validators.max(12),
+      Validators.required,
+    ]);
+    this.cardYearCtl = new FormControl('', [
+      Validators.minLength(2),
+      Validators.required,
+    ]);
+    this.cardCVVCtl = new FormControl('', [
+      Validators.minLength(3),
+      Validators.required,
+    ]);
+
+    this.form.setControl('cardNumber', this.cardNumberCtl);
+    this.form.setControl('cardMonth', this.cardMonthCtl);
+    this.form.setControl('cardYear', this.cardYearCtl);
+    this.form.setControl('cardCVV', this.cardCVVCtl);
   }
 
-  public get cardNumber(): AbstractControl {
-    return this.form.get('cardNumberCtl');
+  public onSubmit(): void {
+    this.clickRegister.emit();
   }
-
-  public get cardExpiryDate(): AbstractControl {
-    return this.form.get('cardExpiryDateCtl');
-  }
-
-  public get cardCVV(): AbstractControl {
-    return this.form.get('cardCVVCtl');
-  }
-
 
 }

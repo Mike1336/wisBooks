@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, ReplaySubject } from 'rxjs';
 import { startWith, debounceTime, takeUntil } from 'rxjs/operators';
@@ -14,31 +14,40 @@ import { CountryService } from '../../services/country.service';
 })
 export class SecondStepComponent implements OnInit, OnDestroy {
 
-  public countries$: Observable<object>;
-
+  @Input()
   public form: FormGroup;
+
+  public countryCityCrl: AbstractControl;
+  public streetIndexCtl: AbstractControl;
+
+  public countries$: Observable<object>;
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private _formBuilder: FormBuilder, private countryService: CountryService) { }
+  constructor(private _countryService: CountryService) { }
 
   public ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      countryCtl: ['', Validators.required],
-      addressCtl: ['', Validators.required],
-    });
+    this.countryCityCrl = new FormControl('', [
+      Validators.required,
+    ]);
+    this.streetIndexCtl = new FormControl('', [
+      Validators.required,
+    ]);
 
-    this.form.get('countryCtl').valueChanges
+    this.form.setControl('countryAndCity', this.countryCityCrl);
+    this.form.setControl('streetAndIndex', this.streetIndexCtl);
+
+    this.countryAndCity.valueChanges
       .pipe(
       startWith(''),
       debounceTime(500),
       takeUntil(this._destroy$),
-    )
+      )
       .subscribe(
       (fieldValue) => {
         fieldValue
-          ? this.countries$ = this.countryService.getCountryByName(fieldValue)
-          : this.countries$ = this.countryService.getAllCountries();
+          ? this.countries$ = this._countryService.getCountryByName(fieldValue)
+          : this.countries$ = this._countryService.getAllCountries();
       },
   );
   }
@@ -48,12 +57,12 @@ export class SecondStepComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public get country(): AbstractControl {
-    return this.form.get('countryCtl');
+  public get countryAndCity(): AbstractControl {
+    return this.form.get('countryAndCity');
   }
 
-  public get address(): AbstractControl {
-    return this.form.get('addressCtl');
+  public get streetAndIndex(): AbstractControl {
+    return this.form.get('streetAndIndex');
   }
 
 }

@@ -2,14 +2,14 @@
 <mat-horizontal-stepper linear #stepper>
     <mat-step [stepControl]="firstFormGroup">
         <ng-template matStepLabel>Fill out your information</ng-template>
-        <first-step></first-step>
+        <first-step [form]="firstFormGroup"></first-step>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
         <ng-template matStepLabel>Fill out your address</ng-template>
-        <second-step></second-step>
+        <second-step [form]="secondFormGroup"></second-step>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup">
         <ng-template matStepLabel>Fill out your card information</ng-template>
-        <third-step (clickRegister)="registre()"></third-step>
+        <third-step [form]="thirdFormGroup" (clickRegister)="registre()"></third-step>
     </mat-step>
 </mat-horizontal-stepper>
