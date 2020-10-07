@@ -1,23 +1,21 @@
 <form [formGroup]="searchForm" class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput
-             placeholder="Search on book title"
-             [matAutocomplete]="auto"
-             formControlName="searchField">
-      <mat-autocomplete #auto="matAutocomplete">     
-        <ng-container *ngFor="let book of foundBooks$ | async">
-          <mat-option [routerLink]="['/book', book.id]">
-            <span>{{book.title}}</span> |
-            <small>Price: {{book.price}}$</small>  
-          </mat-option>
-        </ng-container>
-        <ng-container *ngIf="emptyResult">
-          <mat-option>
-            <span>Books with that title not found</span>
-          </mat-option>
-        </ng-container>
-      </mat-autocomplete>
-    </mat-form-field>
-  
-    <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>Search on book title </mat-label>
+    <input matInput [matAutocomplete]="auto" formControlName="searchField" />
+    <mat-icon matPrefix>search</mat-icon>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <ng-container *ngFor="let book of foundBooks$ | async">
+        <mat-option [routerLink]="['/book', book.id]">
+          <span>{{book.title}}</span> |
+          <small>Price: {{book.price}}$</small>
+        </mat-option>
+      </ng-container>
+      <ng-container *ngIf="emptyResult">
+        <mat-option>
+          <span>Books with that title not found</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </mat-form-field>
 </form>
