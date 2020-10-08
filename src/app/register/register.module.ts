@@ -10,6 +10,7 @@ import { SecondStepComponent } from './components/second-step/second-step.compon
 import { ThirdStepComponent } from './components/third-step/third-step.component';
 import { RegisterContainer } from './containers/register/register.container';
 import { RegisterView } from './views/register/register.view';
+import { CardComponent } from './components/card/card.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { RegisterView } from './views/register/register.view';
     ThirdStepComponent,
     RegisterContainer,
     RegisterView,
+    CardComponent,
   ],
   imports: [
     // Angular

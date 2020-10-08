@@ -1,24 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-        <mat-label>Card number</mat-label>
-        <input matInput cardNumberMask formControlName="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required />
-    </mat-form-field>
-    <div id="cardInf">
-        <div id="cardDate">
-            <mat-form-field>
-                <input matInput formControlName="cardMonth" placeholder="MM" maxlength="2" required />
-            </mat-form-field>
-            <p>/</p>
-            <mat-form-field>
-                <input matInput formControlName="cardYear" placeholder="YY" maxlength="2" required />
-            </mat-form-field>
-        </div>
-        <mat-form-field>
-            <input type="password" matInput cardNumberMask formControlName="cardCVV" placeholder="CVV" maxlength="3" required />
-        </mat-form-field>
-    </div>
-    <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button type="submit" mat-button [disabled]="form.invalid">Registrate</button>
-    </div>
-</form>
+<app-card [form]="form"></app-card>
+<div>
+  <button mat-button matStepperPrevious>Back</button>
+  <button type="submit" mat-button [disabled]="form.invalid">
+    Registrate
+  </button>
+</div>

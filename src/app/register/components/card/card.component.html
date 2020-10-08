@@ -1,0 +1,57 @@
+<form [formGroup]="form">
+    <div id="cardTexture" [setColor]='cardBgColor'>
+      <img id="bankLogo" [src]="bankLogoSrc" *ngIf="bankLogoSrc">
+      <mat-form-field id="cardNumber" appearance="outline">
+        <input
+          matInput
+          cardNumberMask
+          formControlName="cardNumber"
+          maxlength="19"
+          placeholder="1234 5678 9012 3456"
+          required
+        />
+      </mat-form-field>
+      <div id="cardInf">
+        <div id="cardDate">
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              formControlName="cardMonth"
+              placeholder="MM"
+              maxlength="2"
+              required
+            />
+            <mat-error *ngIf="cardMonth.hasError('invalid')">
+                Card is invalid
+            </mat-error>      
+          </mat-form-field>
+          <p>/</p>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              formControlName="cardYear"
+              placeholder="YY"
+              maxlength="2"
+              required
+            />
+            <mat-error *ngIf="cardYear.hasError('invalid')">
+                Card is invalid
+            </mat-error>      
+          </mat-form-field>
+        </div>
+        <mat-form-field id="cardCVV" appearance="outline">
+          <input
+            type="password"
+            matInput
+            cardNumberMask
+            formControlName="cardCVV"
+            placeholder="CVV"
+            maxlength="3"
+            required
+          />
+        </mat-form-field>
+      </div>
+      
+      <img id="paymentSysLogo" [src]="paySysLogoSrc" *ngIf="paySysLogoSrc">
+    </div>
+  </form>

@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, ReplaySubject } from 'rxjs';
-import { startWith, debounceTime, takeUntil } from 'rxjs/operators';
+import { startWith, debounceTime, takeUntil, pluck } from 'rxjs/operators';
 
 import { CountryService } from '../../services/country.service';
+
+import { GeodataService } from './../../services/geodata.service';
 
 @Component({
   selector: 'second-step',
@@ -17,27 +19,24 @@ export class SecondStepComponent implements OnInit, OnDestroy {
   @Input()
   public form: FormGroup;
 
-  public countryCityCrl: AbstractControl;
-  public streetIndexCtl: AbstractControl;
+  public addressCtl: AbstractControl;
 
-  public countries$: Observable<object>;
+  public address$: Observable<object>;
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private _countryService: CountryService) { }
+  constructor(
+    private _geo: GeodataService,
+    private _cdRef: ChangeDetectorRef,
+    ) { }
 
   public ngOnInit(): void {
-    this.countryCityCrl = new FormControl('', [
+    this.addressCtl = new FormControl('', [
       Validators.required,
     ]);
-    this.streetIndexCtl = new FormControl('', [
-      Validators.required,
-    ]);
+    this.form.setControl('address', this.addressCtl);
 
-    this.form.setControl('countryAndCity', this.countryCityCrl);
-    this.form.setControl('streetAndIndex', this.streetIndexCtl);
-
-    this.countryAndCity.valueChanges
+    this.addressCtl.valueChanges
       .pipe(
       startWith(''),
       debounceTime(500),
@@ -45,9 +44,13 @@ export class SecondStepComponent implements OnInit, OnDestroy {
       )
       .subscribe(
       (fieldValue) => {
-        fieldValue
-          ? this.countries$ = this._countryService.getCountryByName(fieldValue)
-          : this.countries$ = this._countryService.getAllCountries();
+        this._cdRef.markForCheck();
+        if (fieldValue) {
+          this.address$ = this._geo.getAddressByQuery(fieldValue)
+          .pipe(
+            pluck('results'),
+          );
+        }
       },
   );
   }
