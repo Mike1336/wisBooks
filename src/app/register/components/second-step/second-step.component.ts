@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Observable, ReplaySubject } from 'rxjs';
-import { startWith, debounceTime, takeUntil, pluck } from 'rxjs/operators';
-
-import { CountryService } from '../../services/country.service';
+import { Observable, ReplaySubject, BehaviorSubject, of } from 'rxjs';
+import { debounceTime, takeUntil, pluck, mergeMap } from 'rxjs/operators';
 
 import { GeodataService } from './../../services/geodata.service';
+import { AddressModel } from './../../models/address.model';
 
 @Component({
   selector: 'second-step',
@@ -21,38 +20,20 @@ export class SecondStepComponent implements OnInit, OnDestroy {
 
   public addressCtl: AbstractControl;
 
-  public address$: Observable<object>;
-
+  private _address$: BehaviorSubject<any> = new BehaviorSubject(null);
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(
     private _geo: GeodataService,
-    private _cdRef: ChangeDetectorRef,
     ) { }
 
-  public ngOnInit(): void {
-    this.addressCtl = new FormControl('', [
-      Validators.required,
-    ]);
-    this.form.setControl('address', this.addressCtl);
+  public get address$(): Observable<any> {
+    return this._address$.asObservable();
+  }
 
-    this.addressCtl.valueChanges
-      .pipe(
-      startWith(''),
-      debounceTime(500),
-      takeUntil(this._destroy$),
-      )
-      .subscribe(
-      (fieldValue) => {
-        this._cdRef.markForCheck();
-        if (fieldValue) {
-          this.address$ = this._geo.getAddressByQuery(fieldValue)
-          .pipe(
-            pluck('results'),
-          );
-        }
-      },
-  );
+  public ngOnInit(): void {
+    this.initForm();
+    this.detectAddress();
   }
 
   public ngOnDestroy(): void {
@@ -60,12 +41,34 @@ export class SecondStepComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public get countryAndCity(): AbstractControl {
-    return this.form.get('countryAndCity');
+  public initForm(): void {
+    this.addressCtl = new FormControl('', [
+      Validators.required,
+    ]);
+    this.form.setControl('address', this.addressCtl);
   }
 
-  public get streetAndIndex(): AbstractControl {
-    return this.form.get('streetAndIndex');
+  public detectAddress(): void {
+    this.addressCtl.valueChanges
+      .pipe(
+        debounceTime(500),
+        mergeMap(
+          (fieldValue: string) => {
+            if (fieldValue) {
+              return this._geo.getAddressByQuery(fieldValue).pipe(
+                pluck('results'),
+              );
+            }
+
+            return of([]);
+          }),
+        takeUntil(this._destroy$),
+      )
+      .subscribe(
+        (data: any) => {
+          AddressModel.convertAddress(data);
+          this._address$.next(data);
+        });
   }
 
 }

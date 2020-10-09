@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-    <div id="cardTexture" [setColor]='cardBgColor'>
+    <div id="cardTexture" [style.background]='cardBgColor'>
       <img id="bankLogo" [src]="bankLogoSrc" *ngIf="bankLogoSrc">
       <mat-form-field id="cardNumber" appearance="outline">
         <input
@@ -21,7 +21,7 @@
               maxlength="2"
               required
             />
-            <mat-error *ngIf="cardMonth.hasError('invalid')">
+            <mat-error *ngIf="cardMonthCtl.hasError('invalid')">
                 Card is invalid
             </mat-error>      
           </mat-form-field>
@@ -34,7 +34,7 @@
               maxlength="2"
               required
             />
-            <mat-error *ngIf="cardYear.hasError('invalid')">
+            <mat-error *ngIf="cardYearCtl.hasError('invalid')">
                 Card is invalid
             </mat-error>      
           </mat-form-field>

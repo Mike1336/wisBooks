@@ -1,7 +1,7 @@
 <app-card [form]="form"></app-card>
 <div>
   <button mat-button matStepperPrevious>Back</button>
-  <button type="submit" mat-button [disabled]="form.invalid">
+  <button mat-button [disabled]="form.invalid" (click)="formLog()">
     Registrate
   </button>
 </div>

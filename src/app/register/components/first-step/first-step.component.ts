@@ -27,14 +27,11 @@ export class FirstStepComponent implements OnInit {
 
   constructor() { }
 
-  public get firstPas(): AbstractControl {
-    return this.form.get('firstPas');
-  }
-  public get secondPas(): AbstractControl {
-    return this.form.get('secondPas');
+  public ngOnInit(): void {
+    this.initForm();
   }
 
-  public ngOnInit(): void {
+  public initForm(): void {
     this.firstNameCtl = new FormControl('', [
       Validators.required,
     ]);

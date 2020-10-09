@@ -20,7 +20,7 @@ export class ThirdStepComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public onSubmit(): void {
+  public formLog(): void {
     this.clickRegister.emit();
   }
 

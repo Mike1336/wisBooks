@@ -35,7 +35,6 @@ import { CardDateMaskDirective } from './directives/card-date.directive';
 import { NotLettersDirective } from './directives/not-letters.directive';
 import { DateMaskDirective } from './directives/date-mask.directive';
 import { CommaPipe } from './pipes/comma.pipe';
-import { SetColorDirective } from './directives/set-color.directive';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { SetColorDirective } from './directives/set-color.directive';
     CardNumberMaskDirective,
     PhoneMaskDirective,
     NotDigitsDirective,
-    SetColorDirective,
   ],
   imports: [
     CommonModule,
@@ -112,7 +110,6 @@ import { SetColorDirective } from './directives/set-color.directive';
     CardNumberMaskDirective,
     PhoneMaskDirective,
     NotDigitsDirective,
-    SetColorDirective,
   ],
 })
 export class SharedModule { }

@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <div>
     <mat-form-field>
-      <mat-label>Firstname</mat-label>
+      <mat-label>First name</mat-label>
       <input
         matInput
         notDigits
@@ -11,7 +11,7 @@
       />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Lastname</mat-label>
+      <mat-label>Last name</mat-label>
       <input
         matInput
         notDigits
@@ -45,7 +45,7 @@
   </div>
   <div>
     <mat-form-field>
-        <mat-label>Create password</mat-label>
+        <mat-label>Password</mat-label>
         <input
           matInput
           [type]="hideFirstPas ? 'password' : 'text'"
@@ -65,7 +65,7 @@
       </mat-form-field>
     
       <mat-form-field>
-        <mat-label>Repeat password</mat-label>
+        <mat-label>Confirm password</mat-label>
         <input
           matInput
           [type]="hideSecondPas ? 'password' : 'text'"
@@ -73,7 +73,7 @@
           maxlength="15"
           required
         />
-        <mat-error *ngIf="secondPas.hasError('pasError')">
+        <mat-error *ngIf="secondPasCtl.hasError('pasError')">
           Passwords must be equal
         </mat-error>
         <button

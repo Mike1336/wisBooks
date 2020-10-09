@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, AbstractControl, FormControl, Validators } from '@angular/forms';
 
-import { ReplaySubject } from 'rxjs';
+import { of, ReplaySubject } from 'rxjs';
 import { map, debounceTime, mergeMap, takeUntil } from 'rxjs/operators';
 
 import { RegisterValidator } from './../../validators/pass.validator';
@@ -11,6 +11,7 @@ import { BankService } from './../../services/bank.service';
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent implements OnInit, OnDestroy {
 
@@ -30,20 +31,18 @@ export class CardComponent implements OnInit, OnDestroy {
 
   constructor(private _bank: BankService, private _cdRef: ChangeDetectorRef) { }
 
-  public get cardNumber(): AbstractControl {
-    return this.form.get('cardNumber');
-  }
-  public get cardYear(): AbstractControl {
-    return this.form.get('cardYear');
-  }
-  public get cardMonth(): AbstractControl {
-    return this.form.get('cardMonth');
-  }
-  public get cardCVV(): AbstractControl {
-    return this.form.get('cardCVV');
+  public ngOnInit(): void {
+    this.initForm();
+
+    this.detectCardNumber();
   }
 
-  public ngOnInit(): void {
+  public ngOnDestroy(): void {
+    this._destroy$.next(null);
+    this._destroy$.complete();
+  }
+
+  public initForm(): void {
     this.cardNumberCtl = new FormControl('', [
       Validators.minLength(19),
       Validators.required,
@@ -69,39 +68,31 @@ export class CardComponent implements OnInit, OnDestroy {
     this.form.setValidators([
       RegisterValidator.cardDateValidation,
     ]);
+  }
 
-    this.cardNumber.valueChanges
+  public detectCardNumber(): void {
+    this.cardNumberCtl.valueChanges
       .pipe(
         map((data: string) => data.replace(' ', '')),
         mergeMap((data: string) => {
           if (data.length >= 6) {
+
             return this._bank.getCardInfo(data.slice(0, 6));
           }
 
-          return this.cardNumber.valueChanges;
+          return of({});
         }),
         debounceTime(500),
         takeUntil(this._destroy$),
       )
       .subscribe(
-        (data: any) => {
-          data.bankColor
-          ? this.cardBgColor = data.bankColor
-          : this.cardBgColor = '';
+        ({ bankColor, formBankLogoBigSvg, brandLogoOriginalSvg }: any) => {
+          this.cardBgColor = bankColor;
+          this.bankLogoSrc = formBankLogoBigSvg;
+          this.paySysLogoSrc = brandLogoOriginalSvg;
 
-          data.formBankLogoBigSvg
-          ? this.bankLogoSrc = data.formBankLogoBigSvg
-          : this.bankLogoSrc = '';
-
-          data.brandLogoOriginalSvg
-          ? this.paySysLogoSrc = data.brandLogoOriginalSvg
-          : this.paySysLogoSrc = '';
+          this._cdRef.markForCheck();
         });
-  }
-
-  public ngOnDestroy(): void {
-    this._destroy$.next(null);
-    this._destroy$.complete();
   }
 
 }
