@@ -76,7 +76,6 @@ export class CardComponent implements OnInit, OnDestroy {
         map((data: string) => data.replace(' ', '')),
         mergeMap((data: string) => {
           if (data.length >= 6) {
-
             return this._bank.getCardInfo(data.slice(0, 6));
           }
 

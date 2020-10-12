@@ -21,9 +21,10 @@ export class RegisterContainer implements OnInit {
     this.thirdFormGroup = new FormGroup({});
   }
   public registre(): void {
+    const address = this.secondFormGroup.get('address').value;
     console.log({
       ...this.firstFormGroup.value,
-      ...this.secondFormGroup.value,
+      address: address.toJSON(),
       ...this.thirdFormGroup.value,
     });
   }

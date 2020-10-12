@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@a
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, ReplaySubject, BehaviorSubject, of } from 'rxjs';
-import { debounceTime, takeUntil, pluck, mergeMap } from 'rxjs/operators';
+import { debounceTime, takeUntil, pluck, mergeMap, map } from 'rxjs/operators';
 
 import { GeodataService } from './../../services/geodata.service';
-import { AddressModel } from './../../models/address.model';
+import { Address } from './../../models/address.model';
 
 @Component({
   selector: 'second-step',
@@ -20,8 +20,8 @@ export class SecondStepComponent implements OnInit, OnDestroy {
 
   public addressCtl: AbstractControl;
 
-  private _address$: BehaviorSubject<any> = new BehaviorSubject(null);
-  private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
+  private readonly _address$ = new BehaviorSubject<Address[]>(null);
+  private _destroy$ = new ReplaySubject<number>(1);
 
   constructor(
     private _geo: GeodataService,
@@ -33,7 +33,7 @@ export class SecondStepComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.detectAddress();
+    this.addressCtlListener();
   }
 
   public ngOnDestroy(): void {
@@ -48,16 +48,14 @@ export class SecondStepComponent implements OnInit, OnDestroy {
     this.form.setControl('address', this.addressCtl);
   }
 
-  public detectAddress(): void {
+  public addressCtlListener(): void {
     this.addressCtl.valueChanges
       .pipe(
         debounceTime(500),
         mergeMap(
           (fieldValue: string) => {
             if (fieldValue) {
-              return this._geo.getAddressByQuery(fieldValue).pipe(
-                pluck('results'),
-              );
+              return this.getAddressByQuery(fieldValue);
             }
 
             return of([]);
@@ -65,10 +63,26 @@ export class SecondStepComponent implements OnInit, OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe(
-        (data: any) => {
-          AddressModel.convertAddress(data);
-          this._address$.next(data);
+        (addresses: Address[]) => {
+          console.log(addresses)
+          this._address$.next(addresses);
         });
+  }
+
+  public getAddressByQuery(query: string): Observable<Address[]> {
+    return this._geo.getAddressByQuery(query).pipe(
+      pluck('results'),
+      map((data: object[]) => {
+        return data.map((item: object) => {
+          return Address.fromJSON(item);
+        });
+      }),
+    );
+  }
+
+  public displayAddress(address: Address): string {
+    console.log(address.toJSON())
+    return address.formattedAddress;
   }
 
 }

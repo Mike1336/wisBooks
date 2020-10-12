@@ -1,9 +1,9 @@
 <form [formGroup]="form">
     <mat-form-field class="example-full-width">
         <input matInput [matAutocomplete]="auto" formControlName="address" placeholder="Ex. 1 Main St, New York, NY" required />
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of address$ | async" [value]="option.formatted_address">
-                <span>{{ option.formatted_address }}</span>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAddress">
+            <mat-option *ngFor="let option of address$ | async" [value]="option">
+                <span>{{ option.formattedAddress }}</span>
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
