@@ -1,4 +1,4 @@
-<form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+<form [formGroup]="form">
   <mat-form-field appearance="outline">
     <mat-label>Select genres</mat-label>
     <mat-select multiple formControlName="genres">
@@ -9,7 +9,7 @@
   </mat-form-field>
 
   <mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel formGroupName="prices">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> Prices </mat-panel-title>
         <mat-panel-description>
@@ -21,7 +21,7 @@
         <mat-label>Price from</mat-label>
         <input matInput notLetters formControlName="minPrice" maxlength="5" />
         <span matPrefix>$&nbsp;</span>
-        <mat-error *ngIf="minPrice.hasError('priceError')">
+        <mat-error *ngIf="minPriceCtl.hasError('priceError')">
           Minimal price could not be biggest than maximal
         </mat-error>
       </mat-form-field>
@@ -33,7 +33,7 @@
       </mat-form-field>
     </mat-expansion-panel>
 
-    <mat-expansion-panel formGroupName="releases">
+    <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title> Book releases </mat-panel-title>
         <mat-panel-description>
@@ -47,16 +47,16 @@
           matInput
           dateMask
           [matDatepicker]="pickerFrom"
-          formControlName="releaseDateFrom"
+          formControlName="releaseFrom"
           maxlength="10"
         />
         <mat-datepicker-toggle matSuffix [for]="pickerFrom">
         </mat-datepicker-toggle>
         <mat-datepicker #pickerFrom startView="multi-year"> </mat-datepicker>
-        <mat-error *ngIf="releaseDateFrom.hasError('releaseError')">
+        <mat-error *ngIf="releaseFromCtl.hasError('releaseError')">
           First release date could not be biggest than second
         </mat-error>
-        <mat-error *ngIf="releaseDateFrom.hasError('matDatepickerParse')">
+        <mat-error *ngIf="releaseFromCtl.hasError('matDatepickerParse')">
           Date must be in format: YYYY-MM-DD
         </mat-error>
       </mat-form-field>
@@ -67,32 +67,16 @@
           matInput
           dateMask
           [matDatepicker]="pickerTo"
-          formControlName="releaseDateTo"
+          formControlName="releaseTo"
           maxlength="10"
         />
         <mat-datepicker-toggle matSuffix [for]="pickerTo">
         </mat-datepicker-toggle>
         <mat-datepicker #pickerTo startView="multi-year"> </mat-datepicker>
-        <mat-error *ngIf="releaseDateTo.hasError('matDatepickerParse')">
+        <mat-error *ngIf="releaseToCtl.hasError('matDatepickerParse')">
           Date must be in format: YYYY-MM-DD
         </mat-error>
       </mat-form-field>
     </mat-expansion-panel>
   </mat-accordion>
-
-  <div id="buttons">
-    <button
-      type="submit"
-      mat-button
-      color="primary"
-      [disabled]="filtersForm.invalid"
-    >
-      Accept filters
-    </button>
-    <ng-container *ngIf="!filtersForm.hasError('emptyForm')">
-      <button type="submit" mat-button color="warn" (click)="resetFilters()">
-        Reset filters
-      </button>
-    </ng-container>
-  </div>
 </form>

@@ -10,13 +10,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 import { MatDrawer } from '@angular/material/sidenav';
 
-import { Observable, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { IFilters } from '../../interfaces/filters';
 
 import { SidebarService } from './../../../layout/services/sidebar.service';
 import { IGenre } from './../../interfaces/genre';
@@ -41,12 +40,15 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatDrawer)
   public drawer: MatDrawer;
 
+  public filtersForm: FormGroup;
+
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
 
   constructor(private _sidebarService: SidebarService, private _cdRef: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
+    this.filtersForm = new FormGroup({});
   }
 
   public ngAfterViewInit(): void {
@@ -72,9 +74,10 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
     this._sidebarService.changeFilSb(data);
   }
 
-  public closeDrawerAndEmit(filters: IFilters): void {
+  public closeDrawerAndEmit(): void {
+    console.log(this.filtersForm.value)
     this.drawer.close();
-    this.applyForm.emit(filters);
+    this.applyForm.emit(this.filtersForm.value);
   }
 
   public closeDrawerAndReset(): void {

@@ -2,48 +2,44 @@ import { FormGroup } from '@angular/forms';
 
 export class FiltersValidator {
 
-  public static priceValidation(priceGroup: FormGroup): { [key: string]: boolean } {
-    const minPrice = priceGroup.get('minPrice');
-    const maxPrice = priceGroup.get('maxPrice');
+  public static priceValidation(form: FormGroup): { [key: string]: boolean } {
+    const minPrice = form.get('minPrice');
+    const maxPrice = form.get('maxPrice');
 
-    if (minPrice.value > maxPrice.value) {
-      minPrice.setErrors({ priceError: true });
-    } else {
-      minPrice.setErrors(null);
+    if (minPrice.value && maxPrice.value) {
+      +(minPrice.value) > +(maxPrice.value)
+       ? minPrice.setErrors({ priceError: true })
+       : minPrice.setErrors(null);
     }
 
     return null;
   }
 
-  public static releaseValidation(releaseFroup: FormGroup): { [key: string]: boolean } {
-    const releaseFrom = releaseFroup.get('releaseDateFrom');
-    const releaseTo = releaseFroup.get('releaseDateTo');
+  public static releaseValidation(form: FormGroup): { [key: string]: boolean } {
+    const releaseFrom = form.get('releaseFrom');
+    const releaseTo = form.get('releaseTo');
 
-    if (releaseFrom.value && releaseTo.value && releaseFrom.value > releaseTo.value) {
-      releaseFrom.setErrors({ releaseError: true });
-    } else {
-      if (!releaseFrom.getError('matDatepickerParse')) {
-        releaseFrom.setErrors(null);
-      }
-
-      return null;
-    }
-  }
-  public static emptyFormValidation(
-    filtersForm: FormGroup,
-  ): { [key: string]: boolean } {
-    for (const controlsProperty of Object.keys(filtersForm.controls)) {
-      if (filtersForm.controls[controlsProperty].value) {
-        for (const propertyOfControlsProperty of
-              Object.keys(filtersForm.controls[controlsProperty].value)) {
-          if (filtersForm.controls[controlsProperty].value[propertyOfControlsProperty]) {
-            return null;
-          }
+    if (releaseFrom.value && releaseTo.value) {
+      if (releaseFrom.value > releaseTo.value) {
+        releaseFrom.setErrors({ releaseError: true });
+      } else {
+        if (!releaseFrom.getError('matDatepickerParse')) {
+          releaseFrom.setErrors(null);
         }
       }
     }
 
-    return { emptyForm: true };
+    return null;
+  }
+
+  public static emptyFormValidation(form: FormGroup): { [key: string]: boolean } {
+    Object.keys(form.controls).forEach((controlName) => {
+      if (!form.controls[controlName].value) {
+        return { emptyForm: true };
+      }
+    });
+
+    return null;
   }
 
 }

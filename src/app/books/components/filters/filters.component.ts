@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
@@ -20,71 +18,43 @@ import { FiltersValidator } from '../../validators/filters.validator';
 export class FiltersComponent implements OnInit {
 
   @Input()
+  public form: FormGroup;
+
+  @Input()
   public genres: IGenre[];
 
   @Input()
   public sbStatus: boolean;
 
-  @Output()
-  public applyForm: EventEmitter<object> = new EventEmitter();
-
-  @Output()
-  public resetForm: EventEmitter<object> = new EventEmitter();
-
-  public filtersForm: FormGroup;
+  public genresCtl: AbstractControl;
+  public minPriceCtl: AbstractControl;
+  public maxPriceCtl: AbstractControl;
+  public releaseFromCtl: AbstractControl;
+  public releaseToCtl: AbstractControl;
 
   constructor() {}
-
-  public get minPrice(): AbstractControl {
-    return this.filtersForm.get('prices').get('minPrice');
-  }
-
-  public get maxPrice(): AbstractControl {
-    return this.filtersForm.get('prices').get('maxPrice');
-  }
-
-  public get releaseDateFrom(): AbstractControl {
-    return this.filtersForm.get('releases').get('releaseDateFrom');
-  }
-
-  public get releaseDateTo(): AbstractControl {
-    return this.filtersForm.get('releases').get('releaseDateTo');
-  }
 
   public ngOnInit(): void {
     this.initForm();
   }
 
-  public applyFilters(): void {
-    this.applyForm.emit(this.filtersForm.value);
-  }
-
-  public resetFilters(): void {
-    this.filtersForm.reset();
-    this.resetForm.emit();
-  }
-
   public initForm(): void {
-    this.filtersForm = new FormGroup(
-      {
-        genres: new FormControl([]),
-        prices: new FormGroup(
-          {
-            minPrice: new FormControl(''),
-            maxPrice: new FormControl(''),
-          },
-          [FiltersValidator.priceValidation],
-        ),
-        releases: new FormGroup(
-          {
-            releaseDateFrom: new FormControl(''),
-            releaseDateTo: new FormControl(''),
-          },
-          [FiltersValidator.releaseValidation],
-        ),
-      },
-      [FiltersValidator.emptyFormValidation],
-    );
+    this.genresCtl = new FormControl('');
+    this.minPriceCtl = new FormControl('');
+    this.maxPriceCtl = new FormControl('');
+    this.releaseFromCtl = new FormControl('');
+    this.releaseToCtl = new FormControl('');
+
+    this.form.setControl('genres', this.genresCtl);
+    this.form.setControl('minPrice', this.minPriceCtl);
+    this.form.setControl('maxPrice', this.maxPriceCtl);
+    this.form.setControl('releaseFrom', this.releaseFromCtl);
+    this.form.setControl('releaseTo', this.releaseToCtl);
+    this.form.setValidators([
+      FiltersValidator.priceValidation,
+      FiltersValidator.releaseValidation,
+      FiltersValidator.emptyFormValidation,
+    ]);
   }
 
 }

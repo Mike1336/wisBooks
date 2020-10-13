@@ -1,7 +1,33 @@
-<mat-drawer-container class="example-container" hasBackdrop [class.hide]="!drawer?.opened">
-    <mat-drawer class="example-sidenav" mode="side" position="end" (openedChange)="changeFilDrawer($event)">
-        <filters-component [genres]="genres"
-            (applyForm)="closeDrawerAndEmit($event)" (resetForm)="closeDrawerAndReset()">
-        </filters-component>
-    </mat-drawer>
+<mat-drawer-container
+  class="example-container"
+  hasBackdrop
+  [class.hide]="!drawer?.opened"
+>
+  <mat-drawer
+    class="example-sidenav"
+    mode="side"
+    position="end"
+    (openedChange)="changeFilDrawer($event)"
+  >
+    <filters-component
+      [form]="filtersForm"
+      [genres]="genres"
+    >
+    </filters-component>
+    <div id="buttons">
+        <button
+          mat-button
+          color="primary"
+          [disabled]="filtersForm.invalid"
+          (click)="closeDrawerAndEmit()"
+        >
+          Accept filters
+        </button>
+        <ng-container *ngIf="!filtersForm.hasError('emptyForm')">
+          <button type="submit" mat-button color="warn" (click)="closeDrawerAndReset()">
+            Reset filters
+          </button>
+        </ng-container>
+      </div>
+  </mat-drawer>
 </mat-drawer-container>

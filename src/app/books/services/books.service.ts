@@ -28,30 +28,22 @@ export class BooksService {
         matcher: RansackMethod.In,
         postfix: 'name',
       },
-      prices: [
-        {
-          matcher: RansackMethod.Gt,
-          name: 'price',
-          from: 'minPrice',
-        },
-        {
-          matcher: RansackMethod.Lt,
-          name: 'price',
-          from: 'maxPrice',
-        },
-      ],
-      releases: [
-        {
-          matcher: RansackMethod.Gt,
-          name: 'release_date',
-          from: 'releaseDateFrom',
-        },
-        {
-          matcher: RansackMethod.Lt,
-          name: 'release_date',
-          from: 'releaseDateTo',
-        },
-      ],
+      minPrice: {
+        matcher: RansackMethod.Gt,
+        name: 'price',
+      },
+      maxPrice: {
+        matcher: RansackMethod.Lt,
+        name: 'price',
+      },
+      releaseFrom: {
+        matcher: RansackMethod.Gt,
+        name: 'release_date',
+      },
+      releaseTo: {
+        matcher: RansackMethod.Lt,
+        name: 'release_date',
+      },
     };
 
     if (filters) {
