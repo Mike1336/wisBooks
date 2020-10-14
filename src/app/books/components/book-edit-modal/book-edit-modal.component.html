@@ -93,14 +93,26 @@
 
   <div mat-dialog-actions>
     <button mat-button color="warn" mat-dialog-close>Cancel</button>
-    <button
+    <ng-container *ngIf="bookEditForm.touched && bookEditForm.dirty; else closeButton">
+      <button
       mat-button
       color="primary"
       (click)="onConfirm()"
       cdkFocusInitial
-      [disabled]="bookEditForm.invalid"
     >
       Apply
     </button>
+    </ng-container>
+    <ng-template #closeButton>
+      <button
+      mat-button
+      color="primary"
+      mat-dialog-close
+    >
+      Apply
+    </button>
+    </ng-template>
+    
+
   </div>
 </div>

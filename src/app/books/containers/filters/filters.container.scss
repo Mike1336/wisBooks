@@ -8,7 +8,11 @@ mat-drawer-container {
     background: none;
     
     mat-drawer{
-        width: 30%;
+        width: 300px;
+        #buttons {
+            display: flex;
+            flex-direction: column;
+          }        
     }
 }
 .hide{

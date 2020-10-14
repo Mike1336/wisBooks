@@ -1,11 +1,27 @@
 <div id="books">
-    <books-component [books]="books$ | async" (editClicked)="showEditModal($event)" (deleteClicked)="showDeleteModal($event)"> </books-component>
-    <div id="nfBooks" *ngIf="emptyResult">
-        <h2>Books not found</h2>
-    </div>
-    <app-paginator [records]="booksQuantity" [limits]="[10, 25, 50, 75, 100, 125, 150]" (changed)="changePageSize($event)" [class.hide]="emptyResult">
-    </app-paginator>
-
+  <books-component
+    [books]="books$ | async"
+    (editClicked)="showEditModal($event)"
+    (deleteClicked)="showDeleteModal($event)"
+  >
+  </books-component>
+  <div id="nfBooks" *ngIf="emptyResult">
+    <h2>Books not found</h2>
+  </div>
+  <div id="filtersButton" (click)="openFilters()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </div>
+  <app-paginator
+    [records]="booksQuantity"
+    [limits]="[10, 25, 50, 75, 100, 125, 150]"
+    (changed)="changePageSize($event)"
+    [class.hide]="emptyResult"
+  >
+  </app-paginator>
 </div>
-<filters-container [genres]="genres" (applyForm)="getFilteredBooks($event)" (resetForm)="resetFilters()">
+<filters-container
+  [genres]="genres"
+  (applyForm)="getFilteredBooks($event)"
+  (resetForm)="resetFilters()"
+>
 </filters-container>

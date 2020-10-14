@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { IBook } from '../../interfaces/book';
 
-import { BookEditValidator } from './../../validators/book-edit.validator';
 import { IGenre } from './../../interfaces/genre';
 import { IAuthor } from './../../interfaces/author';
 
@@ -27,7 +26,8 @@ export class BookEditModalComponent implements OnInit {
   public bookEditForm: FormGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: IImportingBookData,
+    @Inject(MAT_DIALOG_DATA)
+    public data: IImportingBookData,
     public dialogRef: MatDialogRef<IBook>,
     ) { }
 
@@ -63,23 +63,7 @@ export class BookEditModalComponent implements OnInit {
       writingDateCtl: new FormControl(this.data.book.writing_date, [
         Validators.required,
       ]),
-    }, [
-      // BookEditValidator.formChangesChecking(
-      //   this.data.book,
-      //   {
-      //     id: this.data.book.id,
-      //     description: this.description.value,
-      //     author_id: this.author.value,
-      //     title: this.title.value,
-      //     price: this.price.value,
-      //     genres: this.convertGenresToObj(this.genres.value),
-      //     previews: [],
-      //     image: null,
-      //     writing_date: this.writingDate.value,
-      //     release_date: this.releaseDate.value,
-      //   },
-      //   ),
-    ]);
+    });
   }
 
   public onConfirm(): void {

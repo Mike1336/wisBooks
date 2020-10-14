@@ -13,12 +13,7 @@ import { SidebarService } from '../../services/sidebar.service';
 })
 export class HeaderContainer implements OnInit, OnDestroy {
 
-  public filtersDrawer: boolean;
   public navigateDrawer: boolean;
-  public isBooksPage: boolean;
-
-  @Input()
-  public urlStream$: Observable<string>;
 
   @Output()
   public logout: EventEmitter<any> = new EventEmitter<any>();
@@ -28,15 +23,6 @@ export class HeaderContainer implements OnInit, OnDestroy {
   constructor(private _sbService: SidebarService) { }
 
   public ngOnInit(): void {
-    this._sbService.filSbStatus$
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe((filSbStatus) => {
-        this.filtersDrawer = filSbStatus;
-      },
-    );
-
     this._sbService.navSbStatus$
       .pipe(
         takeUntil(this._destroy$),
@@ -45,16 +31,6 @@ export class HeaderContainer implements OnInit, OnDestroy {
         this.navigateDrawer = navSbStatus;
       },
       );
-
-    this.urlStream$
-      .pipe(
-        takeUntil(this._destroy$),
-      )
-      .subscribe((url) => {
-        url === '/books'
-        ? this.isBooksPage = true
-        : this.isBooksPage = false;
-      });
   }
 
   public ngOnDestroy(): void {
@@ -66,10 +42,4 @@ export class HeaderContainer implements OnInit, OnDestroy {
     this.navigateDrawer = !this.navigateDrawer;
     this._sbService.changeNavSb(this.navigateDrawer);
   }
-
-  public changeFilStatus(): void {
-    this.filtersDrawer = !this.filtersDrawer;
-    this._sbService.changeFilSb(this.filtersDrawer);
-  }
-
 }

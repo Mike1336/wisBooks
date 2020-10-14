@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { map, mergeMap, pluck } from 'rxjs/operators';
+import { map, mergeMap, pluck, switchMap } from 'rxjs/operators';
 
 import { IAuthor, IAuthors } from '../../interfaces/author';
 import { AuthorsService } from '../../services/authors.service';
@@ -33,7 +33,7 @@ export class AuthorsContainer implements OnInit {
         map((data) => {
           return data.meta.records;
         }),
-        mergeMap((quantity: number): Observable<IAuthors> => {
+        switchMap((quantity: number): Observable<IAuthors> => {
           this.authorsQuantity = quantity;
 
           return this._authorsService.getAuthorsInQuantity(quantity);

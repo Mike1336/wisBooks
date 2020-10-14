@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRe
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Observable, ReplaySubject } from 'rxjs';
-import { map, pluck, mergeMap, takeUntil } from 'rxjs/operators';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { map, pluck, mergeMap, takeUntil, switchMap } from 'rxjs/operators';
 
 import { IBook } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
@@ -19,6 +19,7 @@ import { BooksService } from './../../services/books.service';
 import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
 import { GenresService } from './../../services/genres.service';
 import { AuthService } from './../../../auth/services/auth.service';
+import { SidebarService } from './../../../layout/services/sidebar.service';
 
 @Component({
   selector: 'books-container',
@@ -50,6 +51,7 @@ export class BooksContainer implements OnInit, OnDestroy {
     private _authorsService: AuthorsService,
     private _snackBar: MatSnackBar,
     private _cdRef: ChangeDetectorRef,
+    private _sbService: SidebarService,
   ) {}
 
   public ngOnInit(): void {
@@ -140,18 +142,22 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     editModal.afterClosed()
       .pipe(
-      mergeMap((bookData) => {
+      switchMap((bookData) => {
         if (bookData) {
           return this._booksService.updateBook(bookData);
         }
+
+        return of(false);
       }),
       takeUntil(this._destroy$),
       )
-      .subscribe(() => {
-        this._cdRef.markForCheck();
+      .subscribe((result) => {
+        if (result) {
+          this._cdRef.markForCheck();
 
-        this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
-        this.openSnackBar('Book had been updated');
+          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
+          this.openSnackBar('Book had been updated');
+        }
       });
   }
 
@@ -186,6 +192,10 @@ export class BooksContainer implements OnInit, OnDestroy {
       top: 0,
       behavior: 'smooth',
     });
+  }
+
+  public openFilters(): void {
+    this._sbService.changeFilSb(true);
   }
 
 }

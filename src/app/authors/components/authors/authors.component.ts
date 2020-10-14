@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { IAuthor } from './../../interfaces/author';
   styleUrls: ['./authors.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorsComponent implements OnInit {
+export class AuthorsComponent implements OnInit, AfterViewInit {
 
 
   public displayedColumns: string[] = ['id', 'first_name', 'last_name'];
@@ -32,7 +32,9 @@ export class AuthorsComponent implements OnInit {
     this._title.setTitle('All authors');
     this.dataSource.data = this.authors;
   }
-
+  public ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+  }
   /**
    * Takes in a paginator and set to dataSource
    *

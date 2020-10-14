@@ -11,6 +11,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    width: 97%;
   }
 
   #spinner {
@@ -29,4 +30,16 @@
 
 .hide {
   visibility: hidden;
+}
+
+#filtersButton {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 3%;
+  display: flex;
+  align-items: center;
+  background: #d8d8d854;
+  cursor: pointer;
 }
