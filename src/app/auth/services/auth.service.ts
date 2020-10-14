@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { IFbResponse } from './../interfaces/fb-response';
 import { IUser } from './../interfaces/user';
@@ -13,16 +13,16 @@ import { environment } from './../../../environments/environment';
 })
 export class AuthService {
 
-  private _submit$ = new BehaviorSubject<boolean>(false);
+  private _loginLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor(private _http: HttpClient) { }
 
-  public get submit$() : Observable<boolean> {
-    return this._submit$.asObservable();
+  public get loginLoading$() : Observable<boolean> {
+    return this._loginLoading$.asObservable();
   }
 
-  public nextToSubmit(data: boolean): void {
-    this._submit$.next(data);
+  public changeLoadingStatus(data: boolean): void {
+    this._loginLoading$.next(data);
   }
 
   public get token(): string {
@@ -41,10 +41,12 @@ export class AuthService {
   public login(user: IUser): Observable<any> {
     user.returnSecureToken = true;
 
-    return this._http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
+    return this._http.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
+        environment.apiKey
+      }`, user)
       .pipe(
         tap(this._setToken),
-        catchError(this._handleError.bind(true)),
       );
   }
 
@@ -66,23 +68,6 @@ export class AuthService {
     } else {
       localStorage.clear();
     }
-  }
-
-  private _handleError(error: HttpErrorResponse): Observable<never> {
-    const { message } = error.error.error;
-
-    // switch (message) {
-    //   case 'EMAIL_NOT_FOUND':
-    //     this._loginErrors$.next({ email: 'Email not found' });
-    //     break;
-
-    //   case 'INVALID_PASSWORD':
-    //     this._loginErrors$.next({ password: 'Invalid password' });
-    //     break;
-    // }
-    console.log(message);
-
-    return throwError(error);
   }
 
 }

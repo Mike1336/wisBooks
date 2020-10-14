@@ -1,6 +1,11 @@
 form {
     display: flex;
     flex-direction: column;
+    #loginError {
+        text-align: center;
+        color: red;
+        padding-bottom: 10px;
+    }
 }
 
 * {

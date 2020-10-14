@@ -1,1 +1,5 @@
-<auth-component [submit$]="auth.submit$" (submitForm)="login($event)"></auth-component>
+<auth-component
+  [loadingStatus$]="loginLoading$"
+  [formError]="formError"
+  (submitForm)="login($event)"
+></auth-component>

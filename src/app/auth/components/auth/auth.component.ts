@@ -16,10 +16,10 @@ export class AuthComponent implements OnInit {
   public hidePas = true;
 
   @Input()
-  public submit$: Observable<boolean>;
+  public loadingStatus$: Observable<boolean>;
 
   @Input()
-  public formErrors$: Observable<object>;
+  public formError: string;
 
   public loginForm: FormGroup;
 
@@ -29,6 +29,10 @@ export class AuthComponent implements OnInit {
   constructor() { }
 
   public ngOnInit(): void {
+    this.initForm();
+  }
+
+  public initForm(): void {
     this.loginForm = new FormGroup({
       emailCtl: new FormControl('', [
         Validators.email,

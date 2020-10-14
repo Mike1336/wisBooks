@@ -1,4 +1,9 @@
 <form [formGroup]="loginForm" (ngSubmit)="submit()">
+  <ng-container *ngIf="formError">
+    <div id="loginError">
+      {{formError}}
+    </div>
+  </ng-container>
   <mat-form-field class="example-full-width">
     <mat-label>E-mail</mat-label>
     <input matInput formControlName="emailCtl" maxlength="15" />
@@ -28,7 +33,7 @@
     </button>
   </mat-form-field>
 
-  <ng-container *ngIf="submit$ | async; else formButtons">
+  <ng-container *ngIf="loadingStatus$ | async; else formButtons">
     <button mat-button disabled>
       <span class="animated_dots">...</span>
     </button>

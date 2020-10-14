@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthComponent } from '../../components/auth/auth.component';
@@ -17,6 +17,9 @@ import { IUser } from './../../interfaces/user';
 })
 export class AuthContainer implements OnInit, OnDestroy {
 
+  public loginLoading$: Observable<boolean>;
+  public formError = '';
+
   @ViewChild(AuthComponent)
   public component: AuthComponent;
 
@@ -25,10 +28,10 @@ export class AuthContainer implements OnInit, OnDestroy {
   constructor(
     public auth: AuthService,
     private _router: Router,
-    private _cdRef: ChangeDetectorRef,
   ) { }
 
   public ngOnInit(): void {
+    this.loginLoading$ = this.auth.loginLoading$;
   }
 
   public ngOnDestroy(): void {
@@ -37,7 +40,7 @@ export class AuthContainer implements OnInit, OnDestroy {
   }
 
   public login(user: IUser): void {
-    this.auth.nextToSubmit(true);
+    this.auth.changeLoadingStatus(true);
 
     this.auth.login(user)
       .pipe(
@@ -46,14 +49,18 @@ export class AuthContainer implements OnInit, OnDestroy {
       .subscribe(
         // tslint:disable-next-line: rxjs-prefer-observer
         () => {
-          this.auth.nextToSubmit(false);
+          this.auth.changeLoadingStatus(false);
           this.component.loginForm.reset();
           this._router.navigate(['/books']);
         },
         // tslint:disable-next-line: rxjs-prefer-observer
         (error) => {
+          const errMessage = error.error.error.message;
+          if (errMessage === 'EMAIL_NOT_FOUND' || errMessage === 'INVALID_PASSWORD') {
+            this.formError = 'Incorrect login or password';
+          }
           setTimeout(() => {
-            this.auth.nextToSubmit(false);
+            this.auth.changeLoadingStatus(false);
           }, 1000);
         },
       );
