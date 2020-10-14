@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
-import { Observable, ReplaySubject } from 'rxjs';
-import { map, debounceTime, takeUntil } from 'rxjs/operators';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { map, debounceTime, takeUntil, tap, switchMap } from 'rxjs/operators';
 
 import { BooksService } from './../../../books/services/books.service';
 import { IBooks, IBook } from './../../../books/interfaces/book';
@@ -11,10 +11,12 @@ import { IBooks, IBook } from './../../../books/interfaces/book';
 @Component({
   selector: 'search-container',
   templateUrl: './search.container.html',
-  styleUrls: ['./search.container.scss']
+  styleUrls: ['./search.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchContainer implements OnInit, OnDestroy {
 
+  public loading: boolean;
   public emptyResult: boolean;
 
   public searchForm: FormGroup;
@@ -23,30 +25,26 @@ export class SearchContainer implements OnInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private _booksService: BooksService, private _cdRef: ChangeDetectorRef) {}
+  constructor(private _booksService: BooksService) {}
 
   public ngOnInit(): void {
     this.searchForm = new FormGroup({
       searchField: new FormControl(''),
     });
-    this.searchForm.get('searchField').valueChanges
+    this.foundBooks$ = this.searchForm.get('searchField').valueChanges
       .pipe(
-        map((word) => {
-          if (word) {
-            return word.toLowerCase();
+        tap(() => this.loading = true),
+        debounceTime(500),
+        switchMap((fieldData) => {
+          if (!fieldData) {
+            return of([]);
           }
 
-          return word;
+          return this.findBooks(fieldData);
         }),
-        debounceTime(500),
+        tap(() => this.loading = false),
         takeUntil(this._destroy$),
-      )
-      .subscribe(
-        (fieldString) => {
-          this.findBooks(fieldString);
-
-          this._cdRef.markForCheck();
-        });
+      );
   }
 
   public ngOnDestroy(): void {
@@ -54,19 +52,18 @@ export class SearchContainer implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public findBooks(searchString: string): void {
-    this.foundBooks$ = this._booksService
-      .getBooksByTItle(searchString)
+  public findBooks(bookName: string): Observable<IBook[]> {
+    return this._booksService
+      .getBooksByTItle(bookName)
       .pipe(
         map((data) => {
           data.books.length === 0
           ? this.emptyResult = true
           : this.emptyResult = false;
 
-          this._cdRef.markForCheck();
-
           return data.books;
-        }));
+        }),
+      );
   }
 
 }

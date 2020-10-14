@@ -1,5 +1,14 @@
 <div id="authors">
   <div id="tableContent">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="#, first name or last name"
+        #input
+      />
+    </mat-form-field>
     <table
       mat-table
       [dataSource]="dataSource"
@@ -22,10 +31,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr
-        mat-row
-        *matRowDef="let author; columns: displayedColumns"
-      ></tr>
+      <tr mat-row *matRowDef="let author; columns: displayedColumns"></tr>
     </table>
 
     <app-paginator

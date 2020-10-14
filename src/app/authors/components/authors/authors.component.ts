@@ -43,6 +43,13 @@ export class AuthorsComponent implements OnInit, AfterViewInit {
   public takePaginator(paginator: MatPaginator): void {
     this.dataSource.paginator = paginator;
   }
+  public applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
 }

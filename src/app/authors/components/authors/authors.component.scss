@@ -1,6 +1,7 @@
 #authors {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-flow: row wrap;
     height: 100%;
 
@@ -26,16 +27,11 @@
 
         }
     }
-
-    mat-paginator {
-        width: 85vw;
-        margin-top: 75px;
-    }
 }
 
 #tableContent {
     position: absolute;
-    height: 592px;
+    height: 650px;
     overflow: auto;
-    margin-top: 75px;
+    z-index: 1;
 }

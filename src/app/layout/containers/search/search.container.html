@@ -11,9 +11,14 @@
           <small>Price: {{book.price}}$</small>
         </mat-option>
       </ng-container>
-      <ng-container *ngIf="emptyResult">
+      <ng-container *ngIf="emptyResult && !loading">
         <mat-option>
           <span>Books with that title not found</span>
+        </mat-option>
+      </ng-container>
+      <ng-container *ngIf="loading">
+        <mat-option>
+          <span>Loading...</span>
         </mat-option>
       </ng-container>
     </mat-autocomplete>
