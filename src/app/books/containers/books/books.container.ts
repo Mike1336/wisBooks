@@ -179,14 +179,18 @@ export class BooksContainer implements OnInit, OnDestroy {
         if (bookId) {
           return this._booksService.deleteBook(bookId);
         }
+
+        return of(false);
       }),
       takeUntil(this._destroy$),
       )
       .subscribe((result: IBook) => {
-        this._cdRef.markForCheck();
+        if (result) {
+          this._cdRef.markForCheck();
 
-        this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
-        this.openSnackBar(`Book with name '${result.title}' was successfully deleted.`);
+          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
+          this.openSnackBar(`Book with name '${result.title}' was successfully deleted.`);
+        }
       });
   }
   public openSnackBar(message: string): void {

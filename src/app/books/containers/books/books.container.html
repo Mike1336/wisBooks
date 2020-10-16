@@ -1,13 +1,21 @@
 <div id="books">
+  <div id="creationButton">
+    <button mat-fab color="primary">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
   <books-component
     [books]="books$ | async"
     (editClicked)="showEditModal($event)"
     (deleteClicked)="showDeleteModal($event)"
   >
   </books-component>
-  <div id="nfBooks" *ngIf="emptyResult">
-    <h2>Books not found</h2>
-  </div>
+  <ng-container *ngIf="emptyResult">
+    <div id="nfBooks">
+      <h2>Books not found</h2>
+    </div>
+  </ng-container>
+
   <div id="filtersButton" (click)="openFilters()">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </div>

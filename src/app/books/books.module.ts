@@ -17,6 +17,7 @@ import { BooksContainer } from './containers/books/books.container';
 import { BooksView } from './views/books/books.view';
 import { FiltersComponent } from './components/filters/filters.component';
 import { FiltersContainer } from './containers/filters/filters.container';
+import { BookCreateModalComponent } from './components/book-create-modal/book-create-modal.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -38,6 +39,7 @@ export const MY_FORMATS = {
     BooksView,
     FiltersComponent,
     FiltersContainer,
+    BookCreateModalComponent,
   ],
   imports: [
     // Angular

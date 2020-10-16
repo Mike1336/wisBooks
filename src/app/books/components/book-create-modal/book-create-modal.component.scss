@@ -1,0 +1,16 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #fields {
+        display: flex;
+        justify-content: space-around;
+
+        #leftFields, #leftFields {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}

@@ -7,6 +7,12 @@
   min-height: 100%;
   padding-top: 55px;
 
+  #creationButton {
+    width: 97%;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
   books-component {
     display: flex;
     flex-flow: row wrap;
