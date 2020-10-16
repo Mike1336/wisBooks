@@ -75,12 +75,12 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public closeDrawerAndEmit(): void {
-    console.log(this.filtersForm.value)
     this.drawer.close();
     this.applyForm.emit(this.filtersForm.value);
   }
 
   public closeDrawerAndReset(): void {
+    this.filtersForm.reset();
     this.drawer.close();
     this.resetForm.emit();
   }

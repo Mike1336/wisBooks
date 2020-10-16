@@ -39,7 +39,7 @@ export class FiltersComponent implements OnInit {
   }
 
   public initForm(): void {
-    this.genresCtl = new FormControl('');
+    this.genresCtl = new FormControl([]);
     this.minPriceCtl = new FormControl('');
     this.maxPriceCtl = new FormControl('');
     this.releaseFromCtl = new FormControl('');

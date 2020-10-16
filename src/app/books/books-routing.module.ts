@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: BooksView,
   },
-  {
-    path: '**',
-    redirectTo: '',
-  },
 ];
 
 @NgModule({

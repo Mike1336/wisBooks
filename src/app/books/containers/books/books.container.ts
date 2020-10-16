@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, of, ReplaySubject } from 'rxjs';
-import { map, pluck, mergeMap, takeUntil, switchMap } from 'rxjs/operators';
+import { map, pluck, takeUntil, switchMap } from 'rxjs/operators';
 
 import { IBook } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
@@ -29,6 +30,9 @@ import { SidebarService } from './../../../layout/services/sidebar.service';
 })
 export class BooksContainer implements OnInit, OnDestroy {
 
+  @Input()
+  public pageFromParam: string;
+
   public emptyResult: boolean;
 
   public filters: IFilters;
@@ -52,14 +56,17 @@ export class BooksContainer implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     private _cdRef: ChangeDetectorRef,
     private _sbService: SidebarService,
+    private _router: Router,
   ) {}
 
   public ngOnInit(): void {
+    this.booksPageIndex = +this.pageFromParam - 1;
+
     this.getAuthors();
 
     this.getGenres();
 
-    this.getBooks();
+    this.getBooks(null, null, this.booksPageIndex);
   }
 
   public ngOnDestroy(): void {
@@ -92,7 +99,7 @@ export class BooksContainer implements OnInit, OnDestroy {
   public getGenres(): void {
     this._genresService.getGenresInQuantity(1)
       .pipe(
-        mergeMap((data: IGenres) => {
+        switchMap((data: IGenres) => {
           return this._genresService.getGenresInQuantity(data.meta.records);
         }),
         pluck('genres'),
@@ -105,7 +112,7 @@ export class BooksContainer implements OnInit, OnDestroy {
   public getAuthors(): void {
     this._authorsService.getAuthorsInQuantity(1)
       .pipe(
-        mergeMap((data: IAuthors) => {
+        switchMap((data: IAuthors) => {
           return this._authorsService.getAuthorsInQuantity(data.meta.records);
         }),
         pluck('authors'),
@@ -117,8 +124,9 @@ export class BooksContainer implements OnInit, OnDestroy {
   }
 
   public changePageSize(pagData: IPaginatorData): void {
+    this._router.navigate([`/books/${pagData.pageIndex + 1}`]);
     this.booksPageSize = pagData.pageSize;
-    this.booksPageIndex = pagData.pageIndex + 1;
+    this.booksPageIndex = pagData.pageIndex;
 
     this.getBooks(this.filters, pagData.pageSize, this.booksPageIndex);
   }
@@ -167,7 +175,7 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     deleteModal.afterClosed()
       .pipe(
-      mergeMap((bookId) => {
+      switchMap((bookId) => {
         if (bookId) {
           return this._booksService.deleteBook(bookId);
         }

@@ -4,11 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'books',
-    pathMatch: 'full',
     children: [
       {
-        path: '',
+        path: ':page',
         loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
+      },
+      {
+        path: '**',
+        redirectTo: '1',
       },
     ],
   },
@@ -29,6 +32,11 @@ const routes: Routes = [
         path: ':id',
         loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
       },
+      {
+        path: '**',
+        redirectTo: '/404',
+      },
+
     ],
   },
   {

@@ -22,7 +22,7 @@ export class NotLettersDirective implements OnInit, OnDestroy{
       )
       .subscribe(
         (data) => {
-          control.setValue(data.replace(/\D/g, ''), { emitEvent: false });
+          control.setValue(data?.replace(/\D/g, ''), { emitEvent: false });
         },
       );
   }

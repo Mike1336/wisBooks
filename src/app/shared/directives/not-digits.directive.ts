@@ -22,7 +22,7 @@ export class NotDigitsDirective implements OnInit, OnDestroy {
       )
       .subscribe(
         (data) => {
-          control.setValue(data.replace(/\W|\d+/g, ''), { emitEvent: false });
+          control.setValue(data?.replace(/\W|\d+/g, ''), { emitEvent: false });
         },
       );
   }

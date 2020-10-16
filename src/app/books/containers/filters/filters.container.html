@@ -9,25 +9,25 @@
     position="end"
     (openedChange)="changeFilDrawer($event)"
   >
-    <filters-component
-      [form]="filtersForm"
-      [genres]="genres"
-    >
+    <filters-component [form]="filtersForm" [genres]="genres">
     </filters-component>
     <div id="buttons">
+      <button
+        mat-button
+        color="primary"
+        [disabled]="filtersForm.invalid"
+        (click)="closeDrawerAndEmit()"
+      >
+        Accept filters
+      </button>
         <button
           mat-button
-          color="primary"
+          color="warn"
           [disabled]="filtersForm.invalid"
-          (click)="closeDrawerAndEmit()"
+          (click)="closeDrawerAndReset()"
         >
-          Accept filters
+          Reset filters
         </button>
-        <ng-container *ngIf="!filtersForm.hasError('emptyForm')">
-          <button type="submit" mat-button color="warn" (click)="closeDrawerAndReset()">
-            Reset filters
-          </button>
-        </ng-container>
-      </div>
+    </div>
   </mat-drawer>
 </mat-drawer-container>

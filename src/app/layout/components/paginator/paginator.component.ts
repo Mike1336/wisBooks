@@ -20,8 +20,8 @@ import { IPaginatorData } from './../../interfaces/paginator-data';
 })
 export class PaginatorComponent implements OnInit {
 
-  @ViewChild(MatPaginator, { static: true })
-  public paginator: MatPaginator;
+  @Input()
+  public index: number = 0;
 
   @Input()
   public records: number = 0;
@@ -36,6 +36,9 @@ export class PaginatorComponent implements OnInit {
   public changed: EventEmitter<IPaginatorData> = new EventEmitter();
 
   public pagData: IPaginatorData;
+
+  @ViewChild(MatPaginator, { static: true })
+  public paginator: MatPaginator;
 
   constructor() {}
 

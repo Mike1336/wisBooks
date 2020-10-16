@@ -1,4 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-books',
@@ -8,9 +12,16 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class BooksView implements OnInit {
 
-  constructor() { }
+  public pageFromRoute$: Observable<string>;
+
+  constructor(private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
+    this.pageFromRoute$ = this.route.params
+      .pipe(
+        map((params) => {
+          return params.page ?? params;
+        }));
   }
 
 }

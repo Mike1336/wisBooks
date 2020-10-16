@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
-  Input,
   ChangeDetectionStrategy,
 } from '@angular/core';
 
@@ -20,17 +19,11 @@ import { AuthService } from './../../../auth/services/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  @Input()
-  public isBooksPage: boolean;
-
   @Output()
   public logout: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   public burgerClicked: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  public filtersClicked: EventEmitter<any> = new EventEmitter<any>();
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
@@ -46,10 +39,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public showSideBar(): void {
     this.burgerClicked.emit();
-  }
-
-  public showBooksFilters(): void {
-    this.filtersClicked.emit();
   }
 
   public logoutEmit(): void {

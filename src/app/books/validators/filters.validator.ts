@@ -32,14 +32,20 @@ export class FiltersValidator {
     return null;
   }
 
-  public static emptyFormValidation(form: FormGroup): { [key: string]: boolean } {
-    Object.keys(form.controls).forEach((controlName) => {
-      if (!form.controls[controlName].value) {
-        return { emptyForm: true };
+  public static emptyFormValidation(form: FormGroup): { [key: string]: boolean } | null {
+    const notEmptyField = Object.keys(form.controls).some((controlName) => {
+      const controlValue = form.controls[controlName].value;
+      if (Array.isArray(controlValue)) {
+        return !!controlValue.length;
+      } else {
+        return !!controlValue;
       }
     });
+    if (notEmptyField) {
+      return null;
+    }
 
-    return null;
+    return { emptyForm: true };
   }
 
 }
