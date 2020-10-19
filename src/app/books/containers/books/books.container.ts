@@ -1,4 +1,4 @@
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { IBook } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
 import { IGenre } from '../../interfaces/genre';
 
+import { BookCreateModalComponent } from './../../components/book-create-modal/book-create-modal.component';
 import { AuthorsService } from './../../../authors/services/authors.service';
 import { IAuthor, IAuthors } from './../../interfaces/author';
 import { BookEditModalComponent } from './../../components/book-edit-modal/book-edit-modal.component';
@@ -34,7 +35,7 @@ export class BooksContainer implements OnInit, OnDestroy {
   public pageFromParam: string;
 
   public emptyResult: boolean;
-
+  public isAuth: boolean;
   public filters: IFilters;
   public booksQuantity: number = 0;
   public booksPageIndex: number = 0;
@@ -61,6 +62,8 @@ export class BooksContainer implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.booksPageIndex = +this.pageFromParam - 1;
+
+    this.isAuth = this.auth.isAuth();
 
     this.getAuthors();
 
@@ -138,6 +141,34 @@ export class BooksContainer implements OnInit, OnDestroy {
 
   public resetFilters(): void {
     this.getBooks();
+  }
+
+  public showCreateModal(): void {
+    const createModal = this.dialog.open(BookCreateModalComponent, {
+      data: {
+        authors: this.authors,
+        genres: this.genres,
+      },
+    });
+    createModal.afterClosed()
+      .pipe(
+      switchMap((bookData) => {
+        if (bookData) {
+          return this._booksService.createBook(bookData);
+        }
+
+        return of(false);
+      }),
+      takeUntil(this._destroy$),
+      )
+      .subscribe((result) => {
+        if (result) {
+          this._cdRef.markForCheck();
+
+          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
+          this.openSnackBar('Book had been created');
+        }
+      });
   }
 
   public showEditModal(book: IBook): void {

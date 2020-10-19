@@ -1,9 +1,11 @@
 <div id="books">
-  <div id="creationButton">
-    <button mat-fab color="primary">
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
+  <ng-container *ngIf="!emptyResult && isAuth">
+    <div id="creationButton">
+      <button mat-fab color="primary" (click)="showCreateModal()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </ng-container>  
   <books-component
     [books]="books$ | async"
     (editClicked)="showEditModal($event)"

@@ -24,7 +24,7 @@ export class BookContainer implements OnInit, OnDestroy {
 
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private booksService: BooksService) { }
+  constructor(private _booksService: BooksService) { }
 
   public ngOnInit(): void {
     this.paramsStream$
@@ -33,12 +33,13 @@ export class BookContainer implements OnInit, OnDestroy {
       )
       .subscribe(
         (id) => {
-          this.book$ = this.booksService.getBookById(id).pipe(
+          this.book$ = this._booksService.getBookById(id).pipe(
             catchError((err) => {
               this.contentNotFound.emit(err);
               throw new Error(`error in source. Details: ${err}`);
             }),
           );
+          this.book$.subscribe(console.log);
         },
       );
   }

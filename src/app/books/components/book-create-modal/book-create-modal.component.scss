@@ -1,16 +1,33 @@
+.mat-dialog-content {
+    overflow: unset;
+    max-height: 100%;
+}
+
+.mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+}  
+
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    mat-form-field{
+        width: 100%;
+    }
 
     #fields {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
 
-        #leftFields, #leftFields {
+        #leftFields, #rightFields {
+            width: 50%;
+            margin: 0 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
     }
 }
+
+  

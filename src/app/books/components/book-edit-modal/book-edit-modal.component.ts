@@ -31,6 +31,34 @@ export class BookEditModalComponent implements OnInit {
     public dialogRef: MatDialogRef<IBook>,
     ) { }
 
+  public get titleCtl(): AbstractControl {
+    return this.bookEditForm.get('title');
+  }
+
+  public get genresCtl(): AbstractControl {
+    return this.bookEditForm.get('genres');
+  }
+
+  public get authorCtl(): AbstractControl {
+    return this.bookEditForm.get('author');
+  }
+
+  public get priceCtl(): AbstractControl {
+    return this.bookEditForm.get('price');
+  }
+
+  public get descriptionCtl(): AbstractControl {
+    return this.bookEditForm.get('description');
+  }
+
+  public get releaseDateCtl(): AbstractControl {
+    return this.bookEditForm.get('releaseDate');
+  }
+
+  public get writingDateCtl(): AbstractControl {
+    return this.bookEditForm.get('writingDate');
+  }
+
   public ngOnInit(): void {
     this.initForm();
   }
@@ -42,25 +70,25 @@ export class BookEditModalComponent implements OnInit {
     const bookGenres = this.data.book.genres.map((genre) => genre.name);
 
     this.bookEditForm = new FormGroup({
-      titleCtl: new FormControl(this.data.book.title, [
+      title: new FormControl(this.data.book.title, [
         Validators.required,
       ]),
-      genresCtl: new FormControl(bookGenres, [
+      genres: new FormControl(bookGenres, [
         Validators.required,
       ]),
-      authorCtl: new FormControl(bookAuthor.id, [
+      author: new FormControl(bookAuthor.id, [
         Validators.required,
       ]),
-      priceCtl: new FormControl(this.data.book.price, [
+      price: new FormControl(this.data.book.price, [
         Validators.required,
       ]),
-      descriptionCtl: new FormControl(this.data.book.description, [
+      description: new FormControl(this.data.book.description, [
         Validators.required,
       ]),
-      releaseDateCtl: new FormControl(this.data.book.release_date, [
+      releaseDate: new FormControl(this.data.book.release_date, [
         Validators.required,
       ]),
-      writingDateCtl: new FormControl(this.data.book.writing_date, [
+      writingDate: new FormControl(this.data.book.writing_date, [
         Validators.required,
       ]),
     });
@@ -69,15 +97,15 @@ export class BookEditModalComponent implements OnInit {
   public onConfirm(): void {
     const newBook = {
       id: this.data.book.id,
-      description: this.description.value,
-      author_id: this.author.value,
-      title: this.title.value,
-      price: this.price.value,
-      genres: this.convertGenresToObj(this.genres.value),
+      description: this.descriptionCtl.value,
+      author_id: this.authorCtl.value,
+      title: this.titleCtl.value,
+      price: this.priceCtl.value,
+      genres: this.convertGenresToObj(this.genresCtl.value),
       previews: [],
       image: null,
-      writing_date: this.writingDate.value,
-      release_date: this.releaseDate.value,
+      writing_date: this.writingDateCtl.value,
+      release_date: this.releaseDateCtl.value,
     };
     this.dialogRef.close(newBook);
   }
@@ -95,32 +123,5 @@ export class BookEditModalComponent implements OnInit {
     return selectedGenres;
   }
 
-  public get title(): AbstractControl {
-    return this.bookEditForm.get('titleCtl');
-  }
-
-  public get genres(): AbstractControl {
-    return this.bookEditForm.get('genresCtl');
-  }
-
-  public get author(): AbstractControl {
-    return this.bookEditForm.get('authorCtl');
-  }
-
-  public get price(): AbstractControl {
-    return this.bookEditForm.get('priceCtl');
-  }
-
-  public get description(): AbstractControl {
-    return this.bookEditForm.get('descriptionCtl');
-  }
-
-  public get releaseDate(): AbstractControl {
-    return this.bookEditForm.get('releaseDateCtl');
-  }
-
-  public get writingDate(): AbstractControl {
-    return this.bookEditForm.get('writingDateCtl');
-  }
 
 }
