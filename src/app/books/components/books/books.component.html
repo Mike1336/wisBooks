@@ -1,34 +1,43 @@
 <ng-container *ngIf="books; else loadingTemplate">
-    <mat-card *ngFor="let book of books" class="example-card">
-        <div id="editButtons" *ngIf="auth.isAuth()">
-            <button mat-icon-button (click)="editClicked.emit(book)">
+  <mat-card *ngFor="let book of books" class="example-card">
+    <div id="editButtons" *ngIf="auth.isAuth()">
+      <button class="editButton" mat-icon-button (click)="editClicked.emit(book)">
         <mat-icon>edit</mat-icon>
       </button>
-            <button mat-icon-button (click)="deleteClicked.emit(book)">
+      <button class="deleteButton" mat-icon-button (click)="deleteClicked.emit(book)">
         <mat-icon>close</mat-icon>
       </button>
-        </div>
-        <mat-card-header>
-            <mat-card-title [routerLink]="['/book', book.id]">{{ book.title }}
-            </mat-card-title>
-            <mat-card-subtitle [routerLink]="['/book', book.id]">{{ book.price }} $</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image class="book-img" src="../../../../assets//book.png" alt="Book image not found" [routerLink]="['/book', book.id]" />
-        <mat-card-content [routerLink]="['/book', book.id]">
-            <p>
-                {{ book.description }}
-            </p>
-        </mat-card-content>
-    </mat-card>
+    </div>
+    <mat-card-header>
+      <mat-card-title [routerLink]="['/book', book.id]"
+        >{{ book.title }}
+      </mat-card-title>
+      <mat-card-subtitle [routerLink]="['/book', book.id]"
+        >{{ book.price }} $</mat-card-subtitle
+      >
+    </mat-card-header>
+    <img
+      mat-card-image
+      class="book-img"
+      src="../../../../assets//book.png"
+      alt="Book image not found"
+      [routerLink]="['/book', book.id]"
+    />
+    <mat-card-content [routerLink]="['/book', book.id]">
+      <p>
+        {{ book.description }}
+      </p>
+    </mat-card-content>
+  </mat-card>
 </ng-container>
 
 <ng-template #loadingTemplate>
-    <mat-card *ngFor="let book of emptyBooks" class="example-card emptyCard">
-        <mat-card-header>
-            <mat-card-title> </mat-card-title>
-            <mat-card-subtitle></mat-card-subtitle>
-        </mat-card-header>
-        <div class="emptyImg"></div>
-        <mat-card-content></mat-card-content>
-    </mat-card>
+  <mat-card *ngFor="let book of emptyBooks" class="example-card emptyCard">
+    <mat-card-header>
+      <mat-card-title> </mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <div class="emptyImg"></div>
+    <mat-card-content></mat-card-content>
+  </mat-card>
 </ng-template>

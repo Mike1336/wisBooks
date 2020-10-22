@@ -1,5 +1,8 @@
 @import "../../../app.component.scss";
 
+$filtersButtonWidth: 5%;
+$otherContentWidth: 100% - $filtersButtonWidth;
+
 #books {
   display: flex;
   flex-flow: column;
@@ -8,7 +11,7 @@
   padding-top: 55px;
 
   #creationButton {
-    width: 97%;
+    width: $otherContentWidth;
     padding-top: 10px;
     display: flex;
     justify-content: center;
@@ -17,7 +20,10 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    width: 97%;
+    width: $otherContentWidth;
+  }
+  app-paginator {
+    width: $otherContentWidth;
   }
 
   #spinner {
@@ -38,14 +44,18 @@
   visibility: hidden;
 }
 
-#filtersButton {
+#filtersButtonArea {
   position: fixed;
   right: 0;
   top: 0;
   height: 100%;
-  width: 3%;
+  width: $filtersButtonWidth;
   display: flex;
   align-items: center;
-  background: #d8d8d854;
-  cursor: pointer;
+  justify-content: center;
+  
+  button {
+    border-radius: 100% 0 0 100%;
+    height: 100px;
+  }
 }

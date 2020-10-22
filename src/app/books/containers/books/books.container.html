@@ -18,8 +18,10 @@
     </div>
   </ng-container>
 
-  <div id="filtersButton" (click)="openFilters()">
-    <mat-icon>keyboard_arrow_left</mat-icon>
+  <div id="filtersButtonArea">
+    <button mat-fab color="primary" (click)="openFilters()">
+      <mat-icon>filter_list</mat-icon>  
+    </button>
   </div>
   <app-paginator
     [records]="booksQuantity"

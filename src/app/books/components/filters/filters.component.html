@@ -20,7 +20,7 @@
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Price from</mat-label>
         <input matInput notLetters formControlName="minPrice" maxlength="5" />
-        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>$</span>
         <mat-error *ngIf="minPriceCtl.hasError('priceError')">
           Minimal price could not be biggest than maximal
         </mat-error>
@@ -29,7 +29,7 @@
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Price to</mat-label>
         <input matInput notLetters formControlName="maxPrice" maxlength="5" />
-        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>$</span>
       </mat-form-field>
     </mat-expansion-panel>
 

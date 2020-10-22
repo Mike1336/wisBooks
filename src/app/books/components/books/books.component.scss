@@ -5,6 +5,10 @@ p {
     overflow: hidden;
 }
 
+mat-card * {
+    outline: none;
+}
+
 mat-card {
     position: relative;
     cursor: pointer;
@@ -40,6 +44,19 @@ mat-card {
         width: 100%;
         display: flex;
         justify-content: space-between;
+
+        button {
+            color: white;
+            background: #4157b5;
+        }
+
+        .editButton {
+            border-radius: 0 0 70% 0;
+        }
+    
+        .deleteButton {
+            border-radius: 0 0 0 70%;
+        }
     }
 }
 

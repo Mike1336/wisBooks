@@ -1901,13 +1901,19 @@
       !*** ./src/app/book/book.module.ts ***!
       \*************************************/
 
-    /*! exports provided: BookModule */
+    /*! exports provided: MY_FORMATS, BookModule */
 
     /***/
     function srcAppBookBookModuleTs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "MY_FORMATS", function () {
+        return MY_FORMATS;
+      });
       /* harmony export (binding) */
 
 
@@ -1968,6 +1974,30 @@
       var _views_book_book_view__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ./views/book/book.view */
       "./src/app/book/views/book/book.view.ts");
+      /* harmony import */
+
+
+      var _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! @angular/material-moment-adapter */
+      "./node_modules/@angular/material-moment-adapter/__ivy_ngcc__/fesm2015/material-moment-adapter.js");
+      /* harmony import */
+
+
+      var _angular_material_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @angular/material/core */
+      "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
+
+      var MY_FORMATS = {
+        parse: {
+          dateInput: 'YYYY-MM-DD'
+        },
+        display: {
+          dateInput: 'YYYY-MM-DD',
+          monthYearLabel: 'YYYY-MM',
+          dateA11yLabel: 'YYYY-MM-DD',
+          monthYearA11yLabel: 'YYYY-MM-DD'
+        }
+      };
 
       var BookModule = function BookModule() {
         _classCallCheck(this, BookModule);
@@ -1980,6 +2010,17 @@
         factory: function BookModule_Factory(t) {
           return new (t || BookModule)();
         },
+        providers: [{
+          provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MAT_DATE_LOCALE"],
+          useValue: 'en-US'
+        }, {
+          provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["DateAdapter"],
+          useClass: _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_9__["MomentDateAdapter"],
+          deps: [_angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MAT_DATE_LOCALE"], _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_9__["MAT_MOMENT_DATE_ADAPTER_OPTIONS"]]
+        }, {
+          provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MAT_DATE_FORMATS"],
+          useValue: MY_FORMATS
+        }],
         imports: [[// Angular
         _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], // Own
         _book_routing_module__WEBPACK_IMPORTED_MODULE_5__["BookRoutingModule"], _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"]]]
@@ -2003,7 +2044,18 @@
             declarations: [_components_book_book_component__WEBPACK_IMPORTED_MODULE_6__["BookComponent"], _containers_book_book_container__WEBPACK_IMPORTED_MODULE_7__["BookContainer"], _views_book_book_view__WEBPACK_IMPORTED_MODULE_8__["BookView"]],
             imports: [// Angular
             _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], // Own
-            _book_routing_module__WEBPACK_IMPORTED_MODULE_5__["BookRoutingModule"], _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"]]
+            _book_routing_module__WEBPACK_IMPORTED_MODULE_5__["BookRoutingModule"], _shared_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"]],
+            providers: [{
+              provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MAT_DATE_LOCALE"],
+              useValue: 'en-US'
+            }, {
+              provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["DateAdapter"],
+              useClass: _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_9__["MomentDateAdapter"],
+              deps: [_angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MAT_DATE_LOCALE"], _angular_material_moment_adapter__WEBPACK_IMPORTED_MODULE_9__["MAT_MOMENT_DATE_ADAPTER_OPTIONS"]]
+            }, {
+              provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MAT_DATE_FORMATS"],
+              useValue: MY_FORMATS
+            }]
           }]
         }], null, null);
       })();
@@ -2340,61 +2392,73 @@
       /* harmony import */
 
 
-      var _books_components_book_edit_modal_book_edit_modal_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _books_components_confirming_delete_modal_confirming_delete_modal_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ./../../../books/components/confirming-delete-modal/confirming-delete-modal.component */
+      "./src/app/books/components/confirming-delete-modal/confirming-delete-modal.component.ts");
+      /* harmony import */
+
+
+      var _books_components_book_edit_modal_book_edit_modal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ./../../../books/components/book-edit-modal/book-edit-modal.component */
       "./src/app/books/components/book-edit-modal/book-edit-modal.component.ts");
       /* harmony import */
 
 
-      var _books_services_books_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _books_services_books_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ./../../../books/services/books.service */
       "./src/app/books/services/books.service.ts");
       /* harmony import */
 
 
-      var _books_services_genres_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _books_services_genres_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ./../../../books/services/genres.service */
       "./src/app/books/services/genres.service.ts");
       /* harmony import */
 
 
-      var _authors_services_authors_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _authors_services_authors_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ./../../../authors/services/authors.service */
       "./src/app/authors/services/authors.service.ts");
       /* harmony import */
 
 
-      var _auth_services_auth_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _auth_services_auth_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ./../../../auth/services/auth.service */
       "./src/app/auth/services/auth.service.ts");
       /* harmony import */
 
 
-      var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! @angular/material/dialog */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/dialog.js");
       /* harmony import */
 
 
-      var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/router */
       "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      /*! @angular/material/snack-bar */
+      "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/snack-bar.js");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
       /*! @angular/common */
       "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
       /* harmony import */
 
 
-      var _components_book_book_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _components_book_book_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
       /*! ../../components/book/book.component */
       "./src/app/book/components/book/book.component.ts");
       /* harmony import */
 
 
-      var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
       /*! @angular/material/progress-spinner */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/progress-spinner.js");
 
@@ -2445,7 +2509,7 @@
       }
 
       var BookContainer = /*#__PURE__*/function () {
-        function BookContainer(_booksService, _genresService, _authorsService, _auth, _dialog, _router) {
+        function BookContainer(_booksService, _genresService, _authorsService, _auth, _dialog, _router, _snackBar) {
           _classCallCheck(this, BookContainer);
 
           this._booksService = _booksService;
@@ -2454,6 +2518,7 @@
           this._auth = _auth;
           this._dialog = _dialog;
           this._router = _router;
+          this._snackBar = _snackBar;
           this.contentNotFound = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
           this._destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
         }
@@ -2478,7 +2543,7 @@
           value: function showEditModal() {
             var _this2 = this;
 
-            var editModal = this._dialog.open(_books_components_book_edit_modal_book_edit_modal_component__WEBPACK_IMPORTED_MODULE_3__["BookEditModalComponent"], {
+            var editModal = this._dialog.open(_books_components_book_edit_modal_book_edit_modal_component__WEBPACK_IMPORTED_MODULE_4__["BookEditModalComponent"], {
               data: {
                 book: this.book,
                 authors: this.authors,
@@ -2494,48 +2559,77 @@
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (result) {
               if (result) {
-                _this2._router.navigate(['/books/1']);
+                _this2.getBookFromUrl();
+
+                _this2.openSnackBar('Book had been updated');
               }
             });
           }
         }, {
           key: "showDeleteModal",
-          value: function showDeleteModal() {}
+          value: function showDeleteModal() {
+            var _this3 = this;
+
+            var deleteModal = this._dialog.open(_books_components_confirming_delete_modal_confirming_delete_modal_component__WEBPACK_IMPORTED_MODULE_3__["ConfirmingDeleteModalComponent"], {
+              data: this.book
+            });
+
+            deleteModal.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (bookId) {
+              if (bookId) {
+                return _this3._booksService.deleteBook(bookId);
+              }
+
+              return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (result) {
+              if (result) {
+                _this3.openSnackBar("Book: \"".concat(result.title, "\" was successfully deleted"));
+
+                _this3._router.navigate(['/books/1']);
+              }
+            });
+          }
         }, {
           key: "getBookFromUrl",
           value: function getBookFromUrl() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.paramsStream$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (id) {
-              return _this3._booksService.getBookById(id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["shareReplay"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (err) {
-                _this3.contentNotFound.emit(err);
+              return _this4._booksService.getBookById(id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["shareReplay"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (err) {
+                _this4.contentNotFound.emit(err);
 
                 throw new Error("error in source. Details: ".concat(err));
-              }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(_this3._destroy$));
+              }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(_this4._destroy$));
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (book) {
-              _this3.book = book;
+              _this4.book = book;
             });
           }
         }, {
           key: "getGenres",
           value: function getGenres() {
-            var _this4 = this;
+            var _this5 = this;
 
             this._genresService.getGenresInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (data) {
-              return _this4._genresService.getGenresInQuantity(data.meta.records);
+              return _this5._genresService.getGenresInQuantity(data.meta.records);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('genres'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (data) {
-              _this4.genres = data;
+              _this5.genres = data;
             });
           }
         }, {
           key: "getAuthors",
           value: function getAuthors() {
-            var _this5 = this;
+            var _this6 = this;
 
             this._authorsService.getAuthorsInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (data) {
-              return _this5._authorsService.getAuthorsInQuantity(data.meta.records);
+              return _this6._authorsService.getAuthorsInQuantity(data.meta.records);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('authors'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (data) {
-              _this5.authors = data;
+              _this6.authors = data;
+            });
+          }
+        }, {
+          key: "openSnackBar",
+          value: function openSnackBar(message) {
+            this._snackBar.open(message, 'OK', {
+              duration: 2000
             });
           }
         }]);
@@ -2544,7 +2638,7 @@
       }();
 
       BookContainer.ɵfac = function BookContainer_Factory(t) {
-        return new (t || BookContainer)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_books_services_books_service__WEBPACK_IMPORTED_MODULE_4__["BooksService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_books_services_genres_service__WEBPACK_IMPORTED_MODULE_5__["GenresService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_authors_services_authors_service__WEBPACK_IMPORTED_MODULE_6__["AuthorsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_auth_services_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_8__["MatDialog"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__["Router"]));
+        return new (t || BookContainer)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_books_services_books_service__WEBPACK_IMPORTED_MODULE_5__["BooksService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_books_services_genres_service__WEBPACK_IMPORTED_MODULE_6__["GenresService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_authors_services_authors_service__WEBPACK_IMPORTED_MODULE_7__["AuthorsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_auth_services_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_9__["MatDialog"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_11__["MatSnackBar"]));
       };
 
       BookContainer.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -2572,7 +2666,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.book)("ngIfElse", _r1);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _components_book_book_component__WEBPACK_IMPORTED_MODULE_11__["BookComponent"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_12__["MatSpinner"]],
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_12__["NgIf"], _components_book_book_component__WEBPACK_IMPORTED_MODULE_13__["BookComponent"], _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__["MatSpinner"]],
         styles: ["header[_ngcontent-%COMP%] {\n  position: fixed;\n  width: 100%;\n  z-index: 102;\n}\n\nmain[_ngcontent-%COMP%] {\n  position: relative;\n  height: 100%;\n}\n\nmain[_ngcontent-%COMP%]   #sidebar[_ngcontent-%COMP%] {\n  position: absolute;\n}\n\n#spinner[_ngcontent-%COMP%] {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9ib29rL2NvbnRhaW5lcnMvYm9vay9ib29rLmNvbnRhaW5lci5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQU9BO0VBQ0ksZUFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FDTko7O0FEU0E7RUFDSSxrQkFBQTtFQUNBLFlBQUE7QUNOSjs7QURRSTtFQUNJLGtCQUFBO0FDTlI7O0FBVkE7RURESSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7QUNlSiIsImZpbGUiOiJzcmMvYXBwL2Jvb2svY29udGFpbmVycy9ib29rL2Jvb2suY29udGFpbmVyLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAbWl4aW4gc3Bpbm5lci1hbGlnbiB7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbn1cblxuaGVhZGVyIHtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgei1pbmRleDogMTAyO1xufVxuXG5tYWluIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgaGVpZ2h0OiAxMDAlO1xuXG4gICAgI3NpZGViYXIge1xuICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgfVxufSIsIkBpbXBvcnQgJy4uLy4uLy4uL2FwcC5jb21wb25lbnQuc2Nzcyc7XG5cbiNzcGlubmVyIHtcbiAgICBAaW5jbHVkZSBzcGlubmVyLWFsaWduO1xufSJdfQ== */"],
         changeDetection: 0
       });
@@ -2589,17 +2683,19 @@
           }]
         }], function () {
           return [{
-            type: _books_services_books_service__WEBPACK_IMPORTED_MODULE_4__["BooksService"]
+            type: _books_services_books_service__WEBPACK_IMPORTED_MODULE_5__["BooksService"]
           }, {
-            type: _books_services_genres_service__WEBPACK_IMPORTED_MODULE_5__["GenresService"]
+            type: _books_services_genres_service__WEBPACK_IMPORTED_MODULE_6__["GenresService"]
           }, {
-            type: _authors_services_authors_service__WEBPACK_IMPORTED_MODULE_6__["AuthorsService"]
+            type: _authors_services_authors_service__WEBPACK_IMPORTED_MODULE_7__["AuthorsService"]
           }, {
-            type: _auth_services_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"]
+            type: _auth_services_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"]
           }, {
-            type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_8__["MatDialog"]
+            type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_9__["MatDialog"]
           }, {
-            type: _angular_router__WEBPACK_IMPORTED_MODULE_9__["Router"]
+            type: _angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]
+          }, {
+            type: _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_11__["MatSnackBar"]
           }];
         }, {
           paramsStream$: [{
@@ -2677,10 +2773,10 @@
         _createClass(BookView, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('id'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (id) {
-              _this6._paramsStream$.next(id);
+              _this7._paramsStream$.next(id);
             });
           }
         }, {
@@ -3236,11 +3332,11 @@
         }, {
           key: "convertGenresToObj",
           value: function convertGenresToObj(genresArray) {
-            var _this7 = this;
+            var _this8 = this;
 
             var selectedGenres = [];
             genresArray.forEach(function (genreFromBook) {
-              var selectedGenre = _this7.data.genres.find(function (genreFromAllList) {
+              var selectedGenre = _this8.data.genres.find(function (genreFromAllList) {
                 return genreFromBook === genreFromAllList.name;
               });
 
@@ -3578,49 +3674,43 @@
       /* harmony import */
 
 
-      var _shared_directives_not_digits_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-      /*! ../../../shared/directives/not-digits.directive */
-      "./src/app/shared/directives/not-digits.directive.ts");
-      /* harmony import */
-
-
-      var _angular_material_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_material_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/material/select */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/select.js");
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! @angular/common */
       "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
       /* harmony import */
 
 
-      var _shared_directives_not_letters_directive__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _shared_directives_not_letters_directive__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! ../../../shared/directives/not-letters.directive */
       "./src/app/shared/directives/not-letters.directive.ts");
       /* harmony import */
 
 
-      var _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! @angular/material/datepicker */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/datepicker.js");
       /* harmony import */
 
 
-      var _shared_directives_date_mask_directive__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      var _shared_directives_date_mask_directive__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! ../../../shared/directives/date-mask.directive */
       "./src/app/shared/directives/date-mask.directive.ts");
       /* harmony import */
 
 
-      var _angular_material_button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      var _angular_material_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
       /*! @angular/material/button */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/button.js");
       /* harmony import */
 
 
-      var _angular_material_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      var _angular_material_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! @angular/material/core */
       "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
 
@@ -3734,10 +3824,10 @@
         }, {
           key: "initForm",
           value: function initForm() {
-            var _this8 = this;
+            var _this9 = this;
 
             var bookAuthor = this.data.authors.find(function (author) {
-              return author.id === _this8.data.book.author_id;
+              return author.id === _this9.data.book.author_id;
             });
             var bookGenres = this.data.book.genres.map(function (genre) {
               return genre.name;
@@ -3772,11 +3862,11 @@
         }, {
           key: "convertGenresToObj",
           value: function convertGenresToObj(genresArray) {
-            var _this9 = this;
+            var _this10 = this;
 
             var selectedGenres = [];
             genresArray.forEach(function (genreFromBook) {
-              selectedGenres.push(_this9.data.genres.find(function (genreFromAllList) {
+              selectedGenres.push(_this10.data.genres.find(function (genreFromAllList) {
                 return genreFromBook === genreFromAllList.name;
               }));
             });
@@ -3831,7 +3921,7 @@
         selectors: [["book-edit-modal-component"]],
         decls: 51,
         vars: 11,
-        consts: [["mat-dialog-title", ""], ["mat-dialog-content", ""], [3, "formGroup"], ["id", "imgAndFields"], ["src", "../../../../assets/book.png"], ["id", "fields"], ["appearance", "outline"], ["matInput", "", "notDigits", "", "formControlName", "title", "required", ""], ["formControlName", "genres", "multiple", "", "required", ""], [3, "value", 4, "ngFor", "ngForOf"], ["formControlName", "author", "required", ""], ["matInput", "", "notLetters", "", "formControlName", "price", "maxlength", "6", "required", ""], ["color", "accent", "appearance", "outline"], ["matInput", "", "dateMask", "", "formControlName", "releaseDate", "maxlength", "10", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["startView", "multi-year"], ["releasePicker", ""], [4, "ngIf"], ["matInput", "", "dateMask", "", "formControlName", "writingDate", "maxlength", "10", 3, "matDatepicker"], ["writingPicker", ""], ["matInput", "", "cols", "30", "rows", "5", "formControlName", "description", "required", ""], ["mat-dialog-actions", ""], ["mat-button", "", "color", "warn", "mat-dialog-close", ""], [4, "ngIf", "ngIfElse"], ["closeButton", ""], [3, "value"], ["mat-button", "", "color", "primary", "cdkFocusInitial", "", 3, "click"], ["mat-button", "", "color", "primary", "mat-dialog-close", ""]],
+        consts: [["mat-dialog-title", ""], ["mat-dialog-content", ""], [3, "formGroup"], ["id", "imgAndFields"], ["src", "../../../../assets/book.png"], ["id", "fields"], ["appearance", "outline"], ["matInput", "", "formControlName", "title", "required", ""], ["formControlName", "genres", "multiple", "", "required", ""], [3, "value", 4, "ngFor", "ngForOf"], ["formControlName", "author", "required", ""], ["matInput", "", "notLetters", "", "formControlName", "price", "maxlength", "6", "required", ""], ["color", "accent", "appearance", "outline"], ["matInput", "", "dateMask", "", "formControlName", "releaseDate", "maxlength", "10", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["startView", "multi-year"], ["releasePicker", ""], [4, "ngIf"], ["matInput", "", "dateMask", "", "formControlName", "writingDate", "maxlength", "10", 3, "matDatepicker"], ["writingPicker", ""], ["matInput", "", "cols", "30", "rows", "5", "formControlName", "description", "required", ""], ["mat-dialog-actions", ""], ["mat-button", "", "color", "warn", "mat-dialog-close", ""], [4, "ngIf", "ngIfElse"], ["closeButton", ""], [3, "value"], ["mat-button", "", "color", "primary", "cdkFocusInitial", "", 3, "click"], ["mat-button", "", "color", "primary", "mat-dialog-close", ""]],
         template: function BookEditModalComponent_Template(rf, ctx) {
           if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 0);
@@ -4025,7 +4115,7 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.bookEditForm.touched && ctx.bookEditForm.dirty)("ngIfElse", _r7);
           }
         },
-        directives: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogTitle"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogContent"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _shared_directives_not_digits_directive__WEBPACK_IMPORTED_MODULE_5__["NotDigitsDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_material_select__WEBPACK_IMPORTED_MODULE_6__["MatSelect"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _shared_directives_not_letters_directive__WEBPACK_IMPORTED_MODULE_8__["NotLettersDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_9__["MatDatepickerInput"], _shared_directives_date_mask_directive__WEBPACK_IMPORTED_MODULE_10__["DateMaskDirective"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_9__["MatDatepickerToggle"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatSuffix"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_9__["MatDatepicker"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogActions"], _angular_material_button__WEBPACK_IMPORTED_MODULE_11__["MatButton"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogClose"], _angular_material_core__WEBPACK_IMPORTED_MODULE_12__["MatOption"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatError"]],
+        directives: [_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogTitle"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogContent"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatFormField"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatLabel"], _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInput"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_material_select__WEBPACK_IMPORTED_MODULE_5__["MatSelect"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgForOf"], _shared_directives_not_letters_directive__WEBPACK_IMPORTED_MODULE_7__["NotLettersDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["MaxLengthValidator"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_8__["MatDatepickerInput"], _shared_directives_date_mask_directive__WEBPACK_IMPORTED_MODULE_9__["DateMaskDirective"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_8__["MatDatepickerToggle"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatSuffix"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_8__["MatDatepicker"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogActions"], _angular_material_button__WEBPACK_IMPORTED_MODULE_10__["MatButton"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__["MatDialogClose"], _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatOption"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_3__["MatError"]],
         styles: [".mat-dialog-content[_ngcontent-%COMP%] {\n  overflow: unset;\n  max-height: 100%;\n}\n\nform[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\nform[_ngcontent-%COMP%]   #imgAndFields[_ngcontent-%COMP%] {\n  display: flex;\n  margin-bottom: 10px;\n}\n\nform[_ngcontent-%COMP%]   #imgAndFields[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 300px;\n  height: auto;\n}\n\nform[_ngcontent-%COMP%]   #imgAndFields[_ngcontent-%COMP%]   #fields[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  margin-left: 20px;\n}\n\nform[_ngcontent-%COMP%]   mat-form-field[_ngcontent-%COMP%] {\n  width: 100%;\n}\n\n.mat-dialog-actions[_ngcontent-%COMP%] {\n  justify-content: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm9va3MvY29tcG9uZW50cy9ib29rLWVkaXQtbW9kYWwvYm9vay1lZGl0LW1vZGFsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtFQUNBLGdCQUFBO0FBQ0o7O0FBRUE7RUFjSSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxtQkFBQTtBQVpKOztBQUhJO0VBQ0ksYUFBQTtFQVVBLG1CQUFBO0FBSlI7O0FBTFE7RUFDSSxZQUFBO0VBQ0EsWUFBQTtBQU9aOztBQUxRO0VBQ0ksYUFBQTtFQUNBLHNCQUFBO0VBQ0EsaUJBQUE7QUFPWjs7QUFBSTtFQUNJLFdBQUE7QUFFUjs7QUFFQTtFQUNJLHVCQUFBO0FBQ0oiLCJmaWxlIjoic3JjL2FwcC9ib29rcy9jb21wb25lbnRzL2Jvb2stZWRpdC1tb2RhbC9ib29rLWVkaXQtbW9kYWwuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWF0LWRpYWxvZy1jb250ZW50IHtcbiAgICBvdmVyZmxvdzogdW5zZXQ7XG4gICAgbWF4LWhlaWdodDogMTAwJTtcbn1cblxuZm9ybSB7XG4gICAgI2ltZ0FuZEZpZWxkcyB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGltZyB7XG4gICAgICAgICAgICB3aWR0aDogMzAwcHg7XG4gICAgICAgICAgICBoZWlnaHQ6IGF1dG87XG4gICAgICAgIH1cbiAgICAgICAgI2ZpZWxkcyB7XG4gICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICAgICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICAgICAgICAgIG1hcmdpbi1sZWZ0OiAyMHB4O1xuICAgICAgICB9XG4gICAgICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XG4gICAgfVxuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIG1hdC1mb3JtLWZpZWxkIHtcbiAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgfVxufVxuXG4ubWF0LWRpYWxvZy1hY3Rpb25zIHtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn0iXX0= */"],
         changeDetection: 0
       });
@@ -5206,15 +5296,15 @@
         }, {
           key: "getBooks",
           value: function getBooks(filters) {
-            var _this10 = this;
+            var _this11 = this;
 
             var booksQuantity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
             var page = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
             this.books$ = this._booksService.getBooks(booksQuantity, page, filters).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
-              _this10.booksQuantity = data.meta.records;
-              data.books.length > 0 ? _this10.emptyResult = false : _this10.emptyResult = true;
+              _this11.booksQuantity = data.meta.records;
+              data.books.length > 0 ? _this11.emptyResult = false : _this11.emptyResult = true;
 
-              _this10.scrollToTop();
+              _this11.scrollToTop();
 
               return data.books;
             }));
@@ -5222,23 +5312,23 @@
         }, {
           key: "getGenres",
           value: function getGenres() {
-            var _this11 = this;
+            var _this12 = this;
 
             this._genresService.getGenresInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (data) {
-              return _this11._genresService.getGenresInQuantity(data.meta.records);
+              return _this12._genresService.getGenresInQuantity(data.meta.records);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('genres'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (data) {
-              _this11.genres = data;
+              _this12.genres = data;
             });
           }
         }, {
           key: "getAuthors",
           value: function getAuthors() {
-            var _this12 = this;
+            var _this13 = this;
 
             this._authorsService.getAuthorsInQuantity(1).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (data) {
-              return _this12._authorsService.getAuthorsInQuantity(data.meta.records);
+              return _this13._authorsService.getAuthorsInQuantity(data.meta.records);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])('authors'), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (data) {
-              _this12.authors = data;
+              _this13.authors = data;
             });
           }
         }, {
@@ -5264,7 +5354,7 @@
         }, {
           key: "showCreateModal",
           value: function showCreateModal() {
-            var _this13 = this;
+            var _this14 = this;
 
             var createModal = this.dialog.open(_components_book_create_modal_book_create_modal_component__WEBPACK_IMPORTED_MODULE_3__["BookCreateModalComponent"], {
               data: {
@@ -5274,24 +5364,24 @@
             });
             createModal.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (bookData) {
               if (bookData) {
-                return _this13._booksService.createBook(bookData);
+                return _this14._booksService.createBook(bookData);
               }
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (result) {
               if (result) {
-                _this13._cdRef.markForCheck();
+                _this14._cdRef.markForCheck();
 
-                _this13.getBooks(_this13.filters, _this13.booksPageSize, _this13.booksPageIndex);
+                _this14.getBooks(_this14.filters, _this14.booksPageSize, _this14.booksPageIndex);
 
-                _this13.openSnackBar('Book had been created');
+                _this14.openSnackBar('Book had been created');
               }
             });
           }
         }, {
           key: "showEditModal",
           value: function showEditModal(book) {
-            var _this14 = this;
+            var _this15 = this;
 
             var editModal = this.dialog.open(_components_book_edit_modal_book_edit_modal_component__WEBPACK_IMPORTED_MODULE_4__["BookEditModalComponent"], {
               data: {
@@ -5302,31 +5392,7 @@
             });
             editModal.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (bookData) {
               if (bookData) {
-                return _this14._booksService.updateBook(bookData);
-              }
-
-              return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
-            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (result) {
-              if (result) {
-                _this14._cdRef.markForCheck();
-
-                _this14.getBooks(_this14.filters, _this14.booksPageSize, _this14.booksPageIndex);
-
-                _this14.openSnackBar('Book had been updated');
-              }
-            });
-          }
-        }, {
-          key: "showDeleteModal",
-          value: function showDeleteModal(book) {
-            var _this15 = this;
-
-            var deleteModal = this.dialog.open(_components_confirming_delete_modal_confirming_delete_modal_component__WEBPACK_IMPORTED_MODULE_5__["ConfirmingDeleteModalComponent"], {
-              data: book
-            });
-            deleteModal.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (bookId) {
-              if (bookId) {
-                return _this15._booksService.deleteBook(bookId);
+                return _this15._booksService.updateBook(bookData);
               }
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
@@ -5336,7 +5402,31 @@
 
                 _this15.getBooks(_this15.filters, _this15.booksPageSize, _this15.booksPageIndex);
 
-                _this15.openSnackBar("Book with name '".concat(result.title, "' was successfully deleted."));
+                _this15.openSnackBar('Book had been updated');
+              }
+            });
+          }
+        }, {
+          key: "showDeleteModal",
+          value: function showDeleteModal(book) {
+            var _this16 = this;
+
+            var deleteModal = this.dialog.open(_components_confirming_delete_modal_confirming_delete_modal_component__WEBPACK_IMPORTED_MODULE_5__["ConfirmingDeleteModalComponent"], {
+              data: book
+            });
+            deleteModal.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["switchMap"])(function (bookId) {
+              if (bookId) {
+                return _this16._booksService.deleteBook(bookId);
+              }
+
+              return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (result) {
+              if (result) {
+                _this16._cdRef.markForCheck();
+
+                _this16.getBooks(_this16.filters, _this16.booksPageSize, _this16.booksPageIndex);
+
+                _this16.openSnackBar("Book with name '".concat(result.title, "' was successfully deleted."));
               }
             });
           }
@@ -5590,12 +5680,12 @@
         }, {
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
-            var _this16 = this;
+            var _this17 = this;
 
             this._sidebarService.filSbStatus$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this._destroy$)).subscribe(function (data) {
-              data ? _this16.drawer.open() : _this16.drawer.close();
+              data ? _this17.drawer.open() : _this17.drawer.close();
 
-              _this16._cdRef.markForCheck();
+              _this17._cdRef.markForCheck();
             });
           }
         }, {
@@ -6943,10 +7033,10 @@
         _createClass(HeaderContainer, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this17 = this;
+            var _this18 = this;
 
             this._sbService.navSbStatus$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function (navSbStatus) {
-              _this17.navigateDrawer = navSbStatus;
+              _this18.navigateDrawer = navSbStatus;
             });
           }
         }, {
@@ -7208,21 +7298,21 @@
         _createClass(SearchContainer, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this18 = this;
+            var _this19 = this;
 
             this.searchForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
               searchField: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('')
             });
             this.foundBooks$ = this.searchForm.get('searchField').valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
-              return _this18.loading = true;
+              return _this19.loading = true;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(500), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (fieldData) {
               if (!fieldData) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])([]);
               }
 
-              return _this18.findBooks(fieldData);
+              return _this19.findBooks(fieldData);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function () {
-              return _this18.loading = false;
+              return _this19.loading = false;
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this._destroy$));
           }
         }, {
@@ -7235,10 +7325,10 @@
         }, {
           key: "findBooks",
           value: function findBooks(bookName) {
-            var _this19 = this;
+            var _this20 = this;
 
             return this._booksService.getBooksByTItle(bookName).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) {
-              data.books.length === 0 ? _this19.emptyResult = true : _this19.emptyResult = false;
+              data.books.length === 0 ? _this20.emptyResult = true : _this20.emptyResult = false;
               return data.books;
             }));
           }
@@ -7413,12 +7503,12 @@
         }, {
           key: "ngAfterViewInit",
           value: function ngAfterViewInit() {
-            var _this20 = this;
+            var _this21 = this;
 
             this._sidebarService.navSbStatus$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this._destroy$)).subscribe(function (data) {
-              data ? _this20.drawer.open() : _this20.drawer.close();
+              data ? _this21.drawer.open() : _this21.drawer.close();
 
-              _this20._cdRef.markForCheck();
+              _this21._cdRef.markForCheck();
             });
           }
         }, {
@@ -8395,13 +8485,13 @@
         }, {
           key: "detectCardNumber",
           value: function detectCardNumber() {
-            var _this21 = this;
+            var _this22 = this;
 
             this.cardNumberCtl.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) {
               return data.replace(' ', '');
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (data) {
               if (data.length >= 6) {
-                return _this21._bank.getCardInfo(data.slice(0, 6));
+                return _this22._bank.getCardInfo(data.slice(0, 6));
               }
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])({});
@@ -8409,11 +8499,11 @@
               var bankColor = _ref.bankColor,
                   formBankLogoBigSvg = _ref.formBankLogoBigSvg,
                   brandLogoOriginalSvg = _ref.brandLogoOriginalSvg;
-              _this21.cardBgColor = bankColor;
-              _this21.bankLogoSrc = formBankLogoBigSvg;
-              _this21.paySysLogoSrc = brandLogoOriginalSvg;
+              _this22.cardBgColor = bankColor;
+              _this22.bankLogoSrc = formBankLogoBigSvg;
+              _this22.paySysLogoSrc = brandLogoOriginalSvg;
 
-              _this21._cdRef.markForCheck();
+              _this22._cdRef.markForCheck();
             });
           }
         }]);
@@ -9025,18 +9115,18 @@
         }, {
           key: "addressCtlListener",
           value: function addressCtlListener() {
-            var _this22 = this;
+            var _this23 = this;
 
             this.addressCtl.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(500), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (fieldValue) {
               if (fieldValue) {
-                return _this22.getAddressByQuery(fieldValue);
+                return _this23.getAddressByQuery(fieldValue);
               }
 
               return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])([]);
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this._destroy$)).subscribe(function (addresses) {
               console.log(addresses);
 
-              _this22._address$.next(addresses);
+              _this23._address$.next(addresses);
             });
           }
         }, {
@@ -10523,11 +10613,11 @@
         _createClass(DateMaskDirective, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this23 = this;
+            var _this24 = this;
 
             var control = this._control.control;
             control.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["takeUntil"])(this._destroy$)).subscribe(function () {
-              var dateInput = _this23._element.nativeElement.value;
+              var dateInput = _this24._element.nativeElement.value;
               var newVal = dateInput.replace(/\D/g, '');
 
               if (newVal.length === 0) {
@@ -10540,7 +10630,7 @@
                 newVal = newVal.replace(/^(\d{0,4})(\d{0,2})(\d{0,2})/, '$1-$2-$3');
               }
 
-              _this23._renderer.setProperty(_this23._element.nativeElement, 'value', newVal);
+              _this24._renderer.setProperty(_this24._element.nativeElement, 'value', newVal);
             });
           }
         }, {

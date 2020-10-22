@@ -22,16 +22,19 @@ mat-expansion-panel {
     justify-content: flex-end;
   }
   mat-form-field {
-    width: 100%;
+    width: 45%;
     margin: 0 8px;
+    span {
+      vertical-align: super;
+    }
   }
 }
 
 
-@media (min-width: 1430px) {
+@media (max-width: 520px) {
   mat-expansion-panel {
     mat-form-field {
-      width: 45%;
+      width: 100%;
     }
   }
 }
