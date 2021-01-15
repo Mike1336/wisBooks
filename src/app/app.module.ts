@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { fromRoot } from './store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BooksModule } from './books/books.module';
@@ -22,6 +27,12 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    // NGRX
+    EffectsModule.forRoot([fromRoot.RootEffects]),
+    StoreModule.forRoot({
+      rootState: fromRoot.rootReducer,
+    }),
+    StoreDevtoolsModule.instrument({}),
     // Own
     BooksModule,
     BookModule,

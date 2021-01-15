@@ -4,13 +4,18 @@ import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRe
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Observable, of, ReplaySubject } from 'rxjs';
-import { map, pluck, takeUntil, switchMap } from 'rxjs/operators';
+import { of, ReplaySubject } from 'rxjs';
+import { pluck, takeUntil, switchMap } from 'rxjs/operators';
+
+import { Store } from '@ngrx/store';
 
 import { IBook } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
 import { IGenre } from '../../interfaces/genre';
+import { fromRoot } from '../../../store';
 
+import { IBooks } from './../../interfaces/book';
+import { IRootState } from './../../../store/reducers';
 import { BookCreateModalComponent } from './../../components/book-create-modal/book-create-modal.component';
 import { AuthorsService } from './../../../authors/services/authors.service';
 import { IAuthor, IAuthors } from './../../interfaces/author';
@@ -37,11 +42,11 @@ export class BooksContainer implements OnInit, OnDestroy {
   public emptyResult: boolean;
   public isAuth: boolean;
   public filters: IFilters;
-  public booksQuantity: number = 0;
+  public booksQuantity: number = 10;
   public booksPageIndex: number = 0;
-  public booksPageSize: number = 0;
+  public booksPageSize: number = 5;
 
-  public books$: Observable<IBook[]>;
+  public books: IBook[];
 
   public genres: IGenre[] = [];
   public authors: IAuthor[] = [];
@@ -51,19 +56,21 @@ export class BooksContainer implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     public auth: AuthService,
-    private _booksService: BooksService,
     private _genresService: GenresService,
     private _authorsService: AuthorsService,
     private _snackBar: MatSnackBar,
     private _cdRef: ChangeDetectorRef,
     private _sbService: SidebarService,
     private _router: Router,
+    private _store: Store<{ rootState: IRootState }>,
   ) {}
 
   public ngOnInit(): void {
     this.booksPageIndex = +this.pageFromParam - 1;
 
     this.isAuth = this.auth.isAuth();
+
+    this._listenData();
 
     this.getAuthors();
 
@@ -81,22 +88,18 @@ export class BooksContainer implements OnInit, OnDestroy {
    * Takes in a 3 parameters and getting books
    *
    * @param filters The optional parameter - data from filters form
-   * @param booksQuantity The optional parameter for query with default value: 10
+   * @param quantity The optional parameter for query with default value: 10
    * @param page The optional parameter for query with default value: 0 (first page)
    */
-  public getBooks(filters?: IFilters, booksQuantity: number = 10, page: number = 0): void {
-    this.books$ = this._booksService.getBooks(booksQuantity, page, filters).pipe(
-      map((data) => {
-        this.booksQuantity = data.meta.records;
-
-        data.books.length > 0
-          ? this.emptyResult = false
-          : this.emptyResult = true;
-        this.scrollToTop();
-
-        return data.books;
-      }),
-    );
+  public getBooks(filters?: IFilters, quantity?: number, page?: number): void {
+    this._store.dispatch(
+      fromRoot.GetBooks(
+        {
+          page: page || this.booksPageIndex,
+          quantity: quantity || this.booksPageSize,
+          filters: filters || this.filters,
+        }),
+      );
   }
 
   public getGenres(): void {
@@ -152,51 +155,55 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     createModal.afterClosed()
       .pipe(
-      switchMap((bookData) => {
-        if (bookData) {
-          return this._booksService.createBook(bookData);
+      switchMap((book) => {
+        if (book) {
+          this._store.dispatch(fromRoot.CreateBook({ book }));
+
+          return this._store.select(fromRoot.getUpdatedBook);
         }
 
         return of(false);
       }),
       takeUntil(this._destroy$),
       )
-      .subscribe((result) => {
-        if (result) {
-          this._cdRef.markForCheck();
+      .subscribe((res: IBook) => {
+        this.getBooks();
 
-          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
-          this.openSnackBar('Book had been created');
-        }
+        this._cdRef.markForCheck();
+
+        this._openSnackBar(`Book ${res.title} was created`);
       });
   }
 
-  public showEditModal(book: IBook): void {
+  public showEditModal(bookForEdit: IBook): void {
     const editModal = this.dialog.open(BookEditModalComponent, {
       data: {
-        book,
+        book: bookForEdit,
         authors: this.authors,
         genres: this.genres,
       },
     });
     editModal.afterClosed()
       .pipe(
-      switchMap((bookData) => {
-        if (bookData) {
-          return this._booksService.updateBook(bookData);
-        }
+        switchMap((book) => {
+          if (!book) {
+            return of(false);
+          }
+          this._store.dispatch(fromRoot.UpdateBook({ book }));
 
-        return of(false);
-      }),
-      takeUntil(this._destroy$),
+          return this._store.select(fromRoot.getUpdatedBook);
+        }),
+        takeUntil(this._destroy$),
       )
-      .subscribe((result) => {
-        if (result) {
-          this._cdRef.markForCheck();
-
-          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
-          this.openSnackBar('Book had been updated');
+      .subscribe((res: IBook) => {
+        if (!res) {
+          return;
         }
+        this.getBooks();
+
+        this._cdRef.markForCheck();
+
+        this._openSnackBar(`Book ${res.title} was updated`);
       });
   }
 
@@ -206,39 +213,65 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     deleteModal.afterClosed()
       .pipe(
-      switchMap((bookId) => {
-        if (bookId) {
-          return this._booksService.deleteBook(bookId);
+      switchMap((deletedBook: IBook) => {
+        if (!deletedBook) {
+          return of(false);
         }
+        this._store.dispatch(fromRoot.DeleteBook({ id: deletedBook.id }));
 
-        return of(false);
+        return this._store.select(fromRoot.getUpdatedBook);
       }),
       takeUntil(this._destroy$),
-      )
-      .subscribe((result: IBook) => {
-        if (result) {
-          this._cdRef.markForCheck();
-
-          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
-          this.openSnackBar(`Book with name '${result.title}' was successfully deleted.`);
+    )
+      .subscribe((res: IBook) => {
+        if (!res) {
+          return;
         }
+        this.getBooks();
+
+        this._cdRef.markForCheck();
+
+        this._openSnackBar(`Book ${res.title} was deleted`);
       });
   }
-  public openSnackBar(message: string): void {
+
+  public openFilters(): void {
+    this._sbService.changeFilSb(true);
+  }
+
+  private _listenData(): void {
+    this._store.select(fromRoot.getBookList).pipe(
+      takeUntil(this._destroy$),
+    )
+      .subscribe((data: IBooks) => {
+        if (!data) {
+          return;
+        }
+        const { books, meta } = data;
+
+        this.books = books;
+        this.booksQuantity = meta.records;
+
+        books.length > 0
+          ? this.emptyResult = false
+          : this.emptyResult = true;
+
+        this._cdRef.markForCheck();
+        this._scrollToTop();
+      });
+  }
+
+  private _openSnackBar(message: string): void {
     this._snackBar.open(message, 'OK', {
       duration: 2000,
     });
   }
 
-  public scrollToTop(): void {
+  private _scrollToTop(): void {
     window.scroll({
       top: 0,
       behavior: 'smooth',
     });
-  }
-
-  public openFilters(): void {
-    this._sbService.changeFilSb(true);
   }
 
 }

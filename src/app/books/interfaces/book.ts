@@ -17,7 +17,6 @@ export interface IBook {
 
 }
 export interface IBooks {
-
   books: IBook[];
   meta: {
     pages: number;
