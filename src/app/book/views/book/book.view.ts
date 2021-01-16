@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -10,7 +10,8 @@ import { pluck, takeUntil } from 'rxjs/operators';
 })
 export class BookView implements OnInit, OnDestroy {
 
-  private _paramsStream$: ReplaySubject<number> = new ReplaySubject(1);
+  public id: number;
+
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(private route: ActivatedRoute, private router: Router) { }
@@ -23,7 +24,7 @@ export class BookView implements OnInit, OnDestroy {
       )
       .subscribe(
         (id) => {
-          this._paramsStream$.next(id);
+          this.id = id;
         },
       );
   }
@@ -31,10 +32,6 @@ export class BookView implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this._destroy$.next(null);
     this._destroy$.complete();
-  }
-
-  public get paramsStream$(): Observable<number> {
-    return this._paramsStream$.asObservable();
   }
 
   public show404(): void {

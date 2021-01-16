@@ -6,7 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { fromRoot } from './store';
+import { fromBook, fromAuthor, fromGenre } from './store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BooksModule } from './books/books.module';
@@ -28,9 +28,15 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     // NGRX
-    EffectsModule.forRoot([fromRoot.RootEffects]),
+    EffectsModule.forRoot([
+      fromBook.BookEffects,
+      fromAuthor.AuthorEffects,
+      fromGenre.GenreEffects,
+    ]),
     StoreModule.forRoot({
-      rootState: fromRoot.rootReducer,
+      bookState: fromBook.booksReducer,
+      authorState: fromAuthor.authorsReducer,
+      genreState: fromGenre.genresReducer,
     }),
     StoreDevtoolsModule.instrument({}),
     // Own

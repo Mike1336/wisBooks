@@ -1,8 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IFilters } from '../books/interfaces/filters';
-
-import { IBook, IBooks } from './../books/interfaces/book';
+import { IFilters } from './../../books/interfaces/filters';
+import { IBooks, IBook } from './../../books/interfaces/book';
 
 const API_GET_ALL_BOOKS = '[Books] Get all books';
 const API_GET_BOOK_BY_ID = '[Books] Get Book By Id';

@@ -4,7 +4,7 @@ import { map, mergeMap } from 'rxjs/operators';
 
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 
-import { BooksService } from './../books/services/books.service';
+import { BooksService } from '../../books/services/books.service';
 import {
   GetBooks,
   GetBookById,
@@ -14,10 +14,10 @@ import {
   UpdateBooksList,
   UpdateBookStatus,
   UpdateShownBook,
-} from './actions';
+} from '../actions/book.action';
 
 @Injectable()
-export class RootEffects {
+export class BookEffects {
 
   public getBooksEffect$ = createEffect(
     () => this.actions$.pipe(

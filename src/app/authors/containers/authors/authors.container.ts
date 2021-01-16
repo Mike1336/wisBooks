@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { map, mergeMap, pluck, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { pluck, switchMap } from 'rxjs/operators';
 
-import { IAuthor, IAuthors } from '../../interfaces/author';
-import { AuthorsService } from '../../services/authors.service';
+import { Store } from '@ngrx/store';
+
+import { fromAuthor } from '../../../store';
+import { IAuthor } from '../../interfaces/author';
+
+import { IAuthorsState } from './../../../store/reducers/author.reducer';
 
 
 @Component({
@@ -14,32 +18,41 @@ import { AuthorsService } from '../../services/authors.service';
 })
 export class AuthorsContainer implements OnInit {
 
-  public authorsQuantity: number;
+  public authorsQuantity = 26;
 
   public authors$: Observable<IAuthor[]>;
 
-  constructor(private _authorsService: AuthorsService) { }
+  constructor(private _store: Store<{ authorState: IAuthorsState }>) { }
 
   public ngOnInit(): void {
-    this.getAuthors();
+    this._listenData();
   }
 
-    /**
-   * Returns Observable with authors list
-   */
-  public getAuthors(): void {
-    this.authors$ = this._authorsService.getAuthorsInQuantity(1)
-      .pipe(
-        map((data) => {
-          return data.meta.records;
-        }),
-        switchMap((quantity: number): Observable<IAuthors> => {
-          this.authorsQuantity = quantity;
+  private _getAuthors(): void {
+    this._store.dispatch(fromAuthor.GetAuthors({ quantity: this.authorsQuantity }));
+  }
 
-          return this._authorsService.getAuthorsInQuantity(quantity);
-        }),
-        pluck('authors'),
-      );
+  private _listenData(): void {
+    this._getAuthors();
+
+    this.authors$ = this._store.select(fromAuthor.getAuthorsList)
+    .pipe(
+      switchMap((data) => {
+        if (!data) {
+          return of(false);
+        }
+        const { meta: { records, limit } } = data;
+
+        this.authorsQuantity = records;
+
+        if (records !== limit) {
+          this._getAuthors();
+        }
+
+        return this._store.select(fromAuthor.getAuthorsList);
+      }),
+      pluck('authors'),
+    );
   }
 
 }

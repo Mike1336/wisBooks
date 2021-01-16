@@ -6,13 +6,13 @@ const routes: Routes = [
     path: 'books',
     children: [
       {
-        path: ':page',
-        loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
-      },
-      {
         path: '',
         pathMatch: 'full',
         redirectTo: '1',
+      },
+      {
+        path: ':page',
+        loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
       },
     ],
   },
@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/books',
+    redirectTo: 'books',
     pathMatch: 'full',
   },
   {

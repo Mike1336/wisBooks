@@ -12,19 +12,14 @@ import { Store } from '@ngrx/store';
 import { IBook } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
 import { IGenre } from '../../interfaces/genre';
-import { fromRoot } from '../../../store';
+import { fromAuthor, fromBook, fromGenre } from '../../../store';
 
 import { IBooks } from './../../interfaces/book';
-import { IRootState } from './../../../store/reducers';
 import { BookCreateModalComponent } from './../../components/book-create-modal/book-create-modal.component';
-import { AuthorsService } from './../../../authors/services/authors.service';
-import { IAuthor, IAuthors } from './../../interfaces/author';
+import { IAuthor } from './../../interfaces/author';
 import { BookEditModalComponent } from './../../components/book-edit-modal/book-edit-modal.component';
-import { IGenres } from './../../interfaces/genre';
 import { ConfirmingDeleteModalComponent } from './../../components/confirming-delete-modal/confirming-delete-modal.component';
-import { BooksService } from './../../services/books.service';
 import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
-import { GenresService } from './../../services/genres.service';
 import { AuthService } from './../../../auth/services/auth.service';
 import { SidebarService } from './../../../layout/services/sidebar.service';
 
@@ -56,13 +51,11 @@ export class BooksContainer implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     public auth: AuthService,
-    private _genresService: GenresService,
-    private _authorsService: AuthorsService,
     private _snackBar: MatSnackBar,
     private _cdRef: ChangeDetectorRef,
     private _sbService: SidebarService,
     private _router: Router,
-    private _store: Store<{ rootState: IRootState }>,
+    private _store: Store,
   ) {}
 
   public ngOnInit(): void {
@@ -93,7 +86,7 @@ export class BooksContainer implements OnInit, OnDestroy {
    */
   public getBooks(filters?: IFilters, quantity?: number, page?: number): void {
     this._store.dispatch(
-      fromRoot.GetBooks(
+      fromBook.GetBooks(
         {
           page: page || this.booksPageIndex,
           quantity: quantity || this.booksPageSize,
@@ -103,27 +96,50 @@ export class BooksContainer implements OnInit, OnDestroy {
   }
 
   public getGenres(): void {
-    this._genresService.getGenresInQuantity(1)
+    this._store.dispatch(fromGenre.GetGenres({ quantity: 1 }));
+
+    this._store.select(fromGenre.getGenresList)
       .pipe(
-        switchMap((data: IGenres) => {
-          return this._genresService.getGenresInQuantity(data.meta.records);
-        }),
-        pluck('genres'),
-        takeUntil(this._destroy$),
-      ).subscribe((data: IGenre[]) => {
+      switchMap((data) => {
+        if (!data) {
+          return of(false);
+        }
+        const { meta: { records, limit } } = data;
+
+        if (records !== limit) {
+          this._store.dispatch(fromGenre.GetGenres({ quantity: records }));
+        }
+
+        return this._store.select(fromGenre.getGenresList);
+      }),
+      pluck('genres'),
+      takeUntil(this._destroy$),
+    )
+      .subscribe((data: IGenre[]) => {
         this.genres = data;
       });
   }
 
   public getAuthors(): void {
-    this._authorsService.getAuthorsInQuantity(1)
+    this._store.dispatch(fromAuthor.GetAuthors({ quantity: 1 }));
+
+    this._store.select(fromAuthor.getAuthorsList)
       .pipe(
-        switchMap((data: IAuthors) => {
-          return this._authorsService.getAuthorsInQuantity(data.meta.records);
-        }),
-        pluck('authors'),
-        takeUntil(this._destroy$),
-      )
+      switchMap((data) => {
+        if (!data) {
+          return of(false);
+        }
+        const { meta: { records, limit } } = data;
+
+        if (records !== limit) {
+          this._store.dispatch(fromAuthor.GetAuthors({ quantity: records }));
+        }
+
+        return this._store.select(fromAuthor.getAuthorsList);
+      }),
+      pluck('authors'),
+      takeUntil(this._destroy$),
+    )
       .subscribe((data: IAuthor[]) => {
         this.authors = data;
       });
@@ -157,9 +173,9 @@ export class BooksContainer implements OnInit, OnDestroy {
       .pipe(
       switchMap((book) => {
         if (book) {
-          this._store.dispatch(fromRoot.CreateBook({ book }));
+          this._store.dispatch(fromBook.CreateBook({ book }));
 
-          return this._store.select(fromRoot.getUpdatedBook);
+          return this._store.select(fromBook.getUpdatedBook);
         }
 
         return of(false);
@@ -189,9 +205,9 @@ export class BooksContainer implements OnInit, OnDestroy {
           if (!book) {
             return of(false);
           }
-          this._store.dispatch(fromRoot.UpdateBook({ book }));
+          this._store.dispatch(fromBook.UpdateBook({ book }));
 
-          return this._store.select(fromRoot.getUpdatedBook);
+          return this._store.select(fromBook.getUpdatedBook);
         }),
         takeUntil(this._destroy$),
       )
@@ -217,9 +233,9 @@ export class BooksContainer implements OnInit, OnDestroy {
         if (!deletedBook) {
           return of(false);
         }
-        this._store.dispatch(fromRoot.DeleteBook({ id: deletedBook.id }));
+        this._store.dispatch(fromBook.DeleteBook({ id: deletedBook.id }));
 
-        return this._store.select(fromRoot.getUpdatedBook);
+        return this._store.select(fromBook.getUpdatedBook);
       }),
       takeUntil(this._destroy$),
     )
@@ -240,7 +256,7 @@ export class BooksContainer implements OnInit, OnDestroy {
   }
 
   private _listenData(): void {
-    this._store.select(fromRoot.getBookList).pipe(
+    this._store.select(fromBook.getBookList).pipe(
       takeUntil(this._destroy$),
     )
       .subscribe((data: IBooks) => {
