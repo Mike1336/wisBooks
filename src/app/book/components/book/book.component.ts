@@ -18,10 +18,10 @@ export class BookComponent implements OnInit {
   public isAuth: boolean;
 
   @Output()
-  public edit = new EventEmitter<never>();
+  public edit = new EventEmitter<IBook>();
 
   @Output()
-  public delete = new EventEmitter<never>();
+  public delete = new EventEmitter<IBook>();
 
   constructor(private _title: Title) { }
 
@@ -30,11 +30,11 @@ export class BookComponent implements OnInit {
   }
 
   public emitEdit(): void {
-    this.edit.emit();
+    this.edit.emit(this.book);
   }
 
   public emitDelete(): void {
-    this.delete.emit();
+    this.delete.emit(this.book);
   }
 
 }

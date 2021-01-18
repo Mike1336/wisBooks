@@ -28,7 +28,7 @@ export class AuthorsContainer implements OnInit {
    * Returns Observable with authors list
    */
   public getAuthors(): void {
-    this.authors$ = this._authorsService.getAuthorsInQuantity(1)
+    this.authors$ = this._authorsService.getInQuantity(1)
       .pipe(
         map((data) => {
           return data.meta.records;
@@ -36,7 +36,7 @@ export class AuthorsContainer implements OnInit {
         switchMap((quantity: number): Observable<IAuthors> => {
           this.authorsQuantity = quantity;
 
-          return this._authorsService.getAuthorsInQuantity(quantity);
+          return this._authorsService.getInQuantity(quantity);
         }),
         pluck('authors'),
       );

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, ReplaySubject } from 'rxjs';
@@ -7,25 +7,18 @@ import { pluck, takeUntil } from 'rxjs/operators';
 @Component({
   templateUrl: './book.view.html',
   styleUrls: ['./book.view.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookView implements OnInit, OnDestroy {
 
-  private _paramsStream$: ReplaySubject<number> = new ReplaySubject(1);
+  public id$: Observable<number>;
+
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private _route: ActivatedRoute, private _router: Router) { }
 
   public ngOnInit(): void {
-    this.route.params
-      .pipe(
-        pluck('id'),
-        takeUntil(this._destroy$),
-      )
-      .subscribe(
-        (id) => {
-          this._paramsStream$.next(id);
-        },
-      );
+    this._initId();
   }
 
   public ngOnDestroy(): void {
@@ -33,12 +26,16 @@ export class BookView implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  public get paramsStream$(): Observable<number> {
-    return this._paramsStream$.asObservable();
+  public show404(): void {
+    this._router.navigate(['/404'], { skipLocationChange: true });
   }
 
-  public show404(): void {
-    this.router.navigate(['/404'], { skipLocationChange: true });
+  private _initId(): void {
+    this.id$ = this._route.params
+    .pipe(
+      pluck('id'),
+      takeUntil(this._destroy$),
+    );
   }
 
 }

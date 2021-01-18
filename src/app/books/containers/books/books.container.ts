@@ -7,19 +7,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { map, pluck, takeUntil, switchMap } from 'rxjs/operators';
 
-import { IBook } from '../../interfaces/book';
+import { Select, Store } from '@ngxs/store';
+
+import { GetBooks } from '../../../store/actions/books.actions';
+import { IBook, IBooks } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
 import { IGenre } from '../../interfaces/genre';
+import { GetAllAuthors } from '../../../store/actions/authors.actions';
+import { GetAllGenres } from '../../../store/actions/genres.actions';
 
+import { Delete, Update, Create } from './../../../store/actions/common.actions';
 import { BookCreateModalComponent } from './../../components/book-create-modal/book-create-modal.component';
-import { AuthorsService } from './../../../authors/services/authors.service';
 import { IAuthor, IAuthors } from './../../interfaces/author';
 import { BookEditModalComponent } from './../../components/book-edit-modal/book-edit-modal.component';
 import { IGenres } from './../../interfaces/genre';
 import { ConfirmingDeleteModalComponent } from './../../components/confirming-delete-modal/confirming-delete-modal.component';
-import { BooksService } from './../../services/books.service';
 import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
-import { GenresService } from './../../services/genres.service';
 import { AuthService } from './../../../auth/services/auth.service';
 import { SidebarService } from './../../../layout/services/sidebar.service';
 
@@ -41,6 +44,16 @@ export class BooksContainer implements OnInit, OnDestroy {
   public booksPageIndex: number = 0;
   public booksPageSize: number = 0;
 
+  @Select((state) => state.books.list)
+  public response$: Observable<IBooks>;
+
+  @Select((state) => state.authors.list)
+  public authors$: Observable<IAuthors>;
+
+  @Select((state) => state.genres.list)
+  public genres$: Observable<IGenres>;
+
+
   public books$: Observable<IBook[]>;
 
   public genres: IGenre[] = [];
@@ -49,15 +62,13 @@ export class BooksContainer implements OnInit, OnDestroy {
   private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(
-    public dialog: MatDialog,
     public auth: AuthService,
-    private _booksService: BooksService,
-    private _genresService: GenresService,
-    private _authorsService: AuthorsService,
+    private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _cdRef: ChangeDetectorRef,
     private _sbService: SidebarService,
     private _router: Router,
+    private _store: Store,
   ) {}
 
   public ngOnInit(): void {
@@ -65,11 +76,13 @@ export class BooksContainer implements OnInit, OnDestroy {
 
     this.isAuth = this.auth.isAuth();
 
-    this.getAuthors();
+    this._listenBooks();
 
-    this.getGenres();
+    this._getAuthors();
 
-    this.getBooks(null, null, this.booksPageIndex);
+    this._getGenres();
+
+    this._getBooks(null, null, this.booksPageIndex);
   }
 
   public ngOnDestroy(): void {
@@ -77,74 +90,26 @@ export class BooksContainer implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  /**
-   * Takes in a 3 parameters and getting books
-   *
-   * @param filters The optional parameter - data from filters form
-   * @param booksQuantity The optional parameter for query with default value: 10
-   * @param page The optional parameter for query with default value: 0 (first page)
-   */
-  public getBooks(filters?: IFilters, booksQuantity: number = 10, page: number = 0): void {
-    this.books$ = this._booksService.getBooks(booksQuantity, page, filters).pipe(
-      map((data) => {
-        this.booksQuantity = data.meta.records;
-
-        data.books.length > 0
-          ? this.emptyResult = false
-          : this.emptyResult = true;
-        this.scrollToTop();
-
-        return data.books;
-      }),
-    );
-  }
-
-  public getGenres(): void {
-    this._genresService.getGenresInQuantity(1)
-      .pipe(
-        switchMap((data: IGenres) => {
-          return this._genresService.getGenresInQuantity(data.meta.records);
-        }),
-        pluck('genres'),
-        takeUntil(this._destroy$),
-      ).subscribe((data: IGenre[]) => {
-        this.genres = data;
-      });
-  }
-
-  public getAuthors(): void {
-    this._authorsService.getAuthorsInQuantity(1)
-      .pipe(
-        switchMap((data: IAuthors) => {
-          return this._authorsService.getAuthorsInQuantity(data.meta.records);
-        }),
-        pluck('authors'),
-        takeUntil(this._destroy$),
-      )
-      .subscribe((data: IAuthor[]) => {
-        this.authors = data;
-      });
-  }
 
   public changePageSize(pagData: IPaginatorData): void {
     this._router.navigate([`/books/${pagData.pageIndex + 1}`]);
     this.booksPageSize = pagData.pageSize;
     this.booksPageIndex = pagData.pageIndex;
 
-    this.getBooks(this.filters, pagData.pageSize, this.booksPageIndex);
+    this._getBooks(this.filters, pagData.pageSize, this.booksPageIndex);
   }
 
   public getFilteredBooks(filters: IFilters): void {
     this.filters = filters;
-    this.getBooks(filters);
+    this._getBooks(filters);
   }
 
   public resetFilters(): void {
-    this.getBooks();
+    this._getBooks();
   }
 
   public showCreateModal(): void {
-    const createModal = this.dialog.open(BookCreateModalComponent, {
+    const createModal = this._dialog.open(BookCreateModalComponent, {
       data: {
         authors: this.authors,
         genres: this.genres,
@@ -152,9 +117,9 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     createModal.afterClosed()
       .pipe(
-      switchMap((bookData) => {
-        if (bookData) {
-          return this._booksService.createBook(bookData);
+      switchMap((book) => {
+        if (book) {
+          return this._store.dispatch(new Create<IBook>(book));
         }
 
         return of(false);
@@ -165,14 +130,14 @@ export class BooksContainer implements OnInit, OnDestroy {
         if (result) {
           this._cdRef.markForCheck();
 
-          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
+          this._getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
           this.openSnackBar('Book had been created');
         }
       });
   }
 
   public showEditModal(book: IBook): void {
-    const editModal = this.dialog.open(BookEditModalComponent, {
+    const editModal = this._dialog.open(BookEditModalComponent, {
       data: {
         book,
         authors: this.authors,
@@ -181,9 +146,9 @@ export class BooksContainer implements OnInit, OnDestroy {
     });
     editModal.afterClosed()
       .pipe(
-      switchMap((bookData) => {
-        if (bookData) {
-          return this._booksService.updateBook(bookData);
+      switchMap((editedBook) => {
+        if (editedBook) {
+          return this._store.dispatch(new Update<IBook>(editedBook));
         }
 
         return of(false);
@@ -194,21 +159,21 @@ export class BooksContainer implements OnInit, OnDestroy {
         if (result) {
           this._cdRef.markForCheck();
 
-          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
+          this._getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
           this.openSnackBar('Book had been updated');
         }
       });
   }
 
   public showDeleteModal(book: IBook): void {
-    const deleteModal = this.dialog.open(ConfirmingDeleteModalComponent, {
+    const deleteModal = this._dialog.open(ConfirmingDeleteModalComponent, {
       data: book,
     });
     deleteModal.afterClosed()
       .pipe(
-      switchMap((bookId) => {
-        if (bookId) {
-          return this._booksService.deleteBook(bookId);
+      switchMap((id) => {
+        if (id) {
+          return this._store.dispatch(new Delete(id));
         }
 
         return of(false);
@@ -219,11 +184,12 @@ export class BooksContainer implements OnInit, OnDestroy {
         if (result) {
           this._cdRef.markForCheck();
 
-          this.getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
+          this._getBooks(this.filters, this.booksPageSize, this.booksPageIndex);
           this.openSnackBar(`Book with name '${result.title}' was successfully deleted.`);
         }
       });
   }
+
   public openSnackBar(message: string): void {
     this._snackBar.open(message, 'OK', {
       duration: 2000,
@@ -240,5 +206,68 @@ export class BooksContainer implements OnInit, OnDestroy {
   public openFilters(): void {
     this._sbService.changeFilSb(true);
   }
+
+  private _listenBooks(): void {
+    this.books$ = this.response$.pipe(
+      map((data) => {
+        if (!data) {
+          return;
+        }
+
+        this.booksQuantity = data.meta.records;
+
+        data.books.length > 0
+          ? this.emptyResult = false
+          : this.emptyResult = true;
+        this.scrollToTop();
+
+        return data.books;
+      }),
+    );
+  }
+
+  /**
+ * Takes in a 3 parameters and getting books
+ *
+ * @param filters The optional parameter - data from filters form
+ * @param booksQuantity The optional parameter for query with default value: 10
+ * @param page The optional parameter for query with default value: 0 (first page)
+ */
+  private _getBooks(filters?: IFilters, booksQuantity: number = 10, page: number = 0): void {
+    this._store.dispatch(new GetBooks(filters, booksQuantity, page));
+  }
+
+  private _getAuthors(): void {
+    this._store.dispatch(new GetAllAuthors());
+
+    this.authors$
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe(
+        (data: IAuthors) => {
+          if (!data) {
+            return;
+          }
+          this.authors = data.authors;
+        });
+  }
+
+  private _getGenres(): void {
+    this._store.dispatch(new GetAllGenres());
+
+    this.genres$
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe(
+        (data: IGenres) => {
+          if (!data) {
+            return;
+          }
+          this.genres = data.genres;
+        });
+  }
+
 
 }

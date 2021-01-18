@@ -19,19 +19,19 @@ export class AuthorsService {
   /**
    * Takes in an quantity and returns an authors list
    *
-   * @param quantity A quantity of authors for getting list
+   * @param value A quantity of authors for getting list
    */
-  public getAuthorsInQuantity(quantity: number): Observable<IAuthors> {
-    return this.http.get<IAuthors>(`${this.apiUrl}${this.authorsEndpoint}?limit=${quantity}`);
+  public getInQuantity(value: number): Observable<IAuthors> {
+    return this.http.get<IAuthors>(`${this.apiUrl}${this.authorsEndpoint}?limit=${value}`);
   }
 
   /**
    * Takes in an id and returns an authors list
    *
-   * @param authorId An author's id for getting list
+   * @param id An author's id for getting list
    */
-  public getAuthorById(authorId: number): Observable<object> {
-    return this.http.get<IAuthor>(`${this.apiUrl}${this.authorsEndpoint}/${authorId}`);
+  public getById(id: number): Observable<IAuthor> {
+    return this.http.get<IAuthor>(`${this.apiUrl}${this.authorsEndpoint}/${id}`);
   }
 
   /**
@@ -39,7 +39,7 @@ export class AuthorsService {
    *
    * @param author An author for create him in list
    */
-  public createAuthor(author: IAuthor): Observable<object> {
+  public create(author: IAuthor): Observable<IAuthor> {
     const url = `${this.apiUrl}${this.authorsEndpoint}`;
 
     return this.http.post<IAuthor>(url, author);
@@ -50,7 +50,7 @@ export class AuthorsService {
    *
    * @param author An author for editing him in list
    */
-  public updateAuthor(author: IAuthor): Observable<object> {
+  public update(author: IAuthor): Observable<IAuthor> {
     const url = `${this.apiUrl}${this.authorsEndpoint}/${author.id}`;
 
     return this.http.put<IAuthor>(url, author);
@@ -59,10 +59,10 @@ export class AuthorsService {
   /**
    * Takes in an anuthor's id and returns a list without the author
    *
-   * @param authorId An author's id for delete him from list
+   * @param id An author's id for delete him from list
    */
-  public deleteAuthor(authorId: number): Observable<object> {
-    return this.http.delete<IAuthor>(`${this.apiUrl}${this.authorsEndpoint}/${authorId}`);
+  public delete(id: number): Observable<IAuthor> {
+    return this.http.delete<IAuthor>(`${this.apiUrl}${this.authorsEndpoint}/${id}`);
   }
 
 

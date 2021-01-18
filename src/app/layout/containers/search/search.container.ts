@@ -54,7 +54,7 @@ export class SearchContainer implements OnInit, OnDestroy {
 
   public findBooks(bookName: string): Observable<IBook[]> {
     return this._booksService
-      .getBooksByTItle(bookName)
+      .getByTitle(bookName)
       .pipe(
         map((data) => {
           data.books.length === 0

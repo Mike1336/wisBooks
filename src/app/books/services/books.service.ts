@@ -9,6 +9,12 @@ import { IFilters } from './../interfaces/filters';
 import { IRsTypes } from './../interfaces/ransack';
 
 
+export interface IParams {
+  quantity?: number;
+  page?: number;
+  filters?: IFilters;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +26,39 @@ export class BooksService {
 
   constructor(private _http: HttpClient) { }
 
-  public getBooks(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
+  public getList(quantity?: number, page?: number, filters?: IFilters): Observable<IBooks> {
+    const params = this._getParams({ quantity, page, filters });
+
+    return this._http.get<IBooks>(`${this._apiUrl}${this._booksEndpoint}`, { params });
+  }
+  public getById(value: number): Observable<IBook> {
+    return this._http.get<IBook>(`${this._apiUrl}${this._booksEndpoint}/${value}`);
+  }
+  public getByTitle(value: string): Observable<IBooks> {
+    return this._http.get<IBooks>(
+      `${this._apiUrl}${this._booksEndpoint}?q[title_cont]=${value}`,
+      );
+  }
+  public getByAuthor(id: number): Observable<IBooks> {
+    return this._http.get<IBooks>(
+      `${this._apiUrl}${this._authorsEndpoint}/${id}/${this._booksEndpoint}`,
+      );
+  }
+  public create(book: IBook): Observable<IBook> {
+    const url = `${this._apiUrl}${this._authorsEndpoint}/${book.author_id}/${this._booksEndpoint}`;
+
+    return this._http.post<IBook>(url, book);
+  }
+  public update(book: IBook): Observable<IBook> {
+    const url = `${this._apiUrl}${this._booksEndpoint}/${book.id}`;
+
+    return this._http.put<IBook>(url, book);
+  }
+  public delete(id: number): Observable<IBook> {
+    return this._http.delete<IBook>(`${this._apiUrl}${this._booksEndpoint}/${id}`);
+  }
+
+  private _getParams({ quantity, page, filters }: IParams): HttpParams {
     let params = new HttpParams();
 
     const instructions: IRsTypes = {
@@ -57,33 +95,7 @@ export class BooksService {
       params = params.append('limit', `${quantity}`);
     }
 
-    return this._http.get<IBooks>(`${this._apiUrl}${this._booksEndpoint}`, { params });
-  }
-  public getBookById(bookId: number): Observable<IBook> {
-    return this._http.get<IBook>(`${this._apiUrl}${this._booksEndpoint}/${bookId}`);
-  }
-  public getBooksByTItle(bookTitle: string): Observable<IBooks> {
-    return this._http.get<IBooks>(
-      `${this._apiUrl}${this._booksEndpoint}?q[title_cont]=${bookTitle}`,
-      );
-  }
-  public getBookByAuthor(authorId: number): Observable<object> {
-    return this._http.get(
-      `${this._apiUrl}${this._authorsEndpoint}/${authorId}/${this._booksEndpoint}`,
-      );
-  }
-  public createBook(book: IBook): Observable<IBook> {
-    const url = `${this._apiUrl}${this._authorsEndpoint}/${book.author_id}/${this._booksEndpoint}`;
-
-    return this._http.post<IBook>(url, book);
-  }
-  public updateBook(book: IBook): Observable<IBook> {
-    const url = `${this._apiUrl}${this._booksEndpoint}/${book.id}`;
-
-    return this._http.put<IBook>(url, book);
-  }
-  public deleteBook(bookId: number): Observable<IBook> {
-    return this._http.delete<IBook>(`${this._apiUrl}${this._booksEndpoint}/${bookId}`);
+    return params;
   }
 
 }

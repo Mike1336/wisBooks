@@ -1,9 +1,9 @@
-<ng-container *ngIf="book; else loading">
+<ng-container *ngIf="(book$ | async) as book; else loading">
   <book-component
     [book]="book"
     [isAuth]="isAuth"
-    (edit)="showEditModal()"
-    (delete)="showDeleteModal()"
+    (edit)="showEditModal($event)"
+    (delete)="showDeleteModal($event)"
   >
   </book-component>
 </ng-container>
