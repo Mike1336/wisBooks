@@ -1,12 +1,10 @@
-<ng-container *ngIf="book; else loading">
-  <book-component
+  <book-component @bookTransitions *ngIf="book; else loading"
     [book]="book"
     [isAuth]="isAuth"
     (edit)="showEditModal()"
     (delete)="showDeleteModal()"
   >
   </book-component>
-</ng-container>
 
 <ng-template #loading>
   <div id="spinner">

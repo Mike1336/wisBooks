@@ -6,21 +6,33 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { catchError, pluck, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
 
-import { ConfirmingDeleteModalComponent } from './../../../books/components/confirming-delete-modal/confirming-delete-modal.component';
-import { IAuthors, IAuthor } from './../../../authors/interfaces/author';
-import { IGenres, IGenre } from './../../../books/interfaces/genre';
-import { GenresService } from './../../../books/services/genres.service';
-import { AuthorsService } from './../../../authors/services/authors.service';
-import { BookEditModalComponent } from './../../../books/components/book-edit-modal/book-edit-modal.component';
-import { AuthService } from './../../../auth/services/auth.service';
-import { IBook } from './../../../books/interfaces/book';
-import { BooksService } from './../../../books/services/books.service';
+import { ConfirmingDeleteModalComponent } from '../../../books/components/confirming-delete-modal/confirming-delete-modal.component';
+import { IAuthors, IAuthor } from '../../../authors/interfaces/author';
+import { IGenres, IGenre } from '../../../books/interfaces/genre';
+import { GenresService } from '../../../books/services/genres.service';
+import { AuthorsService } from '../../../authors/services/authors.service';
+import { BookEditModalComponent } from '../../../books/components/book-edit-modal/book-edit-modal.component';
+import { AuthService } from '../../../auth/services/auth.service';
+import { IBook } from '../../../books/interfaces/book';
+import { BooksService } from '../../../books/services/books.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'book-container',
   templateUrl: './book.container.html',
   styleUrls: ['./book.container.scss'],
+  animations: [
+    trigger('bookTransitions', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('250ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('250ms', style({ opacity: 0 }))
+      ])
+    ])
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookContainer implements OnInit, OnDestroy {

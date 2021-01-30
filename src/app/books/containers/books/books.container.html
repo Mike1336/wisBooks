@@ -7,7 +7,9 @@
     </div>
   </ng-container>  
   <books-component
-    [books]="books$ | async"
+    @pageTransitions
+    *ngIf="(books$ | async) as books "
+    [books]="books"
     (editClicked)="showEditModal($event)"
     (deleteClicked)="showDeleteModal($event)"
   >
