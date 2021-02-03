@@ -89,13 +89,6 @@ export class BooksContainer implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  /**
-   * Takes in a 3 parameters and getting books
-   *
-   * @param filters The optional parameter - data from filters form
-   * @param booksQuantity The optional parameter for query with default value: 10
-   * @param page The optional parameter for query with default value: 0 (first page)
-   */
   public getBooks(filters?: IFilters, booksQuantity: number = 10, page: number = 0): void {
     this.books$ = this._booksService.getBooks(booksQuantity, page, filters).pipe(
       map((data) => {

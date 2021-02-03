@@ -1,187 +1,195 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { MatDialog } from '@angular/material/dialog';
-
-import { Observable, of, ReplaySubject } from 'rxjs';
-import { catchError, pluck, shareReplay, switchMap, takeUntil } from 'rxjs/operators';
-
-import { ConfirmingDeleteModalComponent } from '../../../books/components/confirming-delete-modal/confirming-delete-modal.component';
-import { IAuthors, IAuthor } from '../../../authors/interfaces/author';
-import { IGenres, IGenre } from '../../../books/interfaces/genre';
-import { GenresService } from '../../../books/services/genres.service';
-import { AuthorsService } from '../../../authors/services/authors.service';
-import { BookEditModalComponent } from '../../../books/components/book-edit-modal/book-edit-modal.component';
-import { AuthService } from '../../../auth/services/auth.service';
-import { IBook } from '../../../books/interfaces/book';
-import { BooksService } from '../../../books/services/books.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    OnDestroy,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
+} from '@angular/core';
+import {Router} from '@angular/router';
 import {animate, style, transition, trigger} from "@angular/animations";
 
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+import {EMPTY, iif, Subject} from 'rxjs';
+import {catchError, pluck, switchMap, takeUntil, tap} from 'rxjs/operators';
+
+import {ConfirmingDeleteModalComponent} from '../../../books/components/confirming-delete-modal/confirming-delete-modal.component';
+import {IAuthors, IAuthor} from '../../../authors/interfaces/author';
+import {IGenres, IGenre} from '../../../books/interfaces/genre';
+import {GenresService} from '../../../books/services/genres.service';
+import {AuthorsService} from '../../../authors/services/authors.service';
+import {BookEditModalComponent} from '../../../books/components/book-edit-modal/book-edit-modal.component';
+import {AuthService} from '../../../auth/services/auth.service';
+import {IBook} from '../../../books/interfaces/book';
+import {BooksService} from '../../../books/services/books.service';
+
 @Component({
-  selector: 'book-container',
-  templateUrl: './book.container.html',
-  styleUrls: ['./book.container.scss'],
-  animations: [
-    trigger('bookTransitions', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('250ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('250ms', style({ opacity: 0 }))
-      ])
-    ])
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'book-container',
+    templateUrl: './book.container.html',
+    styleUrls: ['./book.container.scss'],
+    animations: [
+        trigger('bookTransitions', [
+            transition(':enter', [
+                style({opacity: 0}),
+                animate('250ms', style({opacity: 1})),
+            ]),
+            transition(':leave', [
+                animate('250ms', style({opacity: 0}))
+            ])
+        ])
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookContainer implements OnInit, OnDestroy {
 
-  public isAuth: boolean;
+    @Input()
+    public id: number;
 
-  public book: IBook;
+    @Output()
+    public contentNotFound = new EventEmitter<Error>();
 
-  public authors: IAuthor[];
+    public book: IBook;
 
-  public genres: IGenre[];
+    public authors: IAuthor[];
 
-  @Input()
-  public paramsStream$: Observable<number>;
+    public genres: IGenre[];
 
-  @Output()
-  public contentNotFound = new EventEmitter<Error>();
+    private _destroy$ = new Subject<void>();
 
-  private _destroy$ = new ReplaySubject<number>(1);
+    constructor(
+        private _booksService: BooksService,
+        private _genresService: GenresService,
+        private _authorsService: AuthorsService,
+        private _authService: AuthService,
+        private _dialog: MatDialog,
+        private _router: Router,
+        private _snackBar: MatSnackBar,
+        private _cdRef: ChangeDetectorRef,
+    ) {}
 
-  constructor(
-    private _booksService: BooksService,
-    private _genresService: GenresService,
-    private _authorsService: AuthorsService,
-    private _auth: AuthService,
-    private _dialog: MatDialog,
-    private _router: Router,
-    private _snackBar: MatSnackBar,
-    ) { }
+    public get isAuth(): boolean {
+        return this._authService.isAuth();
+    }
 
-  public ngOnInit(): void {
-    this.isAuth = this._auth.isAuth();
+    public ngOnChanges(): void {
+        console.log(this.id)
+        this._fetchBook();
+    }
 
-    this.getBookFromUrl();
+    public ngOnInit(): void {
+        this._fetchGenres();
+        this._fetchAuthors();
+    }
 
-    this.getGenres();
+    public ngOnDestroy(): void {
+        this._destroy$.next();
+        this._destroy$.complete();
+    }
 
-    this.getAuthors();
-  }
+    public showEditModal(): void {
+        const editModal = this._dialog.open(BookEditModalComponent, {
+            data: {
+                book: this.book,
+                authors: this.authors,
+                genres: this.genres,
+            },
+        });
 
-  public ngOnDestroy(): void {
-    this._destroy$.next(null);
-    this._destroy$.complete();
-  }
+        editModal.afterClosed()
+            .pipe(
+                switchMap((bookData) => {
+                  return iif(
+                        () => !!bookData,
+                        this._booksService.updateBook(bookData),
+                        EMPTY
+                    );
+                }),
+                tap((result) => {
+                    if (result) {
+                        this._fetchBook();
+                        this._openSnackBar('Book has been updated');
+                    }
+                }),
+                takeUntil(this._destroy$),
+            )
+            .subscribe();
+    }
 
-  public showEditModal(): void {
-    const editModal = this._dialog.open(BookEditModalComponent, {
-      data: {
-        book: this.book,
-        authors: this.authors,
-        genres: this.genres,
-      },
-    });
-    editModal.afterClosed()
-      .pipe(
-      switchMap((bookData) => {
-        if (bookData) {
-          return this._booksService.updateBook(bookData);
-        }
+    public showDeleteModal(): void {
+        const deleteModal = this._dialog.open(ConfirmingDeleteModalComponent, {
+            data: this.book,
+        });
 
-        return of(false);
-      }),
-      takeUntil(this._destroy$),
-      )
-      .subscribe((result) => {
-        if (result) {
-          this.getBookFromUrl();
+        deleteModal.afterClosed()
+            .pipe(
+                switchMap((bookId: number) => {
+                    return iif(
+                        () => !!bookId,
+                        this._booksService.getBookById(bookId),
+                        EMPTY
+                    );
+                }),
+                tap((result: IBook) => {
+                    if (result) {
+                        this._openSnackBar(`Book: "${result.title}" has been successfully deleted`);
+                        this._router.navigate(['/books/1']);
+                    }
+                }),
+                takeUntil(this._destroy$),
+            )
+            .subscribe();
+    }
 
-          this.openSnackBar('Book had been updated');
-        }
-      });
-  }
+    private _fetchGenres(): void {
+        this._genresService.getGenresInQuantity(1)
+            .pipe(
+                switchMap((data: IGenres) => {
+                    return this._genresService.getGenresInQuantity(data.meta.records);
+                }),
+                pluck('genres'),
+                tap((data: IGenre[]) => this.genres = data),
+                takeUntil(this._destroy$),
+            )
+            .subscribe();
+    }
 
-  public showDeleteModal(): void {
-    const deleteModal = this._dialog.open(ConfirmingDeleteModalComponent, {
-      data: this.book,
-    });
-    deleteModal.afterClosed()
-      .pipe(
-      switchMap((bookId) => {
-        if (bookId) {
-          return this._booksService.deleteBook(bookId);
-        }
+    private _fetchAuthors(): void {
+        this._authorsService.getAuthorsInQuantity(1)
+            .pipe(
+                switchMap((data: IAuthors) => {
+                    return this._authorsService.getAuthorsInQuantity(data.meta.records);
+                }),
+                pluck('authors'),
+                tap((authors) => this.authors = authors),
+                takeUntil(this._destroy$),
+            )
+            .subscribe();
+    }
 
-        return of(false);
-      }),
-      takeUntil(this._destroy$),
-      )
-      .subscribe((result: IBook) => {
-        if (result) {
-          this.openSnackBar(`Book: "${result.title}" was successfully deleted`);
+    private _fetchBook(): void {
+        this._booksService.getBookById(this.id)
+            .pipe(
+                tap((book) => {
+                    this.book = book;
+                    this._cdRef.markForCheck();
+                }),
+                catchError((err) => {
+                        this.contentNotFound.emit(err);
+                        throw new Error(`Error with book: ${err}`);
+                    }
+                ),
+            )
+            .subscribe();
+    }
 
-          this._router.navigate(['/books/1']);
-        }
-      });
-  }
-  public getBookFromUrl(): void {
-    this.paramsStream$
-      .pipe(
-        switchMap((id) => {
-          return this._booksService.getBookById(id).pipe(
-            shareReplay(1),
-            catchError((err) => {
-              this.contentNotFound.emit(err);
-              throw new Error(`error in source. Details: ${err}`);
-            }),
-            takeUntil(this._destroy$),
-          );
-        }),
-        takeUntil(this._destroy$),
-      )
-      .subscribe(
-        (book: IBook) => {
-          this.book = book;
-        },
-      );
-  }
-
-  public getGenres(): void {
-    this._genresService.getGenresInQuantity(1)
-      .pipe(
-        switchMap((data: IGenres) => {
-          return this._genresService.getGenresInQuantity(data.meta.records);
-        }),
-        pluck('genres'),
-        takeUntil(this._destroy$),
-      ).subscribe((data: IGenre[]) => {
-        this.genres = data;
-      });
-  }
-
-  public getAuthors(): void {
-    this._authorsService.getAuthorsInQuantity(1)
-      .pipe(
-        switchMap((data: IAuthors) => {
-          return this._authorsService.getAuthorsInQuantity(data.meta.records);
-        }),
-        pluck('authors'),
-        takeUntil(this._destroy$),
-      )
-      .subscribe((data: IAuthor[]) => {
-        this.authors = data;
-      });
-  }
-
-  public openSnackBar(message: string): void {
-    this._snackBar.open(message, 'OK', {
-      duration: 2000,
-    });
-  }
+    private _openSnackBar(message: string): void {
+        this._snackBar.open(message, 'OK', {
+            duration: 2000,
+        });
+    }
 
 }
