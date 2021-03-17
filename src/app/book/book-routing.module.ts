@@ -6,9 +6,14 @@ import { BookView } from './views/book/book.view';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: BookView,
   },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/',
+  }
 ];
 
 @NgModule({

@@ -4,40 +4,18 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'books',
-    children: [
-      {
-        path: ':page',
-        loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
-      },
-      {
-        path: '**',
-        redirectTo: '1',
-      },
-    ],
+    data: { page: 'books' },
+    loadChildren: () => import('./books/books.module').then((m) => m.BooksModule),
   },
   {
     path: 'authors',
-    pathMatch: 'full',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule),
-      },
-    ],
+    data: { page: 'authors' },
+    loadChildren: () => import('./authors/authors.module').then((m) => m.AuthorsModule),
   },
   {
     path: 'book',
-    children: [
-      {
-        path: ':id',
-        loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
-      },
-      {
-        path: '**',
-        redirectTo: '/404',
-      },
-
-    ],
+    data: { page: 'bookPage' },
+    loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
   },
   {
     path: 'register',
@@ -59,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/books',
+    redirectTo: 'books',
     pathMatch: 'full',
   },
   {

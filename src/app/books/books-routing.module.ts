@@ -5,8 +5,13 @@ import { BooksView } from './views/books/books.view';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':page',
     component: BooksView,
+  },
+  {
+    path: '',
+    pathMatch:'full',
+    redirectTo: '1',
   },
 ];
 

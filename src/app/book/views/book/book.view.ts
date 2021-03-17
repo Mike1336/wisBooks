@@ -1,40 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable, ReplaySubject } from 'rxjs';
-import { pluck, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import {map, pluck} from 'rxjs/operators';
 
 @Component({
   templateUrl: './book.view.html',
   styleUrls: ['./book.view.scss'],
 })
-export class BookView implements OnInit, OnDestroy {
+export class BookView {
 
-  private _paramsStream$: ReplaySubject<number> = new ReplaySubject(1);
-  private _destroy$: ReplaySubject<number> = new ReplaySubject(1);
+  public id$ : Observable<number>;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
-
-  public ngOnInit(): void {
-    this.route.params
-      .pipe(
-        pluck('id'),
-        takeUntil(this._destroy$),
-      )
-      .subscribe(
-        (id) => {
-          this._paramsStream$.next(id);
-        },
-      );
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.id$ = this.getIdFromParams();
   }
 
-  public ngOnDestroy(): void {
-    this._destroy$.next(null);
-    this._destroy$.complete();
-  }
-
-  public get paramsStream$(): Observable<number> {
-    return this._paramsStream$.asObservable();
+  public getIdFromParams (): Observable<number> {
+    return this.route.params
+        .pipe(
+            pluck('id'),
+            map((id) => +id),
+        );
   }
 
   public show404(): void {

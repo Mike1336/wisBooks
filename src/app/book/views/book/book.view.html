@@ -1,2 +1,2 @@
-<book-container [paramsStream$]="paramsStream$" (contentNotFound)="show404()">
+<book-container [id]="id$ | async" (contentNotFound)="show404()">
 </book-container>

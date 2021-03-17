@@ -11,22 +11,34 @@ import { IBook } from '../../interfaces/book';
 import { IFilters } from '../../interfaces/filters';
 import { IGenre } from '../../interfaces/genre';
 
-import { BookCreateModalComponent } from './../../components/book-create-modal/book-create-modal.component';
-import { AuthorsService } from './../../../authors/services/authors.service';
-import { IAuthor, IAuthors } from './../../interfaces/author';
-import { BookEditModalComponent } from './../../components/book-edit-modal/book-edit-modal.component';
-import { IGenres } from './../../interfaces/genre';
-import { ConfirmingDeleteModalComponent } from './../../components/confirming-delete-modal/confirming-delete-modal.component';
-import { BooksService } from './../../services/books.service';
-import { IPaginatorData } from './../../../layout/interfaces/paginator-data';
-import { GenresService } from './../../services/genres.service';
-import { AuthService } from './../../../auth/services/auth.service';
-import { SidebarService } from './../../../layout/services/sidebar.service';
+import { BookCreateModalComponent } from '../../components/book-create-modal/book-create-modal.component';
+import { AuthorsService } from '../../../authors/services/authors.service';
+import { IAuthor, IAuthors } from '../../interfaces/author';
+import { BookEditModalComponent } from '../../components/book-edit-modal/book-edit-modal.component';
+import { IGenres } from '../../interfaces/genre';
+import { ConfirmingDeleteModalComponent } from '../../components/confirming-delete-modal/confirming-delete-modal.component';
+import { BooksService } from '../../services/books.service';
+import { IPaginatorData } from '../../../layout/interfaces/paginator-data';
+import { GenresService } from '../../services/genres.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { SidebarService } from '../../../layout/services/sidebar.service';
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'books-container',
   templateUrl: './books.container.html',
   styleUrls: ['./books.container.scss'],
+  animations: [
+    trigger('pageTransitions', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('250ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('250ms', style({ opacity: 0 }))
+      ])
+    ])
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksContainer implements OnInit, OnDestroy {
@@ -77,13 +89,6 @@ export class BooksContainer implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
-  /**
-   * Takes in a 3 parameters and getting books
-   *
-   * @param filters The optional parameter - data from filters form
-   * @param booksQuantity The optional parameter for query with default value: 10
-   * @param page The optional parameter for query with default value: 0 (first page)
-   */
   public getBooks(filters?: IFilters, booksQuantity: number = 10, page: number = 0): void {
     this.books$ = this._booksService.getBooks(booksQuantity, page, filters).pipe(
       map((data) => {

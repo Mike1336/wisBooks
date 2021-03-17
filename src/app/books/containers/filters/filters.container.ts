@@ -19,6 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { SidebarService } from './../../../layout/services/sidebar.service';
 import { IGenre } from './../../interfaces/genre';
+import {IFilters} from "../../interfaces/filters";
 
 @Component({
   selector: 'filters-container',
@@ -32,7 +33,7 @@ export class FiltersContainer implements OnInit, AfterViewInit, OnDestroy {
   public genres: IGenre[];
 
   @Output()
-  public applyForm: EventEmitter<object> = new EventEmitter();
+  public applyForm: EventEmitter<IFilters> = new EventEmitter();
 
   @Output()
   public resetForm: EventEmitter<object> = new EventEmitter();
