@@ -10,7 +10,7 @@ import { environment } from './../../../environments/environment';
 })
 export class GeodataService {
 
-  private _apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?language=en&key=${environment.apiKey}`;
+  private _apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?language=en&key=${environment.firebaseConfig.apiKey}`;
 
   constructor(private _http: HttpClient) { }
 

@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+import * as firebase from 'firebase';
 
 import { IFbResponse } from './../interfaces/fb-response';
 import { IUser } from './../interfaces/user';
@@ -15,7 +18,10 @@ export class AuthService {
 
   private _loginLoading$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient,
+    private firebaseAuth: AngularFireAuth,
+    ) { }
 
   public get loginLoading$() : Observable<boolean> {
     return this._loginLoading$.asObservable();
@@ -43,11 +49,15 @@ export class AuthService {
 
     return this._http.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
-        environment.apiKey
+        environment.firebaseConfig.apiKey
       }`, user)
       .pipe(
         tap(this._setToken),
       );
+  }
+
+  public signInWithGoogle(): Promise<firebase.default.auth.UserCredential> {
+    return this.firebaseAuth.signInWithPopup(new firebase.default.auth.GoogleAuthProvider());
   }
 
   public logout(): void {

@@ -1,7 +1,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="submit()">
   <ng-container *ngIf="formError">
     <div id="loginError">
-      {{formError}}
+      {{ formError }}
     </div>
   </ng-container>
   <mat-form-field class="example-full-width">
@@ -48,4 +48,5 @@
       Login
     </button>
   </ng-template>
+  <button mat-button>Sign in with Google</button>
 </form>

@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  apiKey: 'AIzaSyBfY5iOkrcNOkhOfaQQUBJsS52VpXJr3oA',
+  firebaseConfig: {
+    apiKey: 'AIzaSyBSaJhlMh8zXMdKW4Xmsp2c5DT1Jnqhvcs',
+    authDomain: 'wisbooks-73f38.firebaseapp.com',
+    projectId: 'wisbooks-73f38',
+    storageBucket: 'wisbooks-73f38.appspot.com',
+    messagingSenderId: '308064902148',
+    appId: '1:308064902148:web:3208231ba9820d8fc6a951',
+    measurementId: 'G-XZMTWEGEVB',
+  },
 };
 
 /*
