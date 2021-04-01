@@ -4,6 +4,7 @@ import { Component, OnInit, Output, ChangeDetectionStrategy, EventEmitter, Input
 import { Observable } from 'rxjs';
 
 import { IUser } from '../../interfaces/user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'auth-component',
@@ -26,7 +27,11 @@ export class AuthComponent implements OnInit {
   @Output()
   public submitForm: EventEmitter<IUser> = new EventEmitter();
 
-  constructor() { }
+  constructor(private _auth: AuthService) { }
+
+  public signin() {
+    this._auth.signInWithGoogle().then((res) => { console.log(res) });
+  }
 
   public ngOnInit(): void {
     this.initForm();
